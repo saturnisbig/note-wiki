@@ -1,0 +1,9 @@
+# Python function var privillege
+
+scope
+
+LEGB
+
+global
+
+nonlocal in python 3.0

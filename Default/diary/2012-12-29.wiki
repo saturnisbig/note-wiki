@@ -1,0 +1,82 @@
+# Python basic
+
+1. something about class.
+
+* 类的数据属性
+
+* 专用类方法
+
+
+
+    __getitem__(self, key)
+    __setitem__(self, key, item)
+
+
+* 高级专用类方法
+
+
+
+    __repr__(self)
+    __cmp__(self, dict)
+    __len__(self)
+    __delitem__(self, key)
+    
+
+* 类属性
+
+* 私有函数
+
+所有类中定义的以\_\_开头的函数。
+
+2. 异常和文件处理
+
+* 异常处理
+
+
+    KeyError
+    ValueError
+    AttributeError
+    NameError
+    TypeError
+    IOError
+
+
+
+
+3. how to 'Import Python Modules'
+
+from mod import sth. vs import mod (then use mod.sth to use sth. inside mod)
+
+import 模块的方式：
+* import X
+
+在当前的namespace中创建一个对X模块的引用，当需要调用X中的方法a时，以X.a方式
+进行。
+* from X import *
+
+在当前namespace中导入X模块X，创建对模块X中所有public objects的引用，所谓public
+即不是以\_\_开头的方法。对模块中方法a的引用可以以a()的方式(X.a的调用方式无法起作用)。
+如果在当前namespace中定义了方法a，则模块X中的a会被覆盖掉。如果a方法在模块X中被改变
+则当前namespace无法获知。
+
+* from X import a, b, c
+
+导入模块X，对a，b，c创建引用，在当前namespace可以调用a，b，c对象。
+* X = __import__('X')
+
+导入模块X，并为模块X创建一个新的引用X，在当前namespace中为X模块创建新的名称。模块
+的导入以字符串的形式作为参数传递给__import__对象。
+
+>>What Does Python do to Import a Module?
+[[http://www.effbot.org/zone/import-confusion.htm]] 
+>> When Python imports a module, it first checks the module registry (sys.modules)
+   to see if the module is already imported. If that’s the case, Python uses the 
+   existing module object as is.
+Otherwise, Python does something like this:
+    Create a new, empty module object (this is essentially a dictionary)
+    Insert that module object in the sys.modules dictionary
+    Load the module code object (if necessary, compile the module first)
+    Execute the module code object in the new module’s namespace. All variables 
+    assigned by the code will be available via the module object.
+
+

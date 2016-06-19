@@ -1,0 +1,4 @@
+# 删除重复的数据保留最小id的数据 sqlite
+
+    DELETE FROM tbl WHERE id NOT IN (SELECT min(id) FROM tbl GROUP BY (col1, col2));
+

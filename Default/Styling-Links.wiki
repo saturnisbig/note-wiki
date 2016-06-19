@@ -1,0 +1,48 @@
+# Styling Links
+
+You will learn:
+- Ordering your link selectors based on cascade
+- Creating stylized link underline
+- styling external links using attribute selectors
+- Making links behave like buttons
+- Creating visited-link styles
+- Creating pure CSS tooltips
+
+
+## Simple link styling
+pseudo-class:
+  :link
+  :visited
+  :hover
+  :active
+
+the order of selector will effect the result, ?
+LoVe, HAte
+
+### Fun with underlines
+通过设置链接的border来提高访问性？
+
+### Fancy link underlines
+用图片作为链接的背景图片，链接下划线
+
+## Highlighting different types of link
+如何区别站内链接和站外链接？
+通过标识出站外链接来提示访问者。可以使用属性选择器。
+
+    a[href^="http:"] {
+      background: url(images/externalLink.gif) no-repeat right top;
+    }
+    a[href^="mailto:"] {
+      ...
+    }
+
+### Highlighting downloadable documents and feeds
+通过属性选择器来实现提示用户可下载文件，
+
+    a[href$=".pdf"] {
+      background: url(images/pdfLink.gif) no-repeat right top;
+      padding-right: 10px;
+    }
+
+## Creating buttons and rollovers
+

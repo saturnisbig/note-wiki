@@ -1,0 +1,17 @@
+# Install mongodb on Ubuntu
+
+
+    $sudo apt-get install mongodb
+    
+
+
+安装好后一些文件的位置：
+
+  配置文件在:/etc/mongodb.conf
+  启动脚本文件:/etc/init.d/mongodb
+  日志文件: /var/log/mongodb.log
+如何控制
+  $sudo service mongodb start
+  $sudo service mongodb stop
+  $sudo service mongodb restart
+  $mongo

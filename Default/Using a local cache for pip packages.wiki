@@ -1,0 +1,11 @@
+
+# 使用pip 安装的时候非常慢
+
+设置pip缓存，安装的时候如果缓存存在就使用已经下载的缓存文件。
+在.bashrc或.zshrc中做如下设置：
+
+    alias pipcache='pip install --download ${HOME}/.pip-packages'
+    alias pipinstall='pip install --no-index --find-links=file://${HOME}/.pip-packages/'
+    $pipcache Django==1.5 # Put Django-1.5.tag.gz in cache file
+    $pipinstall Django--1.5 # install cache Django file
+    

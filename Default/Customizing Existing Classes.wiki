@@ -1,0 +1,38 @@
+# Customizing Existing Classes
+
+2014-03-04 18:50:57
+2014-03-04 19:21:06
+30m
+2014-03-04 21:00:28
+2014-03-04 21:34:17
+30m
+60m
+
+## Avoid Category Method Name Clashes
+
+如果你定义的category里，方法的名字和original class里的一样或者是
+同一个类的不同category里，那么调用这个方法的behavior是undefined。
+
+如果你定义的category里，方法的名字在后期original class新的release里
+定义了的话，那么同样方法调用的behavior同样是undefined。
+
+所以为了避免这些情况出现，最好的方法就是在category的method中添加前缀。
+
+## Class extensions extend the internal implementation
+
+与category有点类似，但是只能在你有source code的情况下才能用extend。
+
+## Use class extensions to hide private information
+
+It’s not uncommon to have two header files for a class, for example,
+such as `XYZPerson.h` and `XYZPersonPrivate.h`. When you release the 
+framework, you only release the public `XYZPerson.h` header file.
+
+
+## Consider other alternatives for class customization
+
+use `delegate`
+
+## Interact directly with the Objective-C runtime
+
+*exercise 2 not done yet.*

@@ -1,0 +1,20 @@
+= Zend Framework Env config =
+  * Apache
+  * Others
+  
+  == Apache ==
+  * turn on the rewrite engine for dir under the web-root 
+    # edit the httpd.conf @/etc/apache2/, add these lines there
+      the reference page are here [http://httpd.apache.org/docs/2.0/mod/core.html#directory Directory_Intro]
+      <Directory /var/www/*>
+      AllowOverride All
+      </Directory>
+    # write a .htaccess file under your site public dir
+      RewriteEngine on
+      RewriteBase /your/site
+      RewriteRule !\.(js|ico|txt|gif|jpg|png|css)$ index.php
+      php_flag magic_quotes_gpc off
+    # test whether your rewrite engine work
+      This article in zend devzone describe how to test your settings [http://devzone.zend.com/node/view/id/70]
+    
+    

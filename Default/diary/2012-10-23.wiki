@@ -1,0 +1,25 @@
+## Assignments, Expressions, and Prints
+
+### Assignment Statements
+
+#### Assignment Statement Forms
+
+1. Tuple, and unpack-list assignment.
+
+        a, b = 'spam', 'eggs'
+        [a, b] = [1, 2]
+
+2. Sequence assignment.
+3. Extended Sequence unpacking. (Python 3.0)
+4. Multiple-target assignments.
+5. Augmented assignments.
+
+##### Variable Name Rules
+
+* Nameing conventions.
+
+### Expression Statements
+
+### Print Statements
+
+

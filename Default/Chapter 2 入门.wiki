@@ -1,0 +1,56 @@
+= 安装 =
+
+== Django 安装 ==
+
+* 安装官方发布版本
+  下载最新的安装包，解压，运行自带的安装脚本。
+  {{{
+  $tar xzvf Django-*.tar.gz
+  $cd Django-*
+  $sudo python setup.py install
+  }}}
+  通常，Django就会被安装到你的Python安装目录的site-packages目录下。
+  一般在/usr/lib/python2.7/site-packages目录下。在Ubuntu下，此目录一般为
+  /usr/local/lib/python2.7/site-packages/目录。
+* 安装Trunk版本
+  {{{
+      $svn co http://code.djangoproject.com/svn/django/trunk djtrunk
+      $touch /usr/lib/python2.7/site-packages/django.pth
+      $echo /home/teddy/sourcecode/djtrunk > /usr/lib/python2.7/site-packages/django.pth
+      $vim ~/.bashrc
+      Add the follow code to the .bashrc file.
+        export PATH=$PATH:/home/teddy/sourcecode/djtrunk/django/bin
+  }}}
+  _Anything about .pth can see here:_
+  _http://www.djangoproject.com/r/python/site-module/_
+* 测试安装是否成功
+  {{{
+      >>> import django
+      >>> django.VERSION
+      (1, 1, 0, finale', 1)
+  }}}
+  
+== 安装数据库 ==
+
+  django 默认支持四种数据库，PostgreSQL MySQL SQLite3 Oracle。
+  以上四种数据库的安装及配置请参见其他材料，除了机器上要安装想用的数据库外，为了
+  让Django能够使用，还需安装相对应的python支持。
+
+== 开始项目 ==
+
+  {{{
+      $django-admin.py startproject yourprojectname
+      $cd yourprojectname
+      $python manage.py runserver (port number)
+  }}}
+  The default ip and port is: 127.0.0.1:8000. Put this in your browser, and you can
+  see the default Django welcome page.
+  *FileStructure*
+    yourprojectname/
+      __init__.py
+      settings.py
+      urls.py
+      wsgi.py
+    manage.py
+  
+== 接下来做什么 ==

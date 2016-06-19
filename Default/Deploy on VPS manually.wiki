@@ -1,0 +1,121 @@
+# 部署代码
+
+- 帐号设置，SSH，权限
+
+确保VPS支持SSH登录，然后通过`ssh root@yourhost`登录VPS，进行如下操作：
+
+        $ useradd -m -s /bin/bash john # add user named john
+        # -m creates a home folder, -s sets john to use bash by default
+        $ usermod -a -G sudo john # add john to the sudoers group
+        $ passwd john # set password for john
+        $ su - john # switch-user to being john
+
+- 安装Nginx
+
+        john@server:$ sudo apt-get install nginx
+        john@server:$ sudo service nginx start
+
+        john@server:$ sudo apt-get install git python-pip
+        john@server:$ sudo pip install virtualenv
+
+- 域名适配staging和live
+
+在域名配置文件中，分别设置A记录，一个是`staging.yourdomianname`，
+另一个是`yourdomianname`，两个都指向你服务器的IP地址。
+
+- 手动部署代码
+
+项目的文件结构图。
+
+调整数据库的位置
+
+修改yqrelax/settings.py的内容：
+        [...]
+        
+        DATABASE = {
+          'default': {
+            'ENGINE': 'django.db.backends.sqlite2',
+            'NAME': os.path.join(BASE_DIR, '../database/db.sqlite3'),
+          }
+        }
+        
+        [...]
+        STATIC_ROOT = os.path.join(BASE_DIR, '../static')
+
+根据项目文件结构图，创建相关文件、文件夹：
+        john@server:$ export SITENAME=staging.yourdomainname
+        john@server:$ mkdir -p ~/sites/$SITENAME/database
+        john@server:$ mkdir -p ~/sites/$SITENAME/static
+        john@server:$ mkdir -p ~/sites/$SITENAME/virtualenv
+        john@server:$ git clone your-codebase-address@github-or-bitbucket \
+                      ~/sites/$SITENAME/source
+
+创建Virtualenv
+
+当前位置：VPS上的/home/john/sites/staging.yourdomain/source
+        john@server:$ virtualenv ../virtualenv  # use --python=python3 if you
+        # want to use python3
+        john@server:$ ../virtualenv/bin/python manage.py runserver
+
+
+配置Nginx
+
+    server {
+      listen 80;
+      server_name SITENAME;
+    
+      location /static {
+        alias /home/teddy/sites/SITENAME/static;
+      }
+    
+      location / {
+        proxy_set_header Host $host;
+        proxy_pass http://unix:/tmp/SITENAME.socket;
+      }
+    }
+        john@server:$ echo $SITENAME
+        john@server:$ sudo ln -s /etc/nginx/site
+
+- 为生产部署做准备
+
+使用gunicorn
+
+安装与使用(目前所在位置为/home/john/sites/youdomain/source/)：
+        john@server:$ ../virtualenv/bin/pip install gunicorn
+        john@server:$ ../virtualenv/bin/gunicorn project.wsgi:application
+
+
+配置Nginx使支持Static files
+
+将static文件归位，以便Nginx能够找到:
+        john@server:$ ../virtualenv/bin/python manage.py collectstatic --noinput
+        john@server:$ ls ../static/
+在配置文件中加上下面的内容：
+        [...]
+        location /static {
+          alias /home/john/sites/yourdomain/static;
+        }
+        [...] 
+然后重新加载Nginx，重启gunicorn
+        john@server:$ sudo service nginx reload
+        john@server:$ ../virtualenv/bin/gunicorn project.wsgi:application
+
+
+使用Unix sockets
+
+为了能够在同一台VPS上设置staging和live站点，必须使用Unix domain socket来让
+Django和gunicorn通信，相关设置见上面。
+
+
+Django配置文件设置--DEBUG和ALLOWED_HOSTS
+
+将Django项目配置文件中的DEBUG值设为True，
+在ALLOWED_HOSTS中设置['staging.yourdomain']
+
+通过upstart设置gunicorn开机自启动
+
+配置文件详见/home/teddy/tpl/deploy_tools/gunicorn.template.conf，将
+该文件复制到`/etc/init/`文件夹下
+
+将gunicorn添加到requirements.txt文件中
+

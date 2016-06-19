@@ -1,0 +1,66 @@
+参考的文章：
+[Git错误non-fast-forward后的冲突解决](http://blog.csdn.net/chain2012/article/details/7476493)
+
+问题描述：
+
+    $git push origin master
+    To ../remote/  
+     ! [rejected]        master -> master (non-fast forward)  
+    error: failed to push some refs to '../remote/'  
+
+运行上述命令提交代码到github上的时候出现的提示。原因是
+代码仓库中的代码已经有人做了新的push，这样为了避免losing commits，
+github拒绝你commit。
+
+解决办法有两种：
+
+1. 强推，用你本地的代码替代git仓库内的内容
+
+    $git push -f
+
+2. 先把仓库的东西fetch到本地，然后merge，最后push
+
+    $git fetch
+    $git merge
+
+or
+
+    $git pull
+
+但是这样之后会出现下面的问题：
+
+    $git pull
+    You asked me to pull without telling me which branch you want to merge with,
+    and 'branch.master.merge' in your configuration file does not tell me, either.
+    Please specify which branch you want to use on the command line and try again(
+    e.g. 'git pull <repository> <refspec>').
+    See git-pull(1) for details.
+
+    If you often merge with the same branch, you may want to use something like the
+    following in your configuration file:
+        [branch "master"]
+        remote = <nickname>
+        merge = <remote-ref>
+        
+        [remote "<nickname>"]
+        url = <url>
+        fetch = <refspec>
+
+    See git-config(1) for details.
+
+上面出现的 [branch "master"]是需要明确(.git/config)如下的内容
+
+    [branch "master"]
+    remote = origin
+    merge = refs/heads/master
+    
+这等于告诉git2件事:
+1. 当你处于master branch, 默认的remote就是origin。
+2. 当你在master branch上使用git pull时，没有指定remote和branch，那么git就会采用默认的remote（也就是origin）来merge在master branch上所有的改变
+
+如果不想或者不会编辑config文件的话，可以在bush上输入如下命令行：
+
+    $ git config branch.master.remote origin  
+    $ git config branch.master.merge refs/heads/master 
+    
+之后再重新git pull下。最后git push你的代码吧。it works now~

@@ -1,0 +1,67 @@
+
+[[production-env-configure]]
+[[TDD-Python]]
+
+[[Writing your first Django app-Part3]]
+[[Chapter 1 介绍]]
+[[Chapter 2 入门]]
+[[Chapter 3 视图和URL配置]]
+[[Chapter 4 模板]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 8: Advanced Views and URLconfs]]
+[[Chapter 9: Advanced Templates]]
+[[Chapter 10: Advanced Models]]
+[[Chapter 14: Sessions User Registration]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+[[Chapter 1 Intro]]
+
+- [[重设管理员账号]]
+* [[Custom Managers]]
+* [[Forms]]
+
+* [[Django-URL的设置]]
+* [[Django-Model的编写]]
+* [[Django-View的编写]]
+* [[Django-分页]]
+* [[Django-自定义模板标签]]
+* [[fetch code与代码高亮]]
+
+## Chapter 03
+Start: 2014-01-26 22:56:00
+End:   2014-01-26 23:42:17
+
+## Chapter 04
+Start: 2014-02-05 09:53:07
+End-01: 2014-02-05 10:20:34
+2014-02-05 11:00:14
+2014-02-05 11:42:00
+
+2014-02-06 10:55:11
+2014-02-06 11:09:08
+
+## Chapter 05
+Start: 2014-02-06 11:11:50
+2014-02-06 11:30:54
+
+2014-02-06 15:44:59
+2014-02-06 16:52:40
+
+## chapter 06
+Start: 2014-02-06 17:27:50
+2014-02-06 17:51:55(30%, 24min)
+
+2014-02-08 20:09:20
+2014-02-08 21:18:53(1h9min)
+
+## Chapter07
+Start: 2014-02-08 22:37:36
+       2014-02-08 23:25:40(48min)
+
+2014-02-09 14:51:14
+2014-02-09 15:49:01(58min)

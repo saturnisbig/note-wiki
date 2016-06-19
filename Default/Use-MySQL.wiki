@@ -1,0 +1,38 @@
+# 在ubuntu中配置Django可用的MySQL
+
+- 安装mysql及相关设置
+
+    sudo apt-get install mysql-server mysql-client
+
+Mysql的配置文件一般在`/etc/mysql`目录下的`my.cnf`文件中，设置mysql
+中文utf8的方法如下：
+
+    [client]下添加default-character-set=utf8
+    [mysqld]下添加character-set-server=utf8
+    [mysql]下添加default-character-set=utf8
+
+设置完后，`sudo service mysql restart`重启加载新的配置文件，
+然后登录mysql通过命令`show variables like 'char%'`查看是否设置成功。
+
+- 安装mysql-python
+
+需要在Ubuntu下先安装：
+
+    apt-get install python-setuptools
+    apt-get install libmysqld-dev
+    apt-get install libmysqlclient-dev
+    apt-get install python-dev
+
+然后通过pip来安装mysql-python
+
+    sudo apt-get install mysql-python
+
+打开python交互窗口，检验是否安装成功：
+
+    import MySQLdb
+
+没报错说明安装成功。
+
+- 设置Django使用MySQL
+
+

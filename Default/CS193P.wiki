@@ -1,0 +1,33 @@
+# CS 193P
+
+## [[193P-Lesson3]]
+
+## [[193P-Lesson4]]
+
+## [[193P-Lesson5]]
+
+- Lecture 2 Slides
+
+start: 2014-02-27 22:06:46
+  end: 2014-02-27 22:27:14
+ cost:
+
+if both do `setter` and `getter`, then you have to add `@synthesize`.
+
+Demo:
+2014-02-27 22:44:33 
+
+- Lecture 3 Slides
+
+2014-03-06 20:22:30 
+2014-03-06 21:13:06
+45m
+ 
+2014-03-06 21:28:06
+2014-03-06 22:28:15
+1h
+
+- Assigment 1
+2014-03-08 22:22:10
+2014-03-08 23:06:33
+50m

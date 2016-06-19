@@ -1,0 +1,20 @@
+## 193P-Lession 3
+
+
+start: 2014-02-19 21:08:45
+  end: 2014-02-19 22:26:45
+ cost: 1h18m
+
+
+weak
+an array has a strong pointer that point to any objects in it.
+
+When designate your initializer, you must call your super's
+designate initializer.
+
+When define your convenient initializer, you call your designate initializer.
+
+MVC
+Xcode
+Basic Objective-C
+

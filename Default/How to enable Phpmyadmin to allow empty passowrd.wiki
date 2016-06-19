@@ -1,0 +1,8 @@
+
+修改配置文件：
+/user/share/phpmyadmin/libraries/config.default.php
+原始配置：
+  $cfg['Servers'][$i]['nopassword']=false;
+  $cfg['Servers'][$i]['AllowNoPassword']=false;
+  把false 修改为true，同时将$cfg['Servers]'[$i]['password']='';
+

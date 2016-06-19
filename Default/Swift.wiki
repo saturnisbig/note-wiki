@@ -1,0 +1,16 @@
+
+Function
+
+- Collection
+
+如果数组或字典被赋值给constant，那么都会变成不可改变的。
+不能向二者添加值，改变collection的size，不能修改字典的
+key所对应的value，但是数组可以修改已经存在的某个index
+的值。
+
+*In-Out parameters*
+
+允许传入函数的参数的值被修改，在传入参数时加上`&`
+
+- [[Class And Structure]]
+- [[Properties]]

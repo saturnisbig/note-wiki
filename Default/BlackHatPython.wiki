@@ -1,0 +1,4 @@
+# Black Hat Python - Python programming for hackers and pentesters
+
+- [[Setting up your python enviroment]] 
+2015-09-15 23:13:28 -

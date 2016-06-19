@@ -1,0 +1,20 @@
+### 介绍class-based views
+
+阅读内容
+
+2016-06-14 20:40:56 - 2016-06-14 20:58:25
+
+https://docs.djangoproject.com/en/1.9/topics/class-based-views/generic-display/
+
+https://docs.djangoproject.com/en/1.9/topics/class-based-views/intro/
+
+https://docs.djangoproject.com/en/1.9/topics/class-based-views/intro/
+
+
+
+
+做笔记
+
+
+
+不需要通过条件判断来

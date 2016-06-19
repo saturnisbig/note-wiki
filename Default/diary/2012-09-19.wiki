@@ -1,0 +1,23 @@
+# Python descriptor and sqlalchemy basic
+
+
+
+difference between 'group by' and 'having'
+python descriptor?
+
+
+## sqlalchemy
+
+create_engine
+
+declarative_base
+
+table
+column, integer
+
+
+metadata
+mapper
+relationship
+backref
+func

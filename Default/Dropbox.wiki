@@ -1,0 +1,16 @@
+
+# backup file @vps
+
+- Install Dropbox via command line
+
+32-bit:
+
+        $cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86" | tar xzf -
+
+64-bit:
+
+        $cd ~ && wget -O - "https://www.dropbox.com/download?plat=lnx.x86_64" | tar xzf -
+
+运行:
+
+        $~/.dropbox-dist/dropboxd &

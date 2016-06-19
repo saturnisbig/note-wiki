@@ -1,0 +1,7 @@
+# MySQL select next or prev of current row
+
+* select the next and previous row of current row.
+    pre:
+      SELECT * FROM tb WHERE id = (SELECT max(id) FROM tb WHERE id < currentId)
+    next:
+      SELECT * FROM tb WHERE id = (SELECT min(id) FROM tb WHERE id > currentId) 

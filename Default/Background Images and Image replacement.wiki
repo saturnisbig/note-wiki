@@ -1,0 +1,28 @@
+# Background images and image replacement
+06/06/12 20:13:31 
+这章会学到如下内容：
+* Fixed-and flexible-width rounded-corner boxes
+* The sliding doors technique
+* Mountaintop corners
+* CSS drop shadows
+* PNG transparency support for IE5.x and above
+
+## Background image basics
+
+    background: color url(image-location) repeat repeat-x repeat-y 
+    no-repeat cor();
+
+## Rounded-corner boxes
+
+### Fixed-width rounded-corner boxes
+
+### Flexible rounded-corner box
+
+*sliding doors technique*
+
+### Mountaintop corners
+
+06/06/12 21:57:23 
+
+
+

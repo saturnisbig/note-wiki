@@ -1,0 +1,40 @@
+
+
+https://developer.apple.com/library/ios/referencelibrary/GettingStarted/RoadMapiOS/AppDevelopmentProcess.html#//apple_ref/doc/uid/TP40011343-CH4-SW1
+
+
+1. Define the Concept
+应用的使用者是谁？
+应用有什么作用？
+你的App能够解决什么问题？
+你的App要如何运作？（呈现给用户什么内容，如何互动，设计UI来达到这个目的。）
+
+1-2. Objects通过message沟通
+一个对象和另一个对象沟通是通过调用那个对象的一个方法
+
+1-3. Protocol（协议）
+A protocol defines a set of behavior that's expected of an object in a give sistuation.
+
+2. Defining the Interaction
+Controller: 相应用户的行为，生成内容在View中。
+Action: 与App上某些事件相关联的代码
+Outlet: 用于将IB上"元素"跟代码中定义的property关联起来，以便在代码中控制
+
+Start: 2014-02-16 22:26:34
+  End: 2014-02-16 23:45:59
+ Cost: 1h19m
+ 
+
+## Implementing an App
+
+### Incorporating the Data
+
+Target-Action
+
+### Tutorial: Add Data
+
+start: 2014-02-19 12:40:46
+  end: 2014-02-19 13:11:28
+ cost: 30m
+
+

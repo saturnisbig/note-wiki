@@ -1,0 +1,9 @@
+
+产生：通过`virtualenv`环境下的pip升级Django时提示
+`ImportError: No module named _sysconfigdata_nd`，升级未成功。
+
+原因：Ubuntu系统本身的一个bug[_sysconfigdata_nd.py missing in /usr/lib/python2.7/](https://bugs.launchpad.net/ubuntu/+source/python2.7/+bug/1115466)
+解决方法：
+
+    $ sudo ln -s /usr/lib/python2.7/plat-i386-linux-gnu/_sysconfigdata_nd.py /usr/lib/python2.7/
+

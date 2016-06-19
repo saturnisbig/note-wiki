@@ -1,0 +1,5 @@
+Python
+
+replace marked substr with the words in a dic obj.
+
+add pagination to admin page.

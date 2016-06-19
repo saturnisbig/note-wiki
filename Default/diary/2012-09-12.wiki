@@ -1,0 +1,20 @@
+# Python date operation
+  
+time.time()
+time.localtime()
+time.strftime()
+time.strptime()
+
+string.find()
+
+time:
+%d days in decimal [01, 31]
+%m month in decimal [01, 12]
+%Y year with centry [2012]
+%a weekday abbreviation Mon, Tue, Wen
+%b month abbreviation Jan, Feb, Sep etc.
+
+## CSS
+common bugs
+
+double-margin float bug IE6 and below  display: inlinep;

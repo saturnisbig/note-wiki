@@ -1,0 +1,23 @@
+# Virtualenv and Virtualenvwrapper
+
+## virtualenv
+
+- 创建一个纯净的工作环境
+
+    $virtualenv --no-site-packages <env_name>
+    $source <env_name>/bin/activate
+
+就算是进入新建的工作环境了
+
+
+## virtualenvwrapper
+
+- 安装
+
+    $pip install virtualenvwrapper
+
+    安装好后，要简单配置，设置独立环境的保存路径:
+    $export WORKON_HOME=~/envs
+    $mkdir -p $WORKON_HOME
+    $source /usr/local/bin/virtualenvwrapper.sh
+

@@ -1,0 +1,17 @@
+## 过滤评论
+
+有两种方法可以来对评论进行简单的处理，防止垃圾(spam)评论：
+
+1. `django.contrib.comments`定义的评论model中有一列`is_public`用来表示
+   评论对外是否可见。
+2. 使用垃圾评论检测系统，Akismet
+
+如何使用上述两种方法：
+
+1. 在django定义的评论model中定义自己的`save()`方法，进行过滤
+2. 在view中写自己的
+
+以上两种方式存在一定的drawback，可以通过使用`signals`和`Django dispatcher`来
+解决：
+
+

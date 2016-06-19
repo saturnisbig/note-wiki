@@ -1,0 +1,34 @@
+
+# sheng
+stevedore.extension Could not load 'user_scripts': distribute
+stevedore.extension Could not load 'project': distribute
+stevedore.extension Could not load 'user_scripts': distribute
+
+    $sudo pip install --upgrade virtualenv virtualenvwrapper
+
+
+
+### Recursively delete directory like '.git', '.svn', '.repo'
+
+    find -name '*.git' | xargs rm -rf
+
+- How to skip kernel update
+在使用华为云主机的时候，update的时候提示不要更新kernel，不然会破坏云架构
+于是找的不更新kernel的方案。see(How tp skip kernel update)[http://askubuntu.com/questions/178324/how-to-skip-kernel-update]
+
+
+    echo $(dpkg -l "*$(uname -r)*" | grep image | awk '{print $2}') hold | dpkg --set-selections
+
+
+## iBus输入法图标无法显示
+
+方法1：
+
+    gconftool -- type boolean -s /desktop/ibus/panel/show_icon_on_systray true
+    gconftool -- type boolean -s /desktop/ibus/panel/show true
+    gsettings set com.canonical.Unity.Panel systray-whitelist "['all']"
+
+方法2：
+
+    $killall ibus-daemon
+    $ibus-daemon -d

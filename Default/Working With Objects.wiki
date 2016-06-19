@@ -1,0 +1,27 @@
+## Working With Objects
+
+start: 2014-03-03 12:44:59 
+  end: 2014-03-03 13:10:43 
+ cost: 26m
+
+- Objects send and Reveive Messages
+ 
+
+- Use Pointers to Keep Track of Objects
+
+- You can pass Objects for Method Parameters
+
+- Method can return Values
+
+- Object can send messages to themselves
+
+- Objects can call method implemented by their superclasses
+
+- Objects are created dynamically
+
+- Initializer methods can take arguments
+
+### exercise
+2014-03-03 18:40:51
+2014-03-03 19:13:02
+33m

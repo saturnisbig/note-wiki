@@ -1,0 +1,14 @@
+# Automate Deployment
+
+### Install fabric
+
+'fabric'，一个让你将服务器上的命令自动化的工具
+
+    $ sudo pip install fabric
+    $ fab function_name, host=SERVER_ADDRESS
+
+### Breakdown of a Fabric script for our Deployment
+
+创建`deploy_tools/fabfile.py`文件，添加如下内容：
+
+    from fabric.contrib.files import 

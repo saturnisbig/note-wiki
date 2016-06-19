@@ -1,0 +1,46 @@
+# if Tests and Python Syntax Rules
+
+## if Statements
+format:
+  if 1:
+    print 1
+  elif 2:
+    print 2
+  else:
+    print 3
+
+
+## Python Syntax Rules
+
+### Block Delimiters: Indentation Rules
+block is delimited by indentation--the empty space to the left of your code.
+
+#### Statement Delimiters: Lines and Continuations
+usually line break with line change.
+if one line is too long to end in a line: 
+1. 结束符，如果这行是因为()，[], {}等符号只要在最后一行补全缺少的符号即可。
+2. 在行的末尾加 '\'。但是这可能存在一个问题：
+
+        x = 2 + 3 + 1 \ # 如果行后的'\'被忽略了，语法并不会报错，但是逻辑上出错。
+            + 4         
+3. 跨多行的字符，以"""开头和结束的字符串可以多行。
+4. 在statement后加';'的情况。
+
+#### A Few Special Cases
+
+### Truth Tests
+dfjsl
+
+
+### The if/else Ternary Expression
+
+
+
+
+
+
+Python's syntax: "What you see is what you get."
+
+
+### Other knowledge
+Python decorator.

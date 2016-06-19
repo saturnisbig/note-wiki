@@ -1,0 +1,40 @@
+# while an for Loops
+
+## while Loops
+
+### General Format
+while format:
+
+    while <test>:
+        <statement1>
+    else:
+        <statement2>
+
+### break, continue, pass and the Loop else
+
+*break*:jump out of the closest enclosing test
+*continue*: jump to the top of the loop, ignore all the rest statement inside.
+*pass*: placeholder,
+*Loop else block*: run only if the loop exited normally(without hitting a break.)
+
+## for Loops
+
+### General Format
+
+    for <target> in <object>:
+        <statements>
+    else:
+        <statements> 
+        
+
+
+## Loop Coding Techniques
+for loop is simpler to code and quicker than while to run.
+
+*Difference between 'for' and 'while'*:
+for iterate through the item in a sequence?
+while is just a repeation
+*Difference between 'break' and 'continue'*:
+break get out of the loop imediatelly, continue just get out of the loop one time.
+
+*generator object*: a kind of object that supports the iteration protocol.

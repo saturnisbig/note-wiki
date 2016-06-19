@@ -1,0 +1,50 @@
+ssh登录后执行了`php /root/Vagex.AllInOne.php`，为了能在后台运行，
+最好是安装tmux，然后启动tmux，在tmux里面运行上面的命令，然后
+按Ctrl+b，后按D即可将进程归入后台执行，下次登陆只要执行命令
+`tmux attach`，即可返回到先前执行的程序上。
+
+
+Vagex 如果没有号的话可以去淘宝购买或者等待复活节开放注册。
+
+每日限制的 3000 视频每个号两台机器基本可以挂满。
+
+MICRO-64
+64M内存
+1.5G SSD硬盘
+100G流量
+G口
+年付3.99美元
+http://dwz.cn/banwagong
+
+Vagex Robot 为@horsley 的作品，特此感谢。
+
+配置：
+1.到 http://126.am/OQ6yM0 下载 VagexRobot.AllInOne.php 并保存到 /root 下
+2.执行如下命令：
+apt-get update && apt-get install php5-cli -y && apt-get install curl libcurl3 libcurl3-dev php5-curl -y && apt-get install screen -y && screen -S vagex
+
+php /root/VagexRobot.AllInOne.php
+3.查看： screen -r vagex 
+
+Vagex 比率：
+Vagex固定在北京时间 14:10 更改比率。从 2 月的新规以后，比率已经不是每日更新的了。 Vagex 官方现在已经规定最高比率在 (=35000 credit （实际上挂机 50 天之后，基本浏览视频数足以升级到 3 星会员， 3 星会员的汇率在 (= 29750 credit 左右）
+      
+      对于现在的比率，个人推测可能会是平时维持最高比率，在每个月的20号促销之后，会有低一些的比率。
+      
+      但是个人建议，现在的最高汇率其实就可以提款。
+      
+      Vagex 提款：
+      Vagex 的提款地址 http://vagex.com/members/exchange.php 要求提款邮箱必须是 Paypal 帐号的首要邮箱（paypal 可以绑定8个邮箱，可以设定一个邮箱为首要邮箱），所以提款前查询 Paypal 网站 https://www.paypal.com/us/verified/pal=你的提款邮箱 
+      
+      多号收款如果注意了首要邮箱单一 Paypal 账户也一般没有问题。
+      
+      Paypal 查询页面上两个邮箱都与你的提款邮箱都一样才可以验证成功。如果验证失败，VG网站会显示 UNVERIFY 点数会在一周内退回。
+      
+      Vagex 发款的时间现在不那么稳定，基本在周五--下周三 之间浮动，除了20号的促销（可能会延迟一周），基本上每周都会发款一次。 提款时间建议在周五之前。
+      
+      单号理论收益：
+      成本：约{))
+   * 2(每日视频限额约需 2 台机器挂满) = $8
+     收益：约$0.2 （此处按照 ( = 20000 credit 汇率计算） * 365 = $73
+         利润：$65)
+

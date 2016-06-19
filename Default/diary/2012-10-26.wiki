@@ -1,0 +1,60 @@
+# Iterations and Comprehensions, Part 1
+*iterable*
+An object is considered iterable if it is either a physically stored sequence
+or an object that produces one result at a time in the context of an iteration
+tool like a 'for' loop.
+
+## Iterators: A First Look
+
+### The Iteration Protocol: File Iterators
+If an object has the '__iter__' attribute in an object, it's iterable?
+
+### Manual Iteration: itera and next
+
+
+## List Comprehensions: A First Look
+what is 'List Comprehensions'?
+
+    [x+10 for x in range(5)] # generate an new list 
+    # equal to below
+    res = []
+    for x in range(5):
+      res.append(x + 10)
+
+### List Comprehension Basic
+1. Written in square brackets.(a way to construct new list.)
+2. 工作原理
+
+### Using List Comprehensions on Files
+
+* more efficency.
+
+>For large file, the speed advantage of List Comprehension is significant.
+
+* remarkable expressive.
+
+### Extended List Comprehension
+
+    lines = [line.rstrip() for line in open('datafile.txt') if line[0] == 'p']
+    # equal to below code.
+    res = []
+    for line in open('datafile.txt'):
+      if line[0] == 'p':
+        res.append(line.rstrip())
+    lines = res
+    
+    # example 2
+    [x + y for x in 'abc' for y in 'lmn']
+    # equal to 
+    res = []
+    for x in 'abc':
+      for y in 'lmn':
+        res.append(x + y)
+
+### Other iteration Contexts
+*sorted*: sorts items in an iterable.
+*zip*: combines items from iterable.
+*enumerate*: pairs item in an iterable with relative positions.
+*filter*: select items for which a function is true.
+*reduce*: runs pairs of items in an iterable through a function.
+

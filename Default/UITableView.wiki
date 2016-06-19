@@ -1,0 +1,117 @@
+
+## Create a A-Z index
+
+[Create Indexed UITableView](http://www.iphonedevcentral.com/indexed-uitableview-tutorial/)
+
+- Create a data source
+
+get word from the file, store in a nsarray.
+create a nsmutabledictionary, letter as key, related word as value.
+return it.
+
+code in DataGenerator.h
+
+        @interface DataGenerator: NSObject {
+
+        }
+        + (NSArray *) wordsFromFile;
+
+
+        @end
+        
+        @implement DataGenerator
+        + (NSArray *) wordsFromFile {
+          NSMutableArray *content = [[NSMutableArray alloc] init];
+          NSString *docDir = [[NSBundle mainBundle] resourcesPath];
+          NSString *wordFilePath = [docDir stringByAppendingPathComponent:@"words.txt"];
+          NSFileManager *fm = [NSFileManager defaultManager];
+          if ([fm fileExistsAtPath: wordFilePath]) {
+            NSData *data = [fm contentsAtPath: wordFilePath];
+            // see http://stackoverflow.com/questions/7466162/how-to-convert-nsdata-to-nsarray-or-nsobject
+            NSArray *wordsFromFile = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+            if (wordsFromFile) {
+              NSString *letters = @"abcdefjhijklmnopqrstuvwxyz";
+              for (int i = 0; i < [letters length]; i++) {
+                char currentLetter = [letters characterAtIndex: i];
+                NSMutableArray *words = [[NSMutableArray alloc] init];
+                NSMutableDictionary *row = [[NSMutableDictionary alloc] init];
+                for ((NSString *)line in wordsFromFile) {
+                  NSArray *lineSplit = [line componentsSeparatedByString:@" "];
+                  NSString *word = [lineSplit objectAtIndex: 0];
+                  if ([word hasPrefix: currentLetter]) {
+                    [words addObject: word];
+                  }
+                }
+                [row setValue:[NSString stringWithCString:toupper(currentLetter)] forKey:@"headerTitle"];
+                [row setValue:words forKey:@"rowValues"];
+                [content addObject:row];
+              }
+            } else {
+              NSLog(@"convert data from file to NSArray error");
+            }
+          } else {
+            NSLog(@"word file not found, handle error here: %@", wordFilePath);
+          }
+          return content
+        }
+        @end
+
+
+
+- Fill in UITableView with values from DataGenerator
+
+在tableviewcontroller中添加实例变量：
+
+        #import "DataGenerator.h"
+        @interface RootViewController: UITableViewController {
+          NSArray *content;
+          NSArray *indices;
+        }
+        @end
+
+在.m文件中的viewDidLoad做如下修改：
+
+        - (void)viewDidLoad {
+          [super viewDidLoad];
+          content = [DataGenerator wordsFromFile];
+          indices = [[content valueForKey:@"headerTitle"] retain];
+        }
+        
+        - (NSInteger)numberOfSectionsInTableView:(UITableView *) {
+          return [content count];
+        }
+        
+        - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+            return [[[content objectAtIndex:section] objectForKey:@"rowValues"] count];
+          }
+        
+        - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowIndexPath:(NSIndexPath *)indexPath {
+          static NSString *cellIdentifier = @"cell";
+          UITableViewCell *cell = [tableView dequeueResuableCellWithIndentifier:cellIdentifier];
+          if (cell == nil) {
+            cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+          }
+          cell.textLabel.text = [[[content objectAtIndex:indexPath.section] objectForKey:@"rowValues"] objectAtIndex:indexPath.row];
+          return cell;
+        }
+
+
+
+- Add index to the table
+
+
+实现`sectionIndexTitlesForTableView`和`sectionForSectionIndexTitle`：
+
+        - (NSArray *)sectionIndexTitlesForTableView:(UITableView *)tableView {
+          return [content valueForKey:@"headerTitle"];
+        }
+        - (NSInteger)tableView:(UITableView *)tableView sectionForSectionIndexTitle:(NSString *)title atIndex:(NSInteger)index {
+          return [indices indexOfObject:title];
+        }
+
+为每个section添加title：
+
+        - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
+          return [[content objectAtIndex:section] objectForKey:@"headerTitle"];
+        }
+    

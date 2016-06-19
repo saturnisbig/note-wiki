@@ -1,0 +1,7 @@
+# 博客中使用markdown和Pygments实现语法高亮
+
+Ref:http://wiki.jikexueyuan.com/project/django-set-up-blog/markdown.html#38bbd995a790f5a67211e034b007c145
+
+
+
+你好，测试剪贴板

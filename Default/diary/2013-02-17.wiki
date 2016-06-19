@@ -1,0 +1,11 @@
+# Tkinter 和Android开发环境安装
+
+安装依赖：
+    sudo apt-get install python-tk python-pmw python-imaging
+
+* 安装Android开发环境
+
+必须先装java
+
+  sudo add-apt-repository ppa:webupd8team/java 
+  sudo apt-get install oracle-java7-installer

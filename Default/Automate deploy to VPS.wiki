@@ -1,0 +1,39 @@
+# Automating Deployment
+
+## 准备工作
+
+1. 拥有VPS帐号和home folder
+2. apt-get install git python-pip
+3. pip install virtualenv
+4. 添加Nginx虚拟主机配置文件
+5. 添加gunicorn的开机启动
+
+## 部署
+
+1. 在`~/sites`文件夹下创建部署文件结构
+2. Pull down source code into folder named `source`
+3. 启动`../virtualenv`下的`virtualenv`
+4. pip install -r requirements.txt
+5. 整合数据库
+6. 汇集static file
+7. 修改`settings.py`中`DEBUG`和`ALLOWED_HOST`的值
+8. 重启gunicorn
+9. 测试一切正常(如果有测试脚本的话)
+
+
+根据`deploy_tools/fabfile.py`做适当的修改，以适合自己的需要。
+然后执行下列命令进行部署(在本地电脑上)：
+
+        $ fab deploy:host=john@staging.yourdomain
+
+### 使用`sed`来配置Nginx和Gunicorn
+        john@server:$ sed "s/SITENAME/yourdomain/g" \
+          deploy_tools/nginx.template.conf | sudo tee \
+          /etc/nginx/sites-available/yourdomain
+        john@server:$ sudo ln -s /etc/nginx/sites-available/yourdomain \
+          /etc/nginx/sites-enabled/yourdomain
+        john@server:$ sed "s/SITENAME/yourdomain/g" \
+          deploy_tools/gunicorn.template.conf | sudo tee \
+          /etc/init/gunicorn-yourdomain.conf
+        john@server:$ sudo service nginx reload
+        john@server:$ sudo start gunicorn-yourdomain

@@ -1,0 +1,13 @@
+[[VimCloseAllTabs]]
+
+Restore session:
+
+$vim -S session.vim 
+or $vim and :source session.vim
+
+## Supertab和snipMate问题
+定义一个函数的时候，按tab会优先使用snipMate插件，但是如果函数有参数，
+就无法用tab进行补全。
+
+解决方法：在.vimrc中重新定义snipMate的trigger键，可以参考snipMate的
+说明文档。

@@ -1,0 +1,16 @@
+
+git目录信息
+
+branches/ #新版Git已经
+
+
+- error: RPC failed; result=22, HTTP code=411
+2014-03-13 21:47:46 
+这是因为git http请求缓存区太小导致，即push的文件太大，
+修改git配置文件.gitconfig，修改添加[http]项为524288000（50M）
+或你希望的大小。.gitconfig位于你的个人文件夹下，即'~/.gitconfig'，
+若不存在，新建一个即可，内容如下：
+
+    [http]
+      receivepack = true
+      postBuffer = 524288000

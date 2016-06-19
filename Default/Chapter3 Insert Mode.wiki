@@ -1,0 +1,45 @@
+
+- Tip 13: Make Corrections instantly from Insert Mode
+
+<C-h>：往回删除一个字符
+<C-w>：往回删除一个词，不包括空格
+<C-u>：从当前位置删除到行首
+
+- Tip 14: Get Back to Normal Mode
+
+`<Esc>`、`<C-[>`：返回Normal Mode
+`<C-o>`：返回到Insert Normal Mode，先执行single command
+
+- Tip 15: Paste from a Register Without Leaving Insert Mode
+
+Remap the Caps Lock key
+
+`yt,`、`jA `、`<C-r>0`、`<Esc>`
+`<C-r>0`：方便在插入模式下粘贴少数几个词，如果register里面
+包含许多文本的话，显示将会有延迟，如果有'textwidth'、'autoindent'
+设置的话，将会有额外的缩进
+
+`<C-r><C-p>{register}`：比较smarter
+
+- Tip 16: Do Back-of-the-Envelope Calculations in Place
+
+'expression register'：允许我们执行运算并将结果直接插入文档中。
+
+- Tip 17: Insert Unusual Characters by Character Code
+
+`<C-v>{123}`: 
+`<C-v>u{123}`: 
+`<C-v>{nondigit}`: 
+`<C-v>{char1}{char2}`: 
+
+- Tip 18: Insert Unusual Character by Digraph
+
+':h digraphs-default'
+':h digraph-table'
+
+- Tip 19: Overwrite Existing Text with Replace Mode
+
+`R`: replace from current place
+`gR`: virtual replace from current place
+
+'Overwrite Tab Characters with Virtual Replace Mode'

@@ -1,0 +1,14 @@
+
+
+- Convert An App
+
+如何转换数据库中已存在table的app：
+安装south，并在'settings.py'中启用app
+`python manage.py syncdb`将south table插入数据库
+`python manage.py convert_to_south myapp`
+
+如果你将代码提交到了代码库，其他人将代码pull之后，必须按如下操作：
+`python manage.py migrate myapp 0001 --fake`前提是必须保证model和
+schema是最新的，以上命令是告诉south，有些表在数据库中已经存在了。
+
+

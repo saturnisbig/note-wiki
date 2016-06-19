@@ -1,0 +1,8 @@
+how to use yield
+
+
+itertool module
+
+generator expression
+
+

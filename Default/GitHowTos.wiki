@@ -1,0 +1,21 @@
+= Git Recorded Howtos =
+
+* 修改已经commit的注释信息
+  $git commit --amend
+  修改最后一次提交的信息，对于历史的提交则需使用rebase
+  $git rebase -i HEAD~3
+  修改当前版本的倒数第三次状态。执行命令后会出现三个以"pick"开头的信息
+  修改想要更改commit信息的那条信息的pick为edit，保存退出。
+  运行$git commit --amend
+  就可以修改了。保存之后，为了回到原来的状态需要再运行：
+  $git rebase --continue
+
+* 已经把信息commit到远程服务器
+  {{{
+  $git push origin +master:master
+    }}}
+  进行强制更新.慎用
+  
+* [[How to remove git submodule]]
+* [[Git non-fast-forward errors]]
+* [[gitignore]]

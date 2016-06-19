@@ -1,0 +1,60 @@
+# Class and Structure
+
+- 类与结构体的共同点(structure)
+
+定义属性存储值
+定义方法
+定义subscript，提供访问值的subscript
+定义初始化，设置初始状态
+遵循协议，提供某些标准功能
+
+- 二者区别
+
+类允许继承
+类型映射，在运行时可以解析类的类型
+deinitializer
+reference counting
+
+- 定义语法
+
+        class VideoMode{
+            var resolution = Resolution()
+            var interlaced = false
+            var frameRate = 0.0
+            var name: String?
+        }
+
+        struct Resolution {
+            var width = 0
+            var height = 0
+        }
+        let someResolution = Resolution()
+        let someVideoMode = VideoMode()
+        // dot syntax to access properties
+        var width = someResolution.width
+        var height = someVideoMode.resolution.height
+        someVideoMode.resolution.width = 1280
+        
+Memberwise initializer for Structure type
+
+        let vga = Resolution(width: 640, height: 480)
+
+
+和枚举类型一样，结构体也是Value Types
+copied当赋值给一个变量或常量，或传递给函数的时候
+
+类似引用类型：
+
+- Identidy Operator
+
+`===`，`!==`用来确定两个变量是否指向同一实例
+"Identical to": 指向同一实例
+"Equal to": 值相等
+
+- 什么时候使用结构体、什么时候使用类？
+结构体用于对数据的封装，如地理坐标，图形的宽高，3D系统等
+类则用于用户需要的数据(custom data)
+
+- 字典和数组中赋值与拷贝
+
+

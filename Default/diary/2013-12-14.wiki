@@ -1,0 +1,9 @@
+# Chapter 4
+
+2013-12-14 00:06:42 
+
+Rules of unit test:
+
+* Don't test constants
+
+2013-12-14 01:02:31 

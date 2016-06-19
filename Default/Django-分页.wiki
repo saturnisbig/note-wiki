@@ -1,0 +1,75 @@
+= 分页的实现
+
+2016-06-16 06:21:20 - 2016-06-16 06:58:28
+
+
+Django官方介绍页面：
+
+[Paginator-分页](https://docs.djangoproject.com/en/1.9/topics/pagination/)
+
+=== 官方文档学习
+
+`Paginator`类的用法：
+
+    >>>from django.core.paginator import Paginator
+    >>>objects = ["john", "paul", "george", "ringo"]
+    >>>p = Paginator(objects, 2) # 接受list/tuple,QuerySet,实现`count`和`__len__`
+    >>>p.count # 总的个数
+    4
+    >>>p.num_pages # 页数
+    2
+    >>>p.page_range # 页码的范围，从1开始
+    range(1, 3)
+    >>>page1 = p.page(1) # 获取第一页对象
+    >>>page1.object_list # 第一页包含的
+    john', 'paul']
+    >>>page2 = p.page(2)
+    >>>page2.object_list
+    george', 'ringo']
+    >>>page2.has_next()
+    False
+    >>>page2.has_previous()
+    True
+    >>>page2.previous_page_number()
+    1
+    >>>page2.start_index() # 1-based index of the first item on this page
+    3
+    >>>page2.end_index()
+    4
+    >>>p.page(3)  # EmptyPage error
+
+
+在view中使用的方式：
+
+    from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+    from django.shortcuts import render
+
+    def listing(request):
+        contact_list = Contacts.objects.all()
+        paginator = Paginator(contact_list, 10)
+        
+        page = request.Get.get('page')
+        try:
+            contacts = paginator.page(page)
+        except PageNotAnInteger:
+            contacts = paginator.page(1)
+        except EmptyPage:
+            contacts = paginator.page(paginator.num_pages)
+        
+        return render(request, 'list.html', {"contacts": contacts})
+
+=== 博客中实现的功能
+
+在模板标签中实现分页的功能：
+
+- 首页、最后页都要显示
+
+- 当前页和当前页的前后2页，均需要显示，其他的以省略号显示
+
+
+##### 在templatetags中的逻辑实现
+
+
+##### 在模板文件中的逻辑实现
+
+

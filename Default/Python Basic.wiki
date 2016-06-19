@@ -1,0 +1,13 @@
+
+
+- Python不等于的表示法（2014-02-13 23:16:07 )
+ 
+可以使用'!='或者'<>'两种表示
+
+
+- Python unicode
+
+s.decode('utf-8'):将其他编码的字符串转换成unicode编码;
+s.encode('utf-8'):将unicode编码转换成其他编码的字符串;
+
+- [[File-Basic]]

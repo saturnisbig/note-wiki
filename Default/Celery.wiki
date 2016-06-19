@@ -1,0 +1,46 @@
+
+- Choosing a Broker
+
+选择一个Broker来传递消息，这里推荐用RabbitMQ
+
+    $sudo apt-get install rabbitmq-server
+
+- 安装Celery
+
+    $pip install celery
+
+- 开始使用
+
+创建任务文件：
+
+    task.py
+    from celery import Celery
+
+    app = Celery('tasks', broker='amqp://guest@localhost/'
+    
+    @app.tasks
+    def add(x, y):
+        return x + y
+
+运行
+
+    $celery -A proj worker -l info
+
+终止:
+- 如果程序是在前台运行，则通`Ctrl+c`来停止。
+- 程序在后台运行（作为守护进程）
+
+        $celery multi stop w1 -A proj -l info
+        $celery multi stopwait w1 -A proj -l info   # 等待worker退出
+        $celery multi restart w1 -A proj -l info    # restart
+
+## Celery和Django结合
+
+布局:
+
+    - proj/
+      - proj/__init__.py
+      - proj/settings.py
+      - proj/urls.py
+    - manage.py
+

@@ -1,0 +1,18 @@
+
+Programming is like pulling a bucket of water up from a well.
+
+When the well isn't too deep, and the bucket isn't very full,
+it's easy. And even lifting a full bucket is pretty easy at first.
+But after a while, you're get tired, TDD is like having a ratchet that
+let you save your progress, take a break, and make sure you never slip
+backwards.                   Kent Beck(who basically invented TDD)
+
+
+The more atomic your commits, the better.
+
+Refactor -- improve the code without changing the functionality.
+
+When refactoring, working on either the code or the tests, but not
+both at once.
+
+重构的时候，要么修改代码要么修改测试，但不要同时进行两项。

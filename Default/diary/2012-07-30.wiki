@@ -1,0 +1,11 @@
+python r'' use inside regular expression
+diff: "" and ''
+u''
+
+webpy:
+form.Form(
+   form.Textbox(),
+   form.Button(),
+   form.Textarea(),
+    )
+    

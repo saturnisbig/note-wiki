@@ -1,0 +1,7 @@
+# Django重设管理员账号
+
+    $python manage.py shell
+    $from django.contrib.auth.models import User
+    $user = User.objects.get(username='admin')
+    $user.set_password('new_password')
+    $user.save()

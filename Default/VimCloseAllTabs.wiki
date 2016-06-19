@@ -1,0 +1,6 @@
+
+user the command 
+  :qa -- close all tabs without saving
+  :wqa -- close all tabs saving before close
+  :tabo -- close all other tabs
+

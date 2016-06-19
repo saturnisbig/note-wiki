@@ -1,0 +1,50 @@
+# 支持Ckeditor
+
+项目地址：https://github.com/django-ckeditor/django-ckeditor
+
+- 安装
+
+    # use virtualenv
+    $ pip install django-ckeditor
+
+- 配置
+
+添加`ckeditor`到app中
+
+设置上传文件目录，在setting.py中做如下设置：
+
+    # 设置上传文件目录
+    MEDIA_URL = "/media/"
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+    CKEDITOR_UPLOAD_PATH = "article_images"
+    # 设置ckeditor在后台的显示
+    CKEDITOR_CONFIGS = {
+        'default': {
+            'toolbar': (
+                ['div','Source','-','Save','NewPage','Preview','-','Templates'],
+                ['Cut','Copy','Paste','PasteText','PasteFromWord','-','Print','SpellChecker','Scayt'],
+                ['Undo','Redo','-','Find','Replace','-','SelectAll','RemoveFormat'],
+                ['Form','Checkbox','Radio','TextField','Textarea','Select','Button',
+                 'ImageButton','HiddenField'],
+                ['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
+                ['NumberedList','BulletedList','-','Outdent','Indent','Blockquote'],
+                ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+                ['Link','Unlink','Anchor'],
+                ['Image','Flash','Table','HorizontalRule','Smiley','SpecialChar','PageBreak'],
+                ['Styles','Format','Font','FontSize'],
+                ['TextColor','BGColor'],
+                ['Maximize','ShowBlocks','-','About',
+                 'pbckcode'],
+            ),
+        }
+    }
+
+- 在项目的urls.py里面添加ckeditor链接
+
+    url(r'^ckeditor/', include('ckeditor.urls')), 
+    
+- 在models.py中设置富文本显示的field
+
+    # 假设在里的model里面有个content列，代表博文内容的
+    from ckeditor.fields import RichTextField
+    content = RichTextField('内容')

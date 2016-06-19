@@ -1,0 +1,39 @@
+## 支持fetch code和代码高亮
+
+
+前提：需要安装`markdown2`和`pygments`两个模块
+
+- 在view中实现语法支持
+
+
+在通过markdown生成HTML的时候，传入额外的参数即可，
+扩展的类型可以参考[markdown2-extras](https://github.com/trentm/python-markdown2/wiki/fenced-code-blocks)
+在所以需要显示文章详细内容的地方view方法中做如下补充：`article.body = markdown2.markdown(article.body, extras=['fenced-code-blocks'])`
+
+这样在后台编辑的时候，即可使用如下语法来插入代码块：
+
+    # python是指明用到的语法，用于对应高亮显示
+    ```python
+    def get_object(self, queryset=None):
+        obj = super(ArticleDetailView, self).get_object()
+        return obj
+    ```
+
+
+- 在模板中实现高亮显示
+
+确保安装了`pygments`模块，将高亮的样式文件放到本地存放css文件的地方，
+在`base.html`模板中引入高亮的`css`文件即可
+
+
+    <link rel="stylesheet" href="{% static 'block/css/pygments/github.css' %}"
+
+
+- 改进的地方
+
+能否实现自动语法识别？
+
+最好是把从markdown语法生成的html文档在存入数据库的时候保存，
+避免每次用到都要在相应的视图方法中进行调用
+
+增加高亮显示的种类？

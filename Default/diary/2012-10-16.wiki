@@ -1,0 +1,48 @@
+## Tuples, Files, and Everythings
+
+### Tuples
+* Ordered collections of arbitrary objects.
+
+* Accessed by offset.
+
+* Of the category "immutable sequences".
+
+can't be changed in place.
+
+* Fixed-length, heterogeneous, and arbitrarily nestable.
+
+* Arrays of object references.
+
+#### Why Lists and tuples?
+the immutability of tuples provide some integority--you can be sure a tuple
+won't be changed through another reference else where in a program, but there
+is no such guarantee for lists.
+
+*eval*
+
+*pickle*
+object serialization:
+
+*References Versus copies*
+1. slice expression. X = L[:], make a copy of L and assign it to X.
+2. dictionary and set use copy method.
+3. some built-in functions such list(), list(L).
+4. the 'copy' standard library make full copies.
+
+*True or False in python*
+1. Numbers are true if nonzero.
+2. Other objects are true if nonempty.
+
+*Assignment creates references, not objects*
+
+
+## Python object type categories
+objects         cat             mutable?
+int             number          N
+string          sequence        N
+List            sequence        Y
+tuple           sequence        N
+dict            map             Y
+file            mixed           N
+set             set             Y
+

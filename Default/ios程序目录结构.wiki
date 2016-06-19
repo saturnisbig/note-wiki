@@ -1,0 +1,45 @@
+# ios 程序目录结构
+
+2013-06-05 20:34:42 
+
+/Documents -- 程序的数据文件
+/Library/Preferences -- 程序的偏好设置
+/Library/Caches -- 缓存数据
+/tmp -- is a temporary dir for writing files that do not need to be persisted between 
+        application launches.
+
+只有对象才能被序列化(serialized) -- It is worth noting that only objects can be serialized.
+
+## 查看模拟器文件夹
+
+Finder按住option，在菜单栏中选择"前往"-》“资源库”
+
+如果没有资源库，则使用终端
+
+    $cd ~/Library/Application Support/iPhone Simulator/6.x/Application   里面会有一堆的GUID类似的目录一个一个找
+    $ls -lnt ./         这样可以查看最新修改的文件
+    
+2013-06-06 20:36:51 
+
+## Archiving(p381)
+
+通过NSKeyedArchiver创建，解析用NSKeyedUnarchiver
+这样的类必须继承NSCoding协议
+
+NSCoding协议，实现两个方法：
+
+    -(void)encodeWithCoder:(NSCoder *)encoder
+    -(id)initWithCoder: (NSCoder *)decoder
+
+如果继承NSCopying协议，需要实现这个方法：
+
+    -(id)copyWithZone: (NSZone *)zone
+
+关于deep copy对象的，可以参考：Memory Management Programming Guide for Cocoa，苹果官网上的
+
+## 多任务处理和保持应用程序状态(p391)
+通过序列化或archive来存储程序的状态，必要的时候恢复程序进入后台的状态。
+-(void) applicationDidEnterBackground: (UIApplication *)application
+-(void) applicationWillEnterForeground: (UIApplication *)application
+2013-06-06 22:06:12 
+

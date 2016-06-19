@@ -1,0 +1,7 @@
+# code smell
+
+* what is ORM
+n Object-Relational-Mapper (ORM) is a layer of abstraction for data stored in a database with tables, rows and columns. It lets us work with databases using familiar Object-Oriented metaphors which work well with code. Classes map to database tables, attributes map to columns, and an individual instance of the class represents a row of data in the database.
+
+
+* 

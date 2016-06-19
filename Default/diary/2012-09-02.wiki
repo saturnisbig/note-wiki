@@ -1,0 +1,20 @@
+# Markdown syntax study
+
+1. css style the link
+2. 
+
+# head 
+== head2 ==
+=== head3 ===
+* list1
+* list2
+* list3
+
+
+    hello wold
+    dfjsl
+
+    `hello world`
+    `print "nice to meet you!"`
+    dfslj
+

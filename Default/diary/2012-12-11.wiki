@@ -1,0 +1,28 @@
+
+扩展字符串中的制表符到对应数量的空格;
+
+    mystring.expandtabs(2)
+
+将一定数量的空格转换成对应的制表符；
+
+    def unexpand(astring, tablen=8):
+        import re
+        pieces = re.split('( +)', astring)
+        thislen = 0
+        lensofar = 0
+        for i, piece in enumerate(pieces):
+            thislen = piece.length()
+            lensofar += thislen
+            if piece.isspace():
+                numblanks = lensofar % tablen
+                numtabs = (thislen - numblanks + tablen - 1) / tablen
+                pieces[i] = '\t' * numtabs + ' ' * numblanks
+        return ''.join(pieces)
+
+不知道记录当前处理字符串长度是为何？
+
+
+修改了博客后台的一些样式，发现这么做效率很低，需要改进这样的做法
+
+如何给jinja2 template 添加自己写的filter
+

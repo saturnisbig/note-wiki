@@ -1,0 +1,9 @@
+## HowTos when using CentOs
+
+
+* 使用的时候出现一个错误
+bash: /usr/local/bin/rar: /lib/ld-linux.so.2: bad ELF interpreter: No such file or directory
+是因为64位系统中安装了32位程序
+解决方法：
+yum install glibc.i686
+

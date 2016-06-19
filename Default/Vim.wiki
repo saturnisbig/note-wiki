@@ -1,0 +1,117 @@
+
+# VIM常用技巧
+
+与剪贴板进行交互，即相互复制，参考下文
+http://blog.fooleap.org/using-vim-with-clipboard-on-archlinux.html
+
+
+# Learn the VI and VIM Editor
+
+## [[Chapter 2 Simple Editing]]
+
+## [[Chapter 3 Moving Around]]
+
+## [[Chapter 4 Beyond the Basics]]
+
+# Practical Vim
+
+- [[Chapter2 Normal Mode]]
+- [[Chapter3 Insert Mode]]
+Start: 2014-02-17 23:35:41 || Page: 069
+  End: 2014-02-17 23:45:45 || Page: 072
+ Cost: 10m                 || Page: 004
+Start: 2014-02-16 16:52:15 || Page: 061
+  End: 2014-02-16 17:17:11 || Page: 067
+ Cost: 25m                 || Page: 007
+Start: 2014-02-27 23:01:10 || Page: 067
+  end: 2014-02-27 23:06:51 || Page: 077
+ cost: 5m 
+
+
+- More Command Combinations
+ 
+(number)(command)(text object)
+
+- Options when starting vi
+
+    $ vi file
+    $ vi +n file   # opens file at line number n.
+    $ vi + file    # opens file at last line.
+    $ vi +/pattern file # opens file at the first occurence of pattern.
+
+- Read-Only Mode
+
+    $ vi -R file
+    $ view file
+
+- Marking your place
+
+`mx` mark current with character x, x can be any letter.
+`'x` move to the first character of the line marked by x.
+``x` move to the character marked by x.
+`double backquote` return to the exact position of the previous mark or context aftr a move.
+`''` return to the beginning of the line of the previous mark or context.
+
+
+## Chapter 5 Introducing the ex Editor
+Start: 2014-02-27 23:06:51 || Page: 77
+  end: 2014-02-27 23:20:22 || Page: 82 
+ cost: 14m
+
+
+- General Form of vi commands
+
+(command)(text object)
+`cw`, `c$`, `yw`, etc.
+(command)(number)(text object)
+`d2w`, `c2w`, etc.
+`2dw`, `2cw`, etc.
+`25i*-` -- insert 25 '*-'
+
+Numberic Arguments for Insert Commands
+
+`25a*` -- append 25 '*'
+
+Joining Two Lines with `J`
+
+Nice to meet you.
+Hello, World!
+move
+
+z [Enter] - move current line to top of screen and scroll.
+z.        - move current line to center of screen and scroll.
+z-        - move current line to bottom of screen and scroll.
+
+### Move By textblock
+
+`e`  move to the end of word.
+`E`  move to the end of word(ignore punctuation).
+`(`  move to the beginning of current sentence.
+`)` move to the beginning of next sentence.
+`{` move to the beginning of current paragraph.
+`}` move to the beginning of next paragraph.
+`[[` move to the beginning of current section.
+`]]` move to the beginning of next section.
+
+*what is paragraph? section?*
+
+- Searching and changing
+`/` search forward.
+`?` search backward.
+`d?move` delete from before the cursor up to and through the word move
+
+- current line searches
+`fx` find(move cursor to) next occurence of x in the line, where x 
+stands for any character.
+`Fx` find(move cursor to) previous occurence of x in the line.
+`tx` find(move cursor to) character before next occurence of x in line. 
+`Tx` find(move cursor to) character after next occurence of x in line. 
+`;` repeat previous find command in same direction.
+`,` repeat previous find command in opposite direction.
+
+- the `G`(go to)command
+`44G` go to line 44, must `:set nu` first to see the line number.
+``  return you to your original position(the position where you issued the
+    last `G` command.)
+''  return to the beginning of line, much like ``.
+

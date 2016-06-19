@@ -1,0 +1,109 @@
+
+- Stored Properties（存储属性）
+
+        
+        struct FixedLengthRange {
+            var firstValue: Int
+            let length: Int
+        }
+        var rangeOfThreeItems = FixedLengthRange(firstValue: 0,
+                length: 3)
+        rangeOfThreeItems.firstValue = 6
+        
+        let rangeOfFourItems = FixedLengthRange(first: 0,
+                length: 4)
+        // 下面的会提示错误，常量，Value Types
+        rangeOfFourItems.firstValue = 6
+        
+
+- Lazy Stored Properties
+
+属性值在实例初始化的时候并没有赋值，等到需要的时候再
+赋值。
+
+- Computed Properties
+
+通过setter和getter来设置计算属性
+
+        struct Point {
+           var x = 0.0, y = 0.0
+        }
+
+        struct Size {
+           var width = 0.0, height = 0.0
+        }
+
+        struct Rect {
+           var origin = Point()
+           var size = Size()
+           var center: Point {
+
+           get {
+               let centerX = origin.x + (size.width / 2)
+               let centerY = origin.y + (size.width / 2)
+               return Point(x: centerX, y: centerY)
+           }
+           set(newCenter) {
+               origin.x = newCenter.x - (size.width / 2)
+               origin.y = newCenter.y - (size.height / 2)
+           }
+           }
+        }
+
+- Shorthand Setter Declaration
+
+如果setter没有为新的值命名的话，默认新的值名称为
+`newValue`
+
+        struct AlternativeRect {
+           var origin = Point()
+           var size = Size()
+           var center: Point {
+           get {
+               let centerX = origin.x + (size.width / 2)
+               let centerY = origin.y + (size.height /2)
+               return Point(x: centerX, y: centerY)
+           }
+           set {
+               origin.x = newValue.x - (size.width / 2)
+               origin.y = newValue.y - (size.height / 2)
+           }
+           }
+        }
+
+- Read-Only Computed Properties
+
+A computed property with a getter but no setter is known as a 
+readonly computed property.
+
+- Property Observer
+
+`willSet`：在被调用前执行
+`didSet`： 在调用后执行
+
+- Global and Local variable
+
+Type Property:属于type本身，与某个实例无关，所有的实例都将拥有
+该属性。
+对值类型：可以定义存储和计算的类型属性
+对类：只能定义computed type properties
+stored type properties必须有一个默认值（因为没地方为其初始化）
+
+
+        struct SomeStructure {
+          static var storedTypeProperty = "Some value"
+          static var computedTypeProperty: Int {
+            // return an Int value here
+          }
+        }
+        enum SomeEnumeration {
+          static var storedTypeProperty = "Some value."
+          static var computedTypeProperty: Int {
+            // return an Int value here
+          }
+        }
+        class SomeClass {
+          class var computedTypeProperty: Int {
+            // return an Int value here
+          }
+        }

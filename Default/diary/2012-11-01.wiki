@@ -1,0 +1,18 @@
+# Revert from 'git rm -r .'
+
+
+## vim
+
+input '\`.' back to previous edit position.
+
+## git
+
+how to revert a 'git rm -r .'?
+
+
+    $git reset HEAD # should do it, if you don't have any uncommited changes.
+    $git reset --hard HEAD # should forcibly reset everything to your last commit.
+    $git stash             # if you do have uncommited changes and first command
+                           # don't work, then save your uncommited changes with it.
+    $git reset --hard HEAD
+    $git stash pop?

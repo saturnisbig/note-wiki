@@ -1,0 +1,34 @@
+# TDD python
+
+- Install python3.3 on ubuntu
+
+    install dependencies:
+    $ sudo apt-get install python-software-properties
+    add repo:
+    $ sudo add-apt-repository ppa:fkrull/deadsnakes
+    update repo:
+    $ sudo apt-get update
+    install:
+    $ sudo apt-get install python3.3
+
+- Make virtualenv to work with python3.3
+
+    this install the require pip-3.3 version
+    $ virtualenv -p /usr/bin/python3.3 tdd/
+
+- 使用不同的pip源(See here)[http://segmentfault.com/q/1010000000162410]
+
+- install required software
+
+    pip3.3 install django==1.6
+    pip3.3 install --upgrade selenium
+
+在~/.pip/下创建pip.conf文件，然后添加一下内容：
+
+
+        [global]
+        timeout = 6000
+        index-url = http://e.pypi.python.org/simple
+        [install]
+        use-mirrors = true
+        mirrors = http://e.pypi.python.org

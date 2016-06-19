@@ -1,0 +1,52 @@
+# (TDD)Chapter2 and Chapter3
+
+## Extending our FT using the unittest module
+
+2013-12-12 19:38:21 
+
+FT should have human-readable story that we can follow, and we can do that by using
+comments that accompany the test code.
+
+### Useful TDD concepts
+
+1. User story
+ 
+从用户角度出发描述应用如何工作。用来时ft结构化。
+
+2. Expected failure
+
+与预期相符未通过的测试。
+
+### Testing a simple home page with unit tests
+
+- Difference of FT and Unit Test
+
+FT:从用户的角度对功能进行测试
+UT:从程序员的角度进行测试
+
+TDD要求两种测试都要，工作流程如下：
+
+1. 先写FT，从用户的角度描述新功能。
+2. 如果某个FT测试未通过，思考如何修改代码才能通过（至少要通过眼前的失败）。
+我们写的每行产品代码都要至少通过一个UT。
+3. 一旦有一个单元测试为通过，我们将代码缩减至最少，足以通过单元测试。很可能
+需要在2和3之间迭代，以便我们的FT能过进一步。
+4. 重新运行FT看是否通过测试，或往前一点。这些都有可能提醒我们写新的UT，和新的代码等等。
+- 有用的方法
+
+
+每次使用git diff来查看修改，确定后再commit(git log --oneline，可以查看每次的message.)
+
+        // 运行Django开发服务器
+        $ python3.3 manage.py runserver
+        // 运行功能测试
+        $ python3.3 functional_tests.py
+        // 运行单元测试
+        $ python3.3 manage.py test
+
+UT的流程：
+运行单元测试
+对代码做最小修改
+重复
+
+        

@@ -1,0 +1,13 @@
+= The Q && A of Myself =
+
+--2011年11月03日 20:12:06 --
+1-Zend_Registry 与 Zend_Session_Namespace是否存在某种类似实现方法？
+
+--2011年11月09日 21:26:22  --
+用SQL语句实现如下查询要求：
+  假设有三张表：
+  1)-bm_master: bid, url, title, content, styleid, categoryid
+  2)-bm_comment: cid, bid, uid, comment, folderid
+  3)-kbn_master: kid,  kind, kname, updated
+  要求取出(bm_master中的)bid, url, title, content, (kbn_master) kid, kname;
+  (bm_comment) count(uid), comment, folderid, cid

@@ -1,0 +1,25 @@
+
+Start: 2014-02-15 16:35:44 || Page: 035
+  End: 2014-02-15 17:16:59 || Page: 051
+ Cost: 40m                 || Page: 016
+
+- General Form of vi commands
+
+(command)(text object)
+`cw`, `c$`, `yw`, etc.
+(command)(number)(text object)
+`d2w`, `c2w`, etc.
+(number)(command)(text object)
+`2dw`, `2cw`, etc.
+
+Numberic Arguments for Insert Commands
+
+`25a*` -- append 25 '*'
+`25i*-` -- insert 25 '*-'
+
+Joining Two Lines with `J`
+
+Nice to meet you.
+Hello, World!
+move
+

@@ -1,0 +1,33 @@
+## Defining Classes
+
+start: 2014-02-20 12:54:17 
+  end: 2014-02-20 13:10:33
+ cost: 16m
+ 
+
+### Defining a class example 
+
+    // .h file
+    @interface Person: NSObject
+
+    @property (readonly) NSString *firstName;
+    @property (readonly) NSString *lastName;
+    
+    - (void)someMethodWithFirstValue:(someType)value1 secondValue:(anotherType)value2;
+
+    @end
+    
+    // .m file
+    #import "XYZPerson.h"
+    @implementation XYZPerson
+
+    @end
+
+
+
+### Properties Control Access to an Object's Values
+
+
+### Properties attributes indicate data accessibility and storage considerations
+
+

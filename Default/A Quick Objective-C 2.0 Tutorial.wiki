@@ -1,0 +1,29 @@
+2013-09-13 23:53:25 
+
+
+retain, 保留
+copy
+assign
+
+@property: as declaring a property exists.
+
+@synthesize:directive actually implements code for the accessors, if necessory.
+
+2013-09-14 00:19:22 
+
+## Learning Objective-C
+[http://cocoadevcentral.com/d/learn_objectivec/]()
+
+2013-09-14 00:19:43 
+
+- Calling Methods
+
+
+    [object method];
+    [objective methodWithInput:input];
+
+    // Method return a value
+    output = [object methodWithOutput];
+    output = [object methodWithInputAndOutput:input]
+    
+2013-09-14 00:50:26 

@@ -1,0 +1,18 @@
+## Lesson 5 View Controller Lifecycle and Multiple MVCs(Jan 22, 2013)
+
+start: 2014-02-24 20:49:58
+  end: 2014-02-24 22:09:33
+ cost: 1h20m
+ 
+- View Controller Lifecycle
+
+- Multiple MVCs
+
+- Demo
+
+
+### View Controller Lifecycle
+
+- awakeFromNib
+
+This 

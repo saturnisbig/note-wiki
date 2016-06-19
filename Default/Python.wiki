@@ -1,0 +1,29 @@
+## Projects
+* [[Python Basic]]
+* [[WebpyLearning]]
+* [[DjangoBook]]
+* [[TDD-Python]]
+* [[Celery]]
+* [[Automate Deployment]]
+* [[Pygments]]
+* [[Scrapy]]
+
+## HowTos
+
+* [[virtualenv-howto]]
+* [[Using a local cache for pip packages]]
+* [[South]]
+*[[_sysconfigdata_nd.py missing]] 
+
+## Django technique
+
+* [[get_absolute_url]]
+* [[Writing custom template tags]]
+* [[博客中语法高亮]]
+* [[添加django-ckeditor]]
+* [[添加pagedown用于markdown编辑]]
+* [[Django-Admin-Customize]]
+* [[Use-MySQL]] 
+            <div id="stats">
+              <!-- STATS: : %(total_time).2fs Python: %(python_time).2fs DB: %(db_time).2fs Queries: %(db_queries)d ENDSTATS -->
+            </div>

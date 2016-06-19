@@ -1,0 +1,11 @@
+# Python 'any' | webpy session error
+
+python
+
+any 
+  check whether any item in iterable object is True if is True: return True else False.
+sqlite 
+  can't use md5 build-in func in MySQL.
+
+webpy:
+  EOF session error? *don't find an answer on internet*

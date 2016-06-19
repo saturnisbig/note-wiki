@@ -1,0 +1,41 @@
+## Introducing Python Statements
+
+### Python Structure Revisited
+
+1. Python programs consist of modules.
+2. Modules consist of statements.
+3. Statements consist of expressions.
+4. Expressions operate and process objects.
+
+#### Python's Statements
+
+assignment
+if/elif/else
+for/else
+while/else
+break
+continue
+global
+yield
+pass
+try/except/finally
+def
+class
+from
+import
+with as
+assert
+raise
+del
+
+### A tale of Two ifs
+
+#### What Python Adds
+
+colon after if/while/for etc.statements.
+indentation
+#### What Python Removes
+
+* parentheses are optional
+* end of line is end of statement
+* end of indentation is end of block

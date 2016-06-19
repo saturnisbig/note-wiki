@@ -1,0 +1,174 @@
+
+# Foundations 
+
+1. The importance of a well-structured and meaningful document
+2. Coding best pratices
+3. Common coding mistakes
+4. Document types, DOCTYPE switching, and browser modes
+5. Ways to target your styles
+6. The cascade, specificity, and inheritance
+
+## Structuring your code 
+* Use meaningful markup
+
+* IDs and class names
+
+  divtis hello this is a block
+
+  Another paragraph.
+
+    print "Hello world!"
+
+## Ways to traget your styles
+- Common Selector
+    * [type selector](#typeSelector)
+    * [descendant selector](#descendantSelector)
+    * [ID and Class selector]
+    * [combine of above four types]
+
+普通与继承选择器可以说是最常见的选择器了，通常用来对文档中
+的元素进行样式设置，用法如下：
+
+    p {...} /* set the style for paragraph */
+    h1 p {...} /* set the style for paragraph descendant h1 */
+
+ID和class选择器用法与type和descendant差不多，ID针对页面中的一个
+属性，class针对一个页面中的一类属性。
+
+    \#idSelector {...}
+    .classSelector {..}
+
+将上面的四种方式结合起来使用，可以满足平常使用中的很多要求。
+
+- Pseudo-classes selector
+
+
+    a:link {color:blue;}
+    a:visited {color:green}
+
+- The universal selector
+
+通用选择器，匹配文档中任何的标签，对其设置属性，也适用于继承选择器
+== 的特性。 ==
+
+    /* 将文档所有标签中内容颜色设置为灰色 */
+    * {
+        color: gray;
+    }
+    /* 将所有h1的ul下的所有标签中内容的颜色设置为:red */
+    h1 ul * {
+        color: red;
+    }
+
+- Advanced selector
+    - child and adjacent sibling selector
+    - attribute selector
+
+这几个选择器在IE6及以下的浏览器中，支持不是很好，但是FF和Safari对
+这些还是支持的，在使用这些选择器过程中要注意就是。
+
+**Child Selector** Example:
+
+    #nav > li {font-weight: bold;}
+    /* html code here. */
+    <ul id="nav">
+        <li>Home</li>
+        <li>Services
+            <ul>
+                <!-- This li tag will not be effected. -->
+                <li>Design</li>
+                <li>Development</li>
+                <li>...</li>
+            </ul>
+        </li>
+        <li>Contact Us</li>
+        <ul>
+    /* To make above example work under IE6, use this. */ 
+    #nav li {font-weight: bold;}
+    #nav li * {font-weight: normal;}
+
+**adjacent example** Example:
+
+    /* 仅对跟在h1后面的p起作用 */
+    h1 + p {font-weight: bold;}
+
+### Attribute selectors
+对具有某个属性的标签或者标签值进行选择，并将样式赋值给所选的标签。
+
+    <abbr title="Cascading Style Sheet">CSS</abbr>
+    /* CSS code */
+    abbr[title] {border-bottom: 1px dotted #999;}
+    abbr[title]:hover {cursor: help;}
+    
+    /* for specific attribute value */
+    a[rel="nofollow"] {
+        background-image: url(nofollow.gif);
+        padding-right: 20px;
+    }
+
+
+## The cascade and specificity
+
+### Specificity
+级联工作顺序：
+    * User styles flagged as !important
+    * Author styles flagged as !important
+    * Author styles
+    * User styles
+    * Styles applied by the browser/user agent.
+
+计算规则:
+如果某个选择的标签的级别不到10级，那就可以以十进制来计算优先顺序：
+    * inline style then a = 1,
+    * b = total number of ID selectors
+    * c = total number of class selectors
+    * d = total number of type and pseudo-element selector
+
+
+    继承样式的Specificity的值为NULL，所以会被重写
+    /* Specificity compute example */
+    Style=""                    1,0,0,0     1000
+    #wrapper #content{}         0,2,0,0     200
+    #content .datePosted{}      0,1,1,0     110
+    div#content{}               0,1,0,1     101
+    #content                    0,1,0,0     100
+    p.comment .datePosted{}     0,0,2,1     21
+    p.comment{}                 0,0,1,1     11
+    div p{}                     0,0,0,2     2
+    p{}                         0,0,0,1     1
+
+### Using Specificity in your style sheet
+
+    form {width: 40em;}
+    /* 20em width is assign to form with ID #search */
+    form #search {width: 20em;}
+    对于一般样式表，要保持尽量一般，对特殊要求样式表则要尽可能特殊。
+
+Adding a class or an ID to the body tag
+
+### Inheritance(继承)
+所谓继承就是，如果一个样式属性允许继承，那么被应用了该样式的标签的继承元素
+都将继承此标签中有继承值的样式。
+
+## Planning, organizing, and maintaining your stylesheets
+
+### Applying styles to your document
+
+    /* 应用样式的方法1 */
+    <link href="/css/basic.css" rel="stylesheet" type="text/css">
+    /* 应用样式的方法2 */
+    <style type="text/css">
+        <!--
+        @import url("/css/advanced.css");
+        -->
+    </style>
+    /* 应用样式的方法3 */
+    在CSS样式表中引用其他的样式表
+
+### Commenting your code
+使用"/\*\*/"来进行注释
+
+格式化你的注释：
+对某个特定的内容进行注释比如说，排版，添加额外的标签来方便查找
+给自己看的注释，可以是修复某个BUG参考来源，Todo，Bugs,etc.
+

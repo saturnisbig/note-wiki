@@ -1,0 +1,28 @@
+# Values and Collections
+
+2014-03-05 21:57:49
+2014-03-05 22:02:01
+5m
+2014-03-07 12:43:35
+2014-03-07 12:56:07
+13m
+
+- Basic c primitive types are available
+
+
+- Objective-C defines additional primitive types
+
+
+- C structures can hold primitive values
+
+## Objects can represent primitive values
+
+- strings are represented by instance of the NSString class
+
+- numbers are represented by instance of NSNumber class
+
+- represent other values using instance of the NSValue class
+
+## Most collections are objects
+
+

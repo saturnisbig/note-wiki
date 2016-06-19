@@ -1,0 +1,31 @@
+
+## IOS protocol and delegate
+
+参考的这篇文章：
+
+- 介绍概念和简单的用法 [delegate和protocol](http://haoxiang.org/2011/08/ios-delegate-and-protocol/)
+- 通过例子来介绍这两个概念，简单易懂。 [协议和委托（Protocol and Delegate）实例剖析](http://www.dapps.net/dev/iphone/ios-dev-protocol-and-delegate-example.html)
+
+protocol是一组函数定义，是从类声明中剥离出来的一组定义。
+语法：
+
+    @protocol classADelegate
+    
+    - (void)methodA;
+    - (void)methodB;
+
+    @end
+    如果类B要实现上面的协议，必须这么定义：
+    @interface classB <classADelegate>
+    实现methodA、methodB;
+    @end
+
+使用的时候：
+
+    id<ClassADelegate> b = ...;
+    [b methodA];
+
+delegate是一种设计模式，就是一个类将自己需要做的一部分功能，让另一个类来完成。
+
+为什么要让另一个类来实现呢？
+

@@ -1,0 +1,23 @@
+
+需求如下：
+
+1. 方便添加、编辑博文，不需要写HTML
+2. 支持多用户，不同用户对应不同的博文
+3. 每篇博文应有一个供选择填写的摘要
+4. 博客所有者能够创建分类，将博文归类到某一分类下
+5. 博主能够决定哪篇博文发表，哪篇博文不发表（草稿功能）
+6. 博文应能够被“featured”，这些博文能够容易被找到（比如在首页展现）
+7. *a link log should be provided，to allow posting of interesting or notable links.*
+8. 博文和链接都应支持“标签”，添加任意描述性单词提供更多元数据等信息
+9. *The link log should integrate with Delicious or other popular link-sharing service*
+   *so that links posted to the weblog automatically show up on the services as well.*
+10. 查看网站的人要能够根据日期、标签、目录访问博文
+11. 访问网站的人要能够给博文和链接留言
+12. 要有能够过滤垃圾评论的方法
+
+遇到的问题：
+- 2014-11-13 12:36:43 
+中文url如何解析，提取参数等
+中文简介的字符截断如何实现
+
+- [[Comments and Sync]]

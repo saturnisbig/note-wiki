@@ -1,0 +1,14 @@
+= 自定义模板标签
+
+自定义标签介绍
+
+https://docs.djangoproject.com/en/1.9/howto/custom-template-tags/
+
+=== 自定义标签文档学习
+
+
+===== Simple tags
+
+`django.template.Library.simple_tags()`
+
+

@@ -1,0 +1,28 @@
+2014-05-24 12:56:31 
+iOS关于SQLite存取时间数据类型的两条常用方法。
+
+通过在Google，StackOverFlow很多的东西，大概有经验的程序猿会这样：
+
+1.把时间通过NSDateFormatter 通过stringFromDate某种格式，然后存字符串。取的时候同样取某个串，通过同一个formatter 的dateFromDate获取NSDate对象。
+
+NSDateFormatter*dateFormat =[[NSDateFormatter alloc] init];            
+[dateFormat setDateFormat:@"yyyy-MM-dd HH:mm:ss"];            
+NSString*dateString=[dateFormat stringFromDate:[NSDate date]];            
+sqlite3_bind_text(saveStmt,1,[dateString UTF8String],-1, SQLITE_TRANSIENT);            
+
+2.把时间通过NSDate的timeIntervalSince1970获取double类型存进数据库，
+取时间时会通过NSDate timeIntervalSince1970:doubleValue 获取NSDate对象。
+
+I typically use a double, something like:
+
+sqlite3_bind_double(statement, index,[dateObject timeIntervalSince1970]);                
+where dateObject is an NSDate*. Then, when getting the data out of the DB, use
+
+[NSDate dateWithTimeIntervalSince1970:doubleValueFromDatabase]; 
+
+友情链接：
+http://stackoverflow.com/questions/302664/objective-c-and-sqlites-datetime-type
+
+http://stackoverflow.com/questions/251155/persisting-dates-to-sqlite3-in-an-iphone-application
+                                     
+http://stackoverflow.com/questions/1711504/how-get-a-datetime-column-in-sqlite-with-objective-c/1711591#1711591

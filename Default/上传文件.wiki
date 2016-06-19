@@ -1,0 +1,5 @@
+
+上传数据的方法有：scp,ftp(vsftp),sftp, rsync等。
+
+    $scp -r localDir user@remote-host-ip:~
+

@@ -1,0 +1,11 @@
+# Tmux reading
+
+- 第一章
+2015-08-24 23:07:27 -  2015-08-24 23:33:38
+创建一个named session
+
+    $tmux new-session -s basic
+    $tmux new -s basic
+    
+- 第二章
+2015-08-25 22:49:10 - 2015-08-25 23:13:29

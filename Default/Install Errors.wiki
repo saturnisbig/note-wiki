@@ -1,0 +1,6 @@
+1. cannot load such file -- openssl
+
+进入到ruby的源码目录，在ext/openssl，目录下执行：
+$sudo ruby extconf.rb
+$sudo make && sudo make install
+

@@ -1,0 +1,9 @@
+# Work Today
+
+- Django Book Chapter 14
+
+  Start: 2014-02-17 21:29:24
+  M-End: 2014-02-17 22:27:47
+M-Start: 2014-02-17 22:50:50 
+    End: 2014-02-17 23:14:49
+   Cost: 1h22m

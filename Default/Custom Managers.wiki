@@ -1,0 +1,7 @@
+2015-02-03 20:17:42 
+
+通常写自己的Custom Managers有两个目的：
+1. 增加manager方法
+2. 修改manager默认返回的QuerySet
+
+

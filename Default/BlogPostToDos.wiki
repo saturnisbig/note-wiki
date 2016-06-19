@@ -1,0 +1,50 @@
+# BlogList
+
+- 2014 goals(done- 2014-02-23 22:51:19)
+
+- Python datetime and time related
+
+一、目前使用中经常用到的一些
+
+1. 时间的生成
+
+    datetime.datetime.now()
+    time.time() # return the seconds since 
+    datetime.datetime.fromtimestamp(seconds) # convert seconds since to datetime obj
+
+2. 时间的格式化
+
+常用到的格式化字符：
+    %a 星期的简写，如星期三为Wed
+    %b 月份的简写，如4月份Apr
+    %d 在这个月中的天数
+    %H 小时(24小时制)
+    %m 月份(0-11)
+    %M 分钟(00-59)
+    %S 秒  (00-59)
+    %Y 4位数年份
+    %y 2位数年份
+
+3. 时间对象与字符串之间的相互转换
+
+将时间字符串转换为datetime对象：
+
+    datetime.strptime(date_string, format)
+    datetime.strptime('2014-04-01 13:07', '%Y-%m-%d' %h:%M)
+
+将datetime对象转换位字符串:
+
+    datetime.now().strftime('%y-%m-%d %H:%M')
+
+4. 时间如何比较大小
+
+5. 时间之间的加减
+
+6. 转换为对人友好的格式，比如'5小时前'等
+
+7. 计算程序执行所需时间
+
+二、这些功能的实现
+
+- 时间的生成
+

@@ -1,0 +1,27 @@
+
+- Tip 7: Pause with Your Brush Off the Page
+ 
+当我们不处于编辑状态的时候，最好返回到'Normal Mode'，
+这样如果我们不想要刚才输入的文字，那么再'Normal Mode'下就
+可以简单的用`u`来返回到原先的状态。如果再'Word'下，就必须
+按好几次的<C-z>。
+
+- Tip 8: Chunk Your Undos
+
+同上
+
+- Tip 9: Compose Repeatable Changes
+
+如果某个操作能够通过`.`来重复操作，那么这个操作就是个好的
+方法。在使用Vim的时候，要尽量使操作带有可重复性。
+
+textobject?
+
+1. Operators and Motions
+
+- Tip 10: Use Counts to Do Simple Arithmetic
+
+<C-a>给数字的值加1
+<C-x>给数字的值减1
+
+- Tip 11: Don't Count If You Can Repeat

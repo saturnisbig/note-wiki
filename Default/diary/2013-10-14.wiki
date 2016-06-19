@@ -1,0 +1,5 @@
+获取任意网站的favicon.ico的方法
+
+http://www.getfavicon.org
+http://www.google.com/s2/favicon?domain=google.com
+

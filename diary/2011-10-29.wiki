@@ -1,0 +1,12 @@
+= Learn about the vimwiki =
+== Learn about the vimwiki ==
+=== Learn about the vimwiki ===
+List
+* one
+* two
+ - three
+ - four
+# six
+# seven
+#
+

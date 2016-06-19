@@ -1,0 +1,43 @@
+
+# 2012-10-8 To 2012-10-14
+
+## Python
+### Dynamic Typing Interlude 
+
+python is dynamic typing, which means the variable type is decided when
+used.
+#### 缺少声明的情况
+
+
+    a = 3
+    a是一个变量名，3作为一个object单独存储，3这个对象包含两个标识，1个表示其
+    数据类型，另一个表示引用数。
+    a通过reference来与3关联，通过指向3的一个指针来表示变量的值。
+
+类型还有垃圾回收(gabage collection)的特性。
+#### 变量共享(Shared Variable)
+
+#### 名词解释
+'Variables':
+'Objects':
+'References':
+
+
+### Strings
+
+
+### Lists and Dictionaries
+
+
+### Others
+
+datetime.datetime.now().strftime() to specific the date format.
+
+
+## webpy
+
+
+
+## sqlalchemy
+
+

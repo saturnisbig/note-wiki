@@ -1,0 +1,76 @@
+## Encapsulating Data
+
+2014-03-03 19:13:24 
+2014-03-03 19:33:46
+
+2014-03-03 21:24:01
+2014-03-03 21:44:56
+
+2014-03-03 22:09:10
+2014-03-03 22:41:00
+
+70m
+
+
+
+- Properties Encapulate an Object's Values
+
+Declare Public Properties for Exposed Data
+
+
+Use Accessor Methods to Get or Set Property values
+
+naming conventions:
+
+
+- Dot syntax is a concise alternative to accessor method calls
+
+- Most properties are backed by Instance variables
+
+通常访问属性最好是用accessor method 或 dot syntax，但是在写initialization，
+deallocation或custom accessor method的时候是例外，可以直接用_propertyname
+
+- You can customize synthesized instance variable names
+
+`@synthesize firstName = ivar_firstName;`
+
+- You can define instance variables without properties
+
+eg: 将变量存储在implement file，用括号括起来。
+
+    @interface SomeClass: NSObject {
+      NSString *_myNonPropertyInstanceVariable;
+    }
+    或者在implementation里面直接声明。
+
+    @implementation SomeClass {
+      NSString *_myNonPropertyInstanceVariable;
+    }
+
+
+- Access Instance Variables Directly from initializer methods
+
+
+- The designated initializer is the primary initialization method
+
+如果你要重载一个父类的初始化方法，你可以有两个作法：
+重载父类的指定初始化方法或者增加自己的初始化方法。不管是哪种方式，你都
+必须先调用父类的'designated initializer'。 
+
+- You can implement custom accessor methods
+
+
+- Properties are atomic by default
+
+更多关于thread safety的内容可以参考：(Concurrency Programming Guide)[https://developer.apple.com/library/ios/documentation/General/Conceptual/ConcurrencyProgrammingGuide/Introduction/Introduction.html#//apple_ref/doc/uid/TP40008091]
+
+
+## Manage the object graph through ownership and responsibility
+
+
+- Copy Properties maintain their own copies
+
+*copy* attribute means that the property will use a strong reference,
+because it must hold on to the new object it creates.
+
+

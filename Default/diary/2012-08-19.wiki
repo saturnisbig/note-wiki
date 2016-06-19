@@ -1,0 +1,10 @@
+# Convert MySQL to sqlite importable sql file
+
+1. mysql2sqlite
+
+convert mysql to sqlite.
+
+2. mysqldump to dump data with some character.
+
+mysqldump -h 127.0.0.1 -P 3307 -u root --default-character-set=utf8 -ppasswd dbname |
+dumpfile.txt

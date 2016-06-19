@@ -1,0 +1,47 @@
+= Markdown Syntax
+
+1-Markdown 的基本规则
+  1)-不能将Markdown中嵌入到HTML中，但可以将HTML嵌入到Markdown
+     语法内.
+  2)-Markdown语法不能表示的都可以用HTML语法表示.
+  3)--
+
+2-常用的一些语法
+    区块元素：
+    1)-标题：
+       Setex:  #(h1) ##(h2) ### etc.
+       Atx:    -(h1) --(h2) --- etc.
+    2)-段落和换行
+    blank line to distinct paragraphs.
+    
+    double space + 'enter' to add '<br />' tag.
+    3)-区块引言
+        Start with '>' to begin your quote. You can use '>' every line or
+        just at the start of your quote.
+        Quote can have quote inside quote. This is start with '>>'.
+        Quote can have head inside quote.
+    4)-清单
+        Unordered List:
+        * - +
+        * - +
+        Ordered List:
+        1. bla bla.
+        2. bla bla.
+        List can have quote inside.
+        * A list item with a blockquote:
+        
+            >This is a blockquote.
+                
+                code here
+
+    5)-程式码区块
+    6)-分隔线
+    区段元素
+    1)-链接
+    2)-强调
+    3)-程式码
+    4)-图片
+    其他
+    1)-跳脱字元
+    加入反斜线来表示想要代表的特殊字符.
+    2)-自动链接

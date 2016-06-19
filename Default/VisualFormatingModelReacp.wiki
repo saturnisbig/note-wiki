@@ -1,0 +1,79 @@
+start -- 05/06/12 20:03:28 
+这章会学到如下内容
+
+* The intricacies and peculiarties of the box model
+* How and why margins collapse
+* The difference between absolute and relative positioning
+* How floating and clearing work
+
+There are three basic positioning schemes in CSS: normal flow, floats, 
+absolute positioning.
+CSS有三种基本的位置schemes:正常流，漂浮，绝对位置。
+
+## Box model recap
+html的块标签都可以当作是一个box，box的width属性仅为内容的宽，而不包含
+margin，border，padding的值。
+在IE5.X会有问题
+
+### Margin collapsing
+相邻的块元素，它的margin会相互抵消掉。相互抵消仅发生在垂直方向上。
+相邻的空内容的块元素的margin也会相互抵消。
+
+当一个页面存在多个段落时，如果每个段落之间的margin没有相互抵消，那么段落
+之间的margin将会时第一个段落顶部margin值的两倍，这不是我们所希望的效果，
+互相抵消更符合我们的想法。
+
+## Positioning recap
+
+### The visual format model
+
+line box: 水平的box形成了line box，每行line box的高度是其包含的所有line box
+中最高的那个line box的height，可以通过修改line height来改变这个高度。
+
+box元素可以包含嵌套包含box标签
+
+### relative positioning
+
+相对位置，是相对标签原来的位置而言的。可以用top, right, bottom, left进行设置
+位置。标签在原来位置所占的空白并不会被移除。
+    
+
+### absolute positioning
+绝对位置，标签*不会在normal flow中占据位置*，标签位置相对于其最接近的设置
+position属性的包含块而言，如果某个标签没有包含块，那么默认就是body或者html标签。
+一般用法是在某个绝对位置的包含块中设置relative position属性，来达到布局的目的。
+比如：要在某个包含块的右下角显示联系信息，就可以这么做。
+
+    #container {
+      position: relative;
+      width: 700px;
+      heidht: 100px;
+    }
+    #contact {
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      text-align: right;
+    }
+
+>The main problem people have with positioning is remembering which type of
+positioning is which. Relative positioning is “relative” to the element’s 
+initial position in the flow of the document, whereas absolute positioning 
+is “relative” to nearest positioned ancestor or, if one doesn’t exist, the 
+initial container block.
+
+z-index: 绝对位置的设置可能会导致层之间的覆盖，通过设置该值，当两个块
+元素重合时，z-index值越大，就会在最上面显示给用户，依值大小来分层显示。
+
+### fixed positioning
+固定位置，相对于iewport而言，可以设置某些内容会随滚动条的滚动而变换位置，
+使得设置fixed position的标签，始终显示在用户面前。
+
+viewport
+
+### floating
+漂浮，漂浮达到的位置相对其包含标签而言，会被从正常文档流中移除。
+
+### line boxes and clearing
+
+end 05/06/12 22:26:39 

@@ -1,0 +1,45 @@
+# Scrapy notes
+
+### installation
+2015-09-24 22:24:10 -
+安装依赖包：libxslt-dev, libffi-dev, libssl-dev, build-essential
+具体的依赖包可能要根据提示的错误进行安装
+
+    $sudo apt-get install libxslt-dev libffi-dev libssl-dev build-essential
+    $cd /path/to/your/virtualenv-env
+    $pip install Scrapy
+    
+### Tutorial
+
+- 创建项目：`scrapy startproject tutorial`
+
+- 定义Item: 继承自`scrapy.Item`
+
+- 写爬虫:
+
+- 学习的资源
+
+### Selectors的使用
+2015-09-26 10:47:26 -
+
+- 构建selectors
+Scrapy的选择器通过传入一个文本或者HttpResponse对象，根据传入的内容选择解析规则，
+比如是xml或html
+
+    >>>from scrapy.selector import Selector
+    >>>from scrapy.http import HtmlResponse
+    # 文本构建
+    >>>body = '<html><body><span>good</span></body></html>'
+    >>>Selector(text=body).xpath('//span/text()').extract()
+    # response对象构建
+    >>>response = HtmlResponse(url='http://example.com', body=body)
+    >>>Selector(response=response).xpath('//span/text()').extract()
+    [u'good']
+
+为了方便，response自带了一个selector属性
+
+    >>>response.selector.xpath('//span/text()').extract()
+    [u'good']
+
+- 使用selector
+

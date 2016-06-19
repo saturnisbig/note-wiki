@@ -1,0 +1,65 @@
+= 视图和URL配置 =
+
+URL配置可以将视图函数和对应的URL匹配起来，当用户访问某个URL地址时，调用视图函数
+，正确完成用户的请求。
+
+== 创建第一个web应用 ==
+
+* 创建视图函数
+view.py
+每个视图函数的第一个参数为 *request* ，一个Http请求，返回的是一个*HttpResponse*.
+如果要传入额外的参数，通过定义视图函数对应的url来实现。
+{{{
+    from django.http import HttpResponse
+    
+    def hello(request):
+        return HttpResponse("Hello world.")
+}}}
+* 修改URL文件
+修改文件为urls.py:
+首先，从模块引入我们的视图函数，其次修改"urlpatterns = patterns()"中的内容，来将
+视图函数与URL关联起来。
+ - Python 搜索路径：使用import时python默认查找的路径.
+    {{{
+    $python
+    >>>import sys
+    >>>print sys.path
+    }}}
+    
+ - 正则表达式：
+    '.': 匹配任意一个字符
+    '\d': 匹配任意一个数字
+    '[a-z]':匹配a-z之间的一个字母
+    '[A-Z]':匹配A-Z之间的一个字母
+    '[a-zA-Z]':匹配a-z之间的任意一个字符(大小写)
+    '+': 匹配一个或更多
+    '[^/]+':一个或多个不为'/'的字符
+    '?':匹配0个或1个之前的表达式(例如:\d?匹配0或1个数字)
+    '*':匹配0或更多(例如:\d*匹配0或更多数字)
+    '{1,3}':介于1和3个(包含)之前的表达式
+
+* 运行程序测试
+
+== 关于网站根目录的快速参考 ==
+(r'^$', my_homepage_view)
+
+== Django如何处理请求 ==
+1.请求转入对应的url
+2.Django通过ROOT_URLCONF配置来决定根URLconf
+3.Django在URLconf中的所以URL模式中查找第一个匹配/hello/条目
+4.根据匹配的条目，调用对应的视图函数
+5.视图函数返回一个!HttpResponse 
+6.Django转换!HttpResponse为一个合适的HTTP Response，以web页面显示
+
+== 第二个视图：动态内容 ==
+显示当前时间
+
+*Django时区* 在配置文件中修改
+
+== 第三个视图：动态URL ==
+修改urls.py文件，添加{{{(r'^time/plus/(\d{1,2})/$', hours_ahead)}}}，
+在url中使用()可以将括号中的内容作为参数传递给视图函数。
+
+可以通过插入{{{assert False}}}来触发错误页面.
+
+

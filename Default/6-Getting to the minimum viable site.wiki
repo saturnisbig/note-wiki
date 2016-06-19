@@ -1,0 +1,56 @@
+# 需求
+
+We want each user to be able to store their own list - at least one, for now.
+A list is made up of several items, whose primary attribute is a bit of descriptive text.
+We need to save lists from one visit to the next. For now, we can give each user
+a unique URL,for their list. Later on we may want some way of automatically
+recognising users and showing them their lists.
+
+# TDD and Design
+
+"YAGNI" (pronounced yag-knee), which stands for You aint gonna need it!'. 
+YAGNI is the mantra we use to resist our overenthusiastic creative urges.
+
+Representational State Transfer (REST) is an approach to web design that’s
+usually used to guide the design of web-based APIs. 
+REST suggests that we have a URL structure that matches our data structure,
+in this case, lists and list items. 
+
+- Test isolation
+
+Different tests shouldn't affect one another. This means we need to reset
+any permanent state at the end of each test. Django's test runner helps us
+do this by creating a test database, which it wipes clean in between each
+test.
+
+- The Testing Goat vs Refactoring Cat
+
+Our natural urge is often to dive in and fix everything at once... but if
+we're not careful, we'll end up like Refactoring Cat, in a situation with
+loads of changes to our code and nothing working. The Testing Goat encourages
+us to take on step at a time, and go from working state to working state.
+
+
+
+# Django
+
+运行某个app下的测试用例：
+
+    $python manage.py test lists
+    $python manage.py test functional_tests
+
+
+The convention I’m using is that urls without a trailing slash are "action"
+URLs which modify the database…, `list/new`和`list/list-identifier/`
+
+Use a separate url for your app, then use `include` in project url.
+
+# Git
+
+移动某个文件:
+
+    $git mv file1 anotherplace/file2
+
+让`git diff`注意到移动的文件差异:
+
+    $git diff --staged -M

@@ -1,0 +1,8 @@
+# Django Admin
+
+- Free theme
+
+Django suit
+http://djangosuit.com/pricing/
+
+

@@ -1,0 +1,63 @@
+# Working with protocols
+
+2014-03-05 21:22:57
+2014-03-05 21:53:48
+31m
+
+Objective-C允许你创建`Protocols`，即声明一些在某个特定情况下会用到的方法。
+
+
+- Protocols define messageing contracts
+
+    @protocol ProtocolName
+    // a list of methods(instance or class both ok) and properties
+    @end
+
+
+- Protocols can have optional methods
+
+    @protocol XYZPieChartViewDataSource
+    - (NSUInteger)numberOfSegments;
+    - (CGFloat)sizeOfSegmentAtIndex:(NSUInteger)segmentIndex;
+    @optional
+    - (NSString *)titleForSegmentAtIndex:(NSUInteger)segmentIndex
+    @end
+
+- Check that optional methods are implemented at runtime
+
+
+    NSString *thisSegmentTitle;
+    if ([self.dataSource respondsToSelector:@selector(titleForSegmentAtIndex:)]) {
+        thisSegmentTitle = [self.dataSource titleForSegmentAtIndex: index];
+    }
+
+if you attempt to call the respondsToSelector: method on an id conforming to the 
+protocol as it’s defined above, you’ll get a compiler error that there’s no known
+instance method for it. Once you qualify an id with a protocol, all static type-checking
+comes back; you’ll get an error if you try to call any method that isn’t defined
+in the specified protocol. One way to avoid the compiler error is to set the custom
+protocol to adopt the NSObject protocol.
+
+
+- Protocols inherit from other protocols
+
+    @protocol MyProtocol <NSObject>
+    ...
+    @end
+
+- Confirm to protocols
+
+    @interface MyClass : NSObject <MyProtocol>
+    ...
+    @end
+
+
+- Cocoa and Cocoa Touch define a large number of protocols
+
+比如：`NSTableViewDelegate` or `UITableViewDelegate` or `NSCoding`、
+`NSFastEnumeration`
+
+
+- Protocols are used for anonymity
+
+

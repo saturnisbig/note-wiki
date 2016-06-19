@@ -1,0 +1,4 @@
+
+# Setting up Django and your web server with uWSGI and nginx(pronounced engine-x)
+
+

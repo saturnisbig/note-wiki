@@ -1,0 +1,48 @@
+## Chapter 3 Moving Around
+
+Start: 2014-02-16 11:40:36 || Page: 057
+  End: 2014-02-16 12:10:47 || Page: 061
+ Cost: 30m                 || Page: 004
+Start: 2014-02-16 16:52:15 || Page: 061
+  End: 2014-02-16 17:17:11 || Page: 067
+ Cost: 25m                 || Page: 007
+
+Not Done Question:
+- *what is paragraph? section?*
+
+z [Enter] - move current line to top of screen and scroll.
+z.        - move current line to center of screen and scroll.
+z-        - move current line to bottom of screen and scroll.
+
+### Move By textblock
+
+`e`  move to the end of word.
+`E`  move to the end of word(ignore punctuation).
+`(`  move to the beginning of current sentence.
+`)` move to the beginning of next sentence.
+`{` move to the beginning of current paragraph.
+`}` move to the beginning of next paragraph.
+`[[` move to the beginning of current section.
+`]]` move to the beginning of next section.
+
+
+- Searching and changing
+`/` search forward.
+`?` search backward.
+`d?move` delete from before the cursor up to and through the word move
+
+- current line searches
+`fx` find(move cursor to) next occurence of x in the line, where x 
+stands for any character.
+`Fx` find(move cursor to) previous occurence of x in the line.
+`tx` find(move cursor to) character before next occurence of x in line. 
+`Tx` find(move cursor to) character after next occurence of x in line. 
+`;` repeat previous find command in same direction.
+`,` repeat previous find command in opposite direction.
+
+- the `G`(go to)command
+`44G` go to line 44, must `:set nu` first to see the line number.
+``  return you to your original position(the position where you issued the
+    last `G` command.)
+`''`  return to the beginning of line, much like ``.
+

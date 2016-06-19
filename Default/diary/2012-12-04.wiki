@@ -1,0 +1,10 @@
+# change template system to jinja2 
+
+done 2012-12-04 22:21:40 
+
+## change comment system to disqus with just a few javascript code.
+need to learn more about the disqus system.
+
+## about jinja2
+
+not enumerate func, use loop.index in a for loop instead.

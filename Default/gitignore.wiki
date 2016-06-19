@@ -1,0 +1,28 @@
+# how to use gitignore
+2014-03-07 19:47:17
+http://www.christianengvall.se/gitignore-exclude-folder-but-include-a-subfolder/
+
+    - Sites
+    - -all
+    - – - -files
+    - – - – - -private
+    - – - – - – - -newspilot
+    - -default
+    - – - -files
+    - – - – - -private
+    - – - – - – - -newspilot
+
+I needed to keep files in the newspilot folder but the files folder and its subfolders 
+was ignored like this in the .gitignore: sites/*/files
+I also didn’t want the files that exists in files and private. And this was the solution:
+
+
+    sites/*/files/*
+    !sites/*/files/private
+    sites/*/files/private/*
+    !sites/*/files/private/newspilot
+
+The first line ignores all files and folders in files.
+The second line excludes the private folder.
+The third line ignores all files and folder in private.
+And finally the last line excludes the newspilot folder.

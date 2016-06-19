@@ -1,0 +1,17 @@
+= Teddy's HowTos =
+  * [[How to enable Phpmyadmin to allow empty passowrd]]
+  * [[VimHowTos]]
+  * [[MySQLHowTos]]
+  * [[Markdown]]
+  * [[UbuntuHowTos]]
+  * [[GitHowTos]]
+  * [[ApacheHowtos]]
+  * [[Ruby]]
+  * [[Python]]
+  * [[Cent Os]]
+  * [[Vagex]]
+  * [[上传文件]]
+  * [[Dropbox]]
+  * [[DjangDeploys]]
+  * [[Sqlite]]
+  * [[Ubuntu-terminal-中文]]?

@@ -1,0 +1,36 @@
+
+- 2015-03-10 20:21:38
+ SQLite的AUTOINCREMENT是一个关键字，用于表中的字段值自动递增。我们可以自动增加一个字段值使用AUTOINCREMENT关键字带有具体列名创建表时自动递增。
+
+ 整型字段可以使用关键字AUTOINCREMENT。
+ 
+## 操作时间
+
+### sqlite自带的时间函数
+
+`date(日期时间字符串)` - 返回"YYYY-MM-DD"格式的日期
+`time(日期时间字符串)` - 返回"YYYY-MM-DD HH:MM:SS"为格式的日期时间
+`datetime(日期时间字符串)` - 返回一个时间格式的对象
+`julianday(日期时间字符串)` - 返回一个天数，从格林威治时间公元前4714年11月24日算起
+`strftime(日期时间格式)` - 返回一个经过格式化的日期时间
+
+- 计算当前时间
+
+    $sqlite> select datetime("now");
+    2015-03-11 19:41:20
+
+- 计算当前月份的最后一天
+
+    $sqlite> select date('now', 'start of month', '+1 month', '-1 day');
+
+- 计算两个日期相差的天数
+
+    $sqilte> select julianday('now') - julian('2012-12-22');
+    
+- 使用strftime对字符串进行日期格式化
+
+    $sqlite> select strftime('%Y-%m-%d', '2015-03-11');
+
+### 与Python时间类型的转换
+
+

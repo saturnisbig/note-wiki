@@ -1,0 +1,9 @@
+# Make dotcloud work -- solve 'sqlite database' lock problem
+
+1- dotcloud works
+
+python sqlite3 operationalerror: database is locked.
+
+$dotcloud logs pblog.www # to view the log information
+
+add mako template requirement.

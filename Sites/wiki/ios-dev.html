@@ -1,0 +1,53 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<link rel="Stylesheet" type="text/css" href="style.css">
+<title>ios-dev</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body>
+
+
+
+<ol>
+<li>
+<a href="ios目录结构.html">ios目录结构</a>
+
+</ol>
+
+<p>
+ios程序目录结构：
+</p>
+
+<p>
+/Documents -- 程序的数据文件
+/Library/Preferences -- 程序的偏好设置
+/Library/Caches -- 缓存数据
+/tmp -- is a temporary dir for writing files that do not need to be persisted between 
+</p>
+<blockquote>
+application launches.
+</blockquote>
+
+<p>
+只有对象才能被序列化(serialized) -- It is worth noting that only objects can be serialized.
+</p>
+
+<p>
+## 查看模拟器文件夹
+</p>
+
+<p>
+Finder按住option，在菜单栏中选择"前往"-》“资源库”
+</p>
+
+<p>
+如果没有资源库，则使用终端
+</p>
+<blockquote>
+$cd ~/Library/Application Support/iPhone Simulator/6.x/Application   里面会有一对的GUID类似的目录一个一个找
+$ls -lnt ./         这样可以查看最新修改的文件
+</blockquote>
+
+</body>
+</html>
