@@ -1,0 +1,36 @@
+# defaultdict
+
+参考：
+
+[Python的defaultdict模块和namedtuple模块](http://xianglong.me/article/learn-python-10-defaultdict-namedtuple/)
+1. 使用的情境
+
+在使用dict的时候，通过d[key]的方法来获取键值对，如果key对应的值不在，
+就会抛出KeyError异常，通过使用`defaultdict`，在初始化的时候调用工厂
+方法，那么请求一个不存在的key时，就会调用工厂方法使用其结果来作为key
+的默认值。
+
+`defaultdict`在使用的时候需要传入一个工厂函数(function_factory),
+`defaultdict(function_factory)`会构建一个类似dict的对应，该对象具有默认
+值，默认值通过调用工厂方法生成。
+
+2. 示例
+
+    from collections import defaultdict
+    s = [('xiaoming', 99), ('wu', 89), ('zhangsan', 66), ('lisi', 100)]
+    d = defaultdict(list)
+    for k, v in s:
+        d[k].append(v)
+
+该方式与调用`dict`的`setdefault(key, [])`比较类似，上述代码也可以这么写：
+
+    d = {}
+    for k, v in s:
+        d.setdefault(k, []).append(v)
+        
+
+3. 原理
+
+通过调用`__missing__`方法实现，可以查看help(defaultdict)
+
+

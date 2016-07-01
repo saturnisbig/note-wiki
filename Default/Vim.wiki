@@ -4,6 +4,7 @@
 与剪贴板进行交互，即相互复制，参考下文
 http://blog.fooleap.org/using-vim-with-clipboard-on-archlinux.html
 
+- [[vim源码编译]]
 
 # Learn the VI and VIM Editor
 

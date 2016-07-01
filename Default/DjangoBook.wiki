@@ -31,6 +31,9 @@
 * [[Django-分页]]
 * [[Django-自定义模板标签]]
 * [[fetch code与代码高亮]]
+* [[Django-常用查询--todo]]
+* [[Django-forms的使用]]
+* [[Django-评论功能]] - 2016-06-29 06:33:23
 
 ## Chapter 03
 Start: 2014-01-26 22:56:00
