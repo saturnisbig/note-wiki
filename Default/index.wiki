@@ -1,9 +1,5 @@
 = Teddy's Wiki =
-  * [[ZendFrameworkStudy]] -- note and work process with zf.
-  * [[DrupalLearning]] -- plans and notes.
   * [[Python]] -- everything about python
-  * [[BlogPostToDos]] -- blog post that need to finished.
-  * [[PHPSourceCode]] -- check out of the php source code and some maillist
   * [[HowTos]] -- personal howto wiki
   * [[CSS]] -- CSS study
   * [[ios-dev]] -- IOS development related
@@ -11,3 +7,5 @@
   * [[Toys]] -- toy application.
   * [[Todo]] -- Todo list
   * [[Books]] -- books that I am reading or readed.
+  * [[BlogPostToDos]] -- blog post that need to finished.
+  * [[投资理财]] -- 投资理财相关知识搜集

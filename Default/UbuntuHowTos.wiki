@@ -1,4 +1,6 @@
 
+- [[阻止软件包升级]] -- (指定的软件包不升级)
+
 # sheng
 stevedore.extension Could not load 'user_scripts': distribute
 stevedore.extension Could not load 'project': distribute

@@ -7,6 +7,7 @@
 [[Git]]
 
 ## Startdict
+
 词库地址：http://abloz.com/huzheng/stardict-dic/zh_CN/
 安装：
 -解压词库

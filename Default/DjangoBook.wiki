@@ -3,23 +3,8 @@
 [[TDD-Python]]
 
 [[Writing your first Django app-Part3]]
-[[Chapter 1 介绍]]
 [[Chapter 2 入门]]
 [[Chapter 3 视图和URL配置]]
-[[Chapter 4 模板]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 8: Advanced Views and URLconfs]]
-[[Chapter 9: Advanced Templates]]
-[[Chapter 10: Advanced Models]]
-[[Chapter 14: Sessions User Registration]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
-[[Chapter 1 Intro]]
 
 - [[重设管理员账号]]
 * [[Custom Managers]]
@@ -34,6 +19,7 @@
 * [[Django-常用查询--todo]]
 * [[Django-forms的使用]]
 * [[Django-评论功能]] - 2016-06-29 06:33:23
+* [[Django-taggit的使用]] - 2016-08-08 21:38:00 
 
 ## Chapter 03
 Start: 2014-01-26 22:56:00

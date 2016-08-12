@@ -1,11 +1,17 @@
 
 # VIM常用技巧
 
+[[Vim-ultisnips插件使用]] - (2016-07-21 07:20:31)
+ 
 与剪贴板进行交互，即相互复制，参考下文
 http://blog.fooleap.org/using-vim-with-clipboard-on-archlinux.html
 
-- [[vim源码编译]]
+[[vim源码编译]] -- 始于为使用YCM插件
 
+- [[YCM插件使用]] (2016-07-06 22:36:41)
+ 
+- [[tabs-edit相关]]
+ 
 # Learn the VI and VIM Editor
 
 ## [[Chapter 2 Simple Editing]]

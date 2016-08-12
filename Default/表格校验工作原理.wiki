@@ -1,0 +1,25 @@
+### 表格校验工作原理
+
+表格校验的流程：
+
+*full_clean() -> field内置的clean() -> form clean_*() -> form clean() -> errors or cleaned_data*
+
+`Form`中的`is_valid()`方法触发了`Form`中定义的另一个方法`full_clean()`，开始了整个校验流程：
+
+- `full_clean`遍历`field`中的`clean`方法，该方法是field内置的校验规则，每个方法
+要么触发`ValidationError`要么返回一个值，如果触发错误则校验结束，数据无效，
+如果是返回值则该值被存入`cleaned_data`字典中
+
+- 如果内置的校验规则没有触发错误，则会查询用户是否自定义了校验方法，这些方法
+定义的规则是以`clean_ + fieldname`的形式。在执行自定义校验方法时，要么触发
+错误，要么将值返回到`cleaned_data`中
+
+- 接着，如果定义的form类中有`clean`方法，则会调用该方法校验数据。如果没有错误，
+则会返回`self.cleaned_data`数据
+
+- 如果没有触发错误，则会返回`cleaned_data`；否则会返回`errors`，将不会有`cleaned_data`。
+每个field都会解析自己对应的错误，在模板中可以通过`{{ form.username.errors }}`的方式
+来获取错误的值。
+
+- 最后，`is_valid`返回False或True
+
