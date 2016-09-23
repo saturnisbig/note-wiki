@@ -1,0 +1,55 @@
+### 根据Model创建Form
+
+
+    from django.db import models
+    from django.forms import ModelForm
+
+    TITLE_CHOICES = (
+        ('MR', 'Mr.'),
+        ('MRS', 'Mrs.'),
+        ('MS', 'Ms.'),
+    )
+    class Author(models.Model):
+        name = models.CharField(max_length=100)
+        title = models.CharField(max_length=3, choices=TITLE_CHOICES)
+        birth_date = models.DateField(blank=True, null=True)
+        
+        def __str__(self):
+            return self.name
+    class Book(models.Model):
+        name = models.CharField(max_legnth=100)
+        authors = models.ManyToManyField(Author)
+        
+    class AuthorForm(ModelForm):
+        class Meta:
+            model = Author
+            fields = ['name', 'title', 'birth_date']
+    class BookForm(ModelForm):
+        class Meta:
+            model = Book
+            fields = ['name', 'authors']
+
+上述代码等同于使用forms创建的如下代码（除了`save()`方法有不同外）
+
+    from django import forms
+    class AuthorForm(forms.Form):
+        name = forms.CharField(max_length=100)
+        title = forms.CharField(
+            max_length = 3,
+            widget = forms.Select(choices=TITLE_CHOICES)
+        )
+        birth_date = forms.DateField(required=False)
+    
+    class BookForm(forms.Form):
+        name = forms.CharField(max_length=100)
+        authors = forms.ModelMultipleChoiceField(queryset=Author.objects.all())
+        
+
+注意点：
+
+ModelForm生成的表格中各个项的排列顺序按照他们在Model中定义的顺序，`ManyToManyField`被
+放在最后。
+
+如果在model中设置`editable=False`，那么ModelForm创建表格时不会生成该项
+
+

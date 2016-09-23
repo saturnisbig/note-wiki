@@ -1,0 +1,41 @@
+## Form-fields 文档
+2016-09-05 22:10:36 - 2016-09-05 22:58:32
+
+- required
+
+该表单值能否为空，默认值不能为空，否则会触发异常
+
+- label
+
+在表单中显示时的名字，默认是定义在`Form`中的名字，通过`label`属性，
+可以显示得更友好
+
+- initial
+
+用于生成表单时显示的默认的值，针对unbound 'Form'
+
+
+- widget
+
+使用的控件类型
+
+- help_text
+
+帮助内容，提示用户输入信息
+
+- error_messages
+
+错误的提示信息，不同的`Field`定义了不同的错误信息，参见[built-in Field classes](https://docs.djangoproject.com/en/1.10/ref/forms/fields/#built-in-field-classes)
+比如`forms.CharField(error_messages={'required': '请输入正确的用户名'})`
+
+- validator
+
+- localize(本地化)
+
+- disabled
+
+New in Django1.9. 不可编辑的
+
+- ModelChoiceField
+
+用于表示外键关系，接受`queryset`参数

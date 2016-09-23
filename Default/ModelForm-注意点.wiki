@@ -1,0 +1,9 @@
+#### ModelForm注意点
+
+
+ModelForm生成的表格中各个项的排列顺序按照他们在Model中定义的顺序，`ManyToManyField`被
+放在最后。
+
+如果在model中设置`editable=False`，那么ModelForm创建表格时不会生成该项
+
+

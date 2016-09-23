@@ -1,0 +1,9 @@
+#### ModelForm常用知识点整理
+
+去掉Model中不想包含的列
+
+为Model中不同的列添加相应的widget
+
+为不同的列添加对应的css类
+
+

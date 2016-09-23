@@ -19,7 +19,7 @@
 
 - 使用`isinstance()`
 
-用来判断继承关系，比如有如下继承关系：`object -> Animal -> Dog -> Husky`
+用来判断实例的继承关系，比如有如下继承关系：`object -> Animal -> Dog -> Husky`
 
 
 - 使用`dir()`

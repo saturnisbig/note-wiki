@@ -1,0 +1,61 @@
+### Python面向对象基本概念及用法
+
+2016-09-18 13:13:44 - 2016-09-18 13:45:20 - (p625-p634)
+
+2016-09-19 21:49:22 - 2016-09-19 22:33:22 - (p641-p653)
+
+>>>programming in Python is really a matter of *incremental prototyping*--
+you write some code, test it, write more code, test again, and so on.
+
+2016-09-20 13:16:35 - 2016-09-20 13:45:44 
+
+p653-p659
+
+2016-09-20 21:51:21 - 2016-09-20 22:52:13
+
+p661-p666
+
+P666 有关正确显示示例对应的类名及包含的属性
+
+2016-09-21 07:02:07 - 2016-09-21 07:21:50
+p666 - p672
+
+书写工具类的考虑，方法被子类重写问题，可以明确某些方法的私有性
+
+p700 pickle、dbm、shelve介绍
+
+2016-09-21 12:53:42 - 2016-09-21 13:45:00 
+
+p672 - p681(9) 
+
+when Python pickles a class instance, it records its self instance attributes,
+along with the name of the class it was created from and the module where the class
+lives.
+
+2016-09-21 21:25:41 - 2016-09-21 21:57:16
+p681 - p686(5)
+
+p684: When attached to classes, names are shared; in instances, name
+record per-instance data, not shared behavior or data.
+
+*class method*: receive a class when called instead of an instance, and can be used to
+manage per-class data.
+
+2016-09-21 22:08:07 - 2016-09-21 22:49:33
+p686 - p696
+
+*abstract superclass*: a class that expects parts of its behavior to be provided by
+its subclasses.
+
+2016-09-22 12:42:19 - 2016-09-22 13:24:11
+
+p696 - p705(9)
+
+2016-09-23 07:00:40 - 2016-09-23 07:24:44
+
+p705 - p710(5)
+
+双下划线开头和结尾，区别于自定义的方法
+
+
+
