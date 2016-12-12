@@ -1,5 +1,6 @@
 ## Projects
 * [[Python Basic]]
+* [[Python Intermediate]] - 2016-10-20 12:48:02
 * [[WebpyLearning]]
 * [[DjangoBook]]
 * [[TDD-Python]]
@@ -7,6 +8,7 @@
 * [[Automate Deployment]]
 * [[Pygments]]
 * [[Scrapy]]
+* [[Python-hacks]] - 2016-10-24 12:59:37
 
 ## HowTos
 

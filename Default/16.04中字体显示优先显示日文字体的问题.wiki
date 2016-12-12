@@ -1,0 +1,28 @@
+## [优先显示日文字体的问题](http://forum.ubuntu.org.cn/viewtopic.php?f=8&t=476862&start=15)
+
+
+
+其实现在遇到 CJK 字体，如果请求是 zh-cn 的话的确是往 SC 跑的。
+
+在`/etf/fonts/conf.d/64-language-selector-prefer.conf`里面注意到：
+代码:
+
+    <alias>
+       <family>sans-serif</family>
+       <prefer>
+          <family>Noto Sans CJK JP</family>
+          <family>Noto Sans CJK SC</family>
+          <family>Noto Sans CJK TC</family>
+       </prefer>
+    </alias>
+    <alias>
+       <family>monospace</family>
+       <prefer>
+          <family>Noto Sans Mono CJK JP</family>
+          <family>Noto Sans Mono CJK SC</family>
+          <family>Noto Sans Mono CJK TC</family>
+       </prefer>
+    </alias>
+
+你要做的就是把 JP 换到最后面。还有就是跟设置的终端字体也有关系，我出现这个问题
+就是因为在终端使用了`M+`字体。

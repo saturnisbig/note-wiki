@@ -1,0 +1,25 @@
+#### Using the re Module
+
+- Module functions
+
+compile(pattern [, flags])
+
+match(pattern, string [, flags])
+
+search(pattern, string [, flags])
+
+findall(pattern, string [, flags])
+
+finditer(pattern, string [, flags])
+
+split(pattern, string [, maxsplit, flags])
+
+sub(pattern, repl, string [, count, flags])
+
+subn(pattern, repl, string [, count, flags])
+
+escape(string)
+
+- Compiled pattern objects
+
+match search findall finditer split sub subn

@@ -1,0 +1,10 @@
+### collections - deque and namedtuple
+
+- dequeue and namedtuple
+
+2016-11-01 19:31:25 - 2016-11-01 20:15:14
+
+p18 - p23(5)
+
+
+

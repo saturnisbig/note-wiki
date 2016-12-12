@@ -1,86 +1,114 @@
 # Diary
 
+## 2016
+
+### December
+        * [[2016-12-12|WSWP - Chapter 2 - 复习]]
+
+### November
+        * [[2016-11-22|PP-Chapter 19]]
+        * [[2016-11-21|WSWP - Chapter02 - code exercise]]
+        * [[2016-11-16|Scraping with Python - Chapter1]]
+        * [[2016-11-09|Exception Designing]]
+        * [[2016-11-07|Vim edit habit paper]]
+        * [[2016-11-01|collections - deque and namedtuple]]
+
+### October
+        * [[2016-10-31|collections module -- defaultdict]]
+        * [[2016-10-24|The collections module]]
+        * [[2016-10-18|Exception Basics]]
+        * [[2016-10-17|Class部分练习题5]]
+        * [[2016-10-12|Class Decorator和Class Gotchas]]
+        * [[2016-10-11|static method和class method的用法]]
+        * [[2016-10-10|__slots__和staticmethod]]
+        * [[2016-10-09|Learning Python Study]]
+
+## 2015
+
+### September
+        * [[2015-09-05]]
+
 ## 2014
 
 ### February
-  * [[2014-02-17|Work Today]]
+        * [[2014-02-17|Work Today]]
 
 ## 2013
 
 ### December
-  * [[2013-12-25|How to remove git submodule]]
-  * [[2013-12-15|code smell]]
-  * [[2013-12-14|Chapter 4]]
-  * [[2013-12-12|(TDD)Chapter2 and Chapter3]]
-  * [[2013-12-11|TDD python]]
+        * [[2013-12-25|How to remove git submodule]]
+        * [[2013-12-15|code smell]]
+        * [[2013-12-14|Chapter 4]]
+        * [[2013-12-12|(TDD)Chapter2 and Chapter3]]
+        * [[2013-12-11|TDD python]]
 
 ### November
-  * [[2013-11-24|Virtualenv and Virtualenvwrapper]]
+        * [[2013-11-24|Virtualenv and Virtualenvwrapper]]
 
 ### October
-  * [[2013-10-17|Install mongodb on Ubuntu]]
-  * [[2013-10-14]]
+        * [[2013-10-17|Install mongodb on Ubuntu]]
+        * [[2013-10-14]]
 
 ### August
-  * [[2013-08-20|关于Python编码]]
+        * [[2013-08-20|关于Python编码]]
 
 ### July
-  * [[2013-07-31|工厂模式]]
-  * [[2013-07-29|数据库的命名原则]]
-  * [[2013-07-14|删除重复的数据保留最小id的数据 sqlite]]
-  * [[2013-07-05]]
+        * [[2013-07-31|工厂模式]]
+        * [[2013-07-29|数据库的命名原则]]
+        * [[2013-07-14|删除重复的数据保留最小id的数据 sqlite]]
+        * [[2013-07-05]]
 
 ### May
-  * [[2013-05-27|IOS protocol and delegate]]
-  * [[2013-05-22|ios]]
+        * [[2013-05-27|IOS protocol and delegate]]
+        * [[2013-05-22|ios]]
 
 ### March
-  * [[2013-03-06|button like anchor and javascript to ignore click event]]
+        * [[2013-03-06|button like anchor and javascript to ignore click event]]
 
 ### February
-  * [[2013-02-17|Tkinter 和Android开发环境安装]]
-  * [[2013-02-16|sqlite export and import to sql statement]]
+        * [[2013-02-17|Tkinter 和Android开发环境安装]]
+        * [[2013-02-16|sqlite export and import to sql statement]]
 
 ### January
-  * [[2013-01-30]]
-  * [[2013-01-06|Python re]]
+        * [[2013-01-30]]
+        * [[2013-01-06|Python re]]
 
 ## 2012
 
 ### December
-  * [[2012-12-29|Python basic]]
-  * [[2012-12-23]]
-  * [[2012-12-13]]
-  * [[2012-12-11]]
-  * [[2012-12-04|change template system to jinja2]]
+        * [[2012-12-29|Python basic]]
+        * [[2012-12-23]]
+        * [[2012-12-13]]
+        * [[2012-12-11]]
+        * [[2012-12-04|change template system to jinja2]]
 
 ### November
-  * [[2012-11-15|Python function var privillege]]
-  * [[2012-11-14|Python Function Basics]]
-  * [[2012-11-01|Revert from 'git rm -r .']]
+        * [[2012-11-15|Python function var privillege]]
+        * [[2012-11-14|Python Function Basics]]
+        * [[2012-11-01|Revert from 'git rm -r .']]
 
 ### October
-  * [[2012-10-26|Iterations and Comprehensions, Part 1]]
-  * [[2012-10-25|while an for Loops]]
-  * [[2012-10-24|if Tests and Python Syntax Rules]]
-  * [[2012-10-23|Assignments, Expressions, and Prints]]
-  * [[2012-10-22|Introducing Python Statements]]
-  * [[2012-10-16|Tuples, Files, and Everythings]]
-  * [[2012-10-14|2012-10-8 To 2012-10-14]]
+        * [[2012-10-26|Iterations and Comprehensions, Part 1]]
+        * [[2012-10-25|while an for Loops]]
+        * [[2012-10-24|if Tests and Python Syntax Rules]]
+        * [[2012-10-23|Assignments, Expressions, and Prints]]
+        * [[2012-10-22|Introducing Python Statements]]
+        * [[2012-10-16|Tuples, Files, and Everythings]]
+        * [[2012-10-14|2012-10-8 To 2012-10-14]]
 
 ### September
-  * [[2012-09-25|Python 'any' | webpy session error]]
-  * [[2012-09-19|Python descriptor and sqlalchemy basic]]
-  * [[2012-09-12|Python date operation]]
-  * [[2012-09-02|Markdown syntax study]]
+        * [[2012-09-25|Python 'any' | webpy session error]]
+        * [[2012-09-19|Python descriptor and sqlalchemy basic]]
+        * [[2012-09-12|Python date operation]]
+        * [[2012-09-02|Markdown syntax study]]
 
 ### August
-  * [[2012-08-24|Make dotcloud work -- solve 'sqlite database' lock problem]]
-  * [[2012-08-19|Convert MySQL to sqlite importable sql file]]
-  * [[2012-08-14|MySQL select next or prev of current row]]
-  * [[2012-08-07]]
-  * [[2012-08-04]]
+        * [[2012-08-24|Make dotcloud work -- solve 'sqlite database' lock problem]]
+        * [[2012-08-19|Convert MySQL to sqlite importable sql file]]
+        * [[2012-08-14|MySQL select next or prev of current row]]
+        * [[2012-08-07]]
+        * [[2012-08-04]]
 
 ### July
-  * [[2012-07-30]]
+        * [[2012-07-30]]
 

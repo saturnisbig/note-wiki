@@ -2,6 +2,6 @@
 
 关于函数定义的跳转及返回
 
-往前跳为C-O往后为C-i
+往前跳为C-O往后为C-I
 
 http://blog.jobbole.com/58978/

@@ -1,0 +1,8 @@
+# 内置的异常类
+
+BaseException
+-> Excpetion(root of user-defined exceptions)
+--> ArithmeticError: root of numeric errors
+--> LookupError: root of indexing errors
+
+还有其他很多，可以通过`import exceptions  help(exceptions)`来查看

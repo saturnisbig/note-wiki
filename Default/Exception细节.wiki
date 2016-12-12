@@ -1,0 +1,56 @@
+#
+
+
+- 异常的处理流程
+
+
+- 异常语句的几种形式
+
+except:*use with care*
+except name:
+except name as value:
+except (name1, name2):
+except (name1, name2) as value:
+else:
+finally:
+
+
+try:
+    statements
+finally:
+    statements
+    
+执行过程：
+
+- 如果没有触发异常，则try里面的语句执行完后接着执行finally里面的语句，然后执行try外的
+其他语句。
+
+- 若触发异常，则先执行完finally里面的语句，然后返回到之前进入的try语句或者最上层默认的处理，
+接着打印异常信息。
+
+统一的`try/except/finally`(after Python2.5，可以被放在一起），如下：
+try:
+    main-action
+except Exception1:
+    handler1
+except Exception2:
+    handler2
+else:
+    else-block
+finally:
+    finally-block
+    
+*Scope and try except Variables*
+在2.X版本的Python中，在except语句中异常相关的变量，does not localized to the clause itself，
+在try块执行完后仍然能够被访问到。
+
+在3.X版本中则是属于try块内的，try块的语句一执行完，则变量无法被访问，如果需要该变量的值，
+可以将变量保存到其他的参数中。
+
+通过raise触发异常（当需要捕获和处理异常而又想继续执行自己的代码时，可以用下面的方法）
+try:
+    raise IndexError('spam')
+except IndexError:
+    print('propagating')
+    raise
+

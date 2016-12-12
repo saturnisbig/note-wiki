@@ -1,0 +1,38 @@
+### Python Hacks
+
+- [如何在Python中跳出两层循环？](http://nedbatchelder.com//blog/201608/breaking_out_of_two_loops.html)
+github上面的翻译：https://github.com/PythonTG/PythonTG/blob/master/sources/20160813-breaking-out-of-two-loops.md
+
+如何立即跳出嵌套的两层循环？例如，要检验字符中是否存在相同的字符，如何找到一对
+相同的字符之后就停止循环？下面是常见的做法：
+
+    s = "a string to examine"
+    for i in range(len(s)):
+        for j in range(i+1, len(s)):
+	    if s[i] == s[j]:
+	        answer = (i, j)
+		break		# 在这里同时跳出两个循环
+		
+通常有下面三种解决办法：
+
+1. 将循环放在一个函数中进行，利用函数返回来跳出循环。这样不尽如人意，因为
+循环可能不适合重构为一个新的函数；
+
+2. 抛出异常，在两个循环外捕捉它。类似goto
+
+3. 使用布尔变量来记录循环结束，在外循环第二次检查以进行第二次break。
+
+作者的作法：
+
+    def unique_pairs(n):
+        for i in range(n):
+            for j in range(i+1, n):
+                yield i, j
+     
+    s = "a string to examine"
+    for i,j  in unique_pairs(len(s)):
+        if s[i] == s[j]:
+	    answer = (i, j)
+	    break
+	    
+这里我们写了一个生成器用于生成索引，

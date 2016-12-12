@@ -1,0 +1,24 @@
+## with/as context managers
+
+- 基本用法
+
+'with expression [as variable]':
+    with-block
+    
+这里expression默认返回一个支持"context management protocol"的对象，
+这个对象可能返回一个值被赋予variable变量
+
+- Multiple Context managers in 3.1, 2.7 and later
+
+        with open('data') as fin, open('res', 'w') as fout:
+	    for line in fin:
+	        if 'some key' in line:
+		    fout.write(line)
+		    
+	with open('data') as fin:
+	    with open('res', 'w') as fout:
+	        for line in fin:
+	            if 'some key' in line:
+		        fout.write(line)
+			
+

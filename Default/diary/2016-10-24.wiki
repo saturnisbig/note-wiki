@@ -1,0 +1,20 @@
+### The collections module
+
+2016-10-24 06:27:54 - 2016-10-24 07:16:45
+p10 - p17(8)
+
+主要包括：ChainMap, defaultdict, deque, namedtuple, OrderedDict
+
+ChainMap在3.0中才有，常用于程序配置文件设置中
+
+- Counter
+
+对iterable对象中的item进行计数，item必须是hashable的。
+不能在list中有嵌套的list，然后作为Counter的参数。
+
+可以使用most_common(c)方法，获取计数超过c的item的值。
+
+可以使用substract方法，对两个计数中的item的个数相减。
+
+- defaultdict
+

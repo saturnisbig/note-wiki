@@ -1,0 +1,55 @@
+## Exception Basics
+
+2016-10-18 19:18:46 - 2016-10-18 20:13:54
+
+p825 - 
+p1079 - p1101(20)
+
+- [[Exceptions基础]]
+
+- [[Exception细节]]
+
+2016-10-18 21:48:27 - 2016-10-18 22:32:51
+
+p1101 - p1112(11)
+
+------------------------------------------------------
+
+2016-10-19 20:41:27 - 2016-10-19 21:38:17
+p1112 - p1120(8)
+
+- [[assert]]
+- [[with-as]]
+
+------------------------------------------------------ 
+
+2016-11-08 20:46:38 - 2016-11-08 22:12:20
+p1130 - p1141(11)
+
+为什么需要异常继承？p1129举了个好的例子。
+
+- [[built-in exception class]]
+
+如果打算显示自己的异常提示信息，必须重写`__repr__`或`__str__`方法
+
+------------------------------------------------------ 
+
+2016-11-09 21:44:37 - 2016-11-09 22:38:07
+p1141 - p1151
+
+p1145
+raise is like 'go to', can be used to break through more than one loop.
+
+functions can signal conditions with raise
+
+closing files and server connections
+
+debugging with outer try statements
+
+running in-process tests
+
+displaying errors and tracebacks
+
+
+
+

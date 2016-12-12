@@ -1,0 +1,48 @@
+# Scraping with Python
+
+2016-11-16 20:16:22 - 2016-11-16 21:05:41
+
+p1 - p14(13)
+
+`pip install builtwith`, use builtwith to check the technologies a website used.
+
+`pip install python-whois`, use `whois` to find out who owns a websites.
+
+2016-11-16 21:36:26 - 2016-11-16 22:42:27
+
+p14-p16(2)
+
+2016-11-18 07:15:36 - 2016-11-18 07:32:38 
+
+p17-p24(7)
+
+2016-11-18 12:43:58 - 2016-11-18 13:08:04
+
+p25-p34(9)
+
+re
+
+BeautifulSoup
+
+lxml - css selector
+
+2016-11-21 18:37:40 - 2016-11-21 19:51:55
+
+install `cssselect`
+
+2016-11-21 20:23:21 - 2016-11-21 22:17:30
+
+### Chapter 3 - Caching Downloads
+
+2016-11-24 12:48:35 - 2016-11-24 13:18:52 
+p35-p47
+
+### Chapter 2 - 
+2016-12-12 06:43:43 - 2016-12-12 07:20:24
+p25 - p34
+2016-12-12 20:33:02 - 2016-12-12 21:26:29
+
+2016-12-12 21:48:04 - 2016-12-12 22:06:08
+复习第一章，重点是如何抓取网站所有链接地址
+
+返回的状态码中：5XX是服务器问题，可以测试的地址'http://httpstat.us/500'

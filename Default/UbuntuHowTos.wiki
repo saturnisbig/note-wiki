@@ -1,4 +1,8 @@
 
+- [[sogou input method remove when restart]] - 2016-11-09 21:43:29
+
+- [[16.04中字体显示优先显示日文字体的问题]]
+
 - [[阻止软件包升级]] -- (指定的软件包不升级)
 
 # sheng
@@ -7,7 +11,6 @@ stevedore.extension Could not load 'project': distribute
 stevedore.extension Could not load 'user_scripts': distribute
 
     $sudo pip install --upgrade virtualenv virtualenvwrapper
-
 
 
 ### Recursively delete directory like '.git', '.svn', '.repo'

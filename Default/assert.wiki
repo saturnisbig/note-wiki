@@ -1,0 +1,10 @@
+## The assert Statement
+
+`assert test, data`    # the data part is optional
+
+可以在编译程序的时候去除，通过在命令设置`-O`标示
+
+assert主要用于捕获用户定义的限制条件，还有就是用于抽象类中提示继承
+的子类必须实现相应的方法。
+
+

@@ -1,0 +1,37 @@
+
+异常如果被捕获，默认的错误提示消息将不会显示出来。
+
+可以通过`raise IndexError`来触发异常
+
+`assert`也可用来触发异常
+
+例子：
+
+    def after():
+        try:
+	    fetcher(x, 4)
+	finally:
+	    print('after fetch')
+	print('after try?')
+
+触发异常后，`finally`中的语句会被执行，但之后的语句就不会。
+
+`try/except`：主要用于捕获异常和从异常中恢复
+
+`try/finally`：用来确保终止行动被触发，不管在`try`块中触发了何种
+的异常。
+
+Quiz:(p1090)
+
+1、错误处理；终止程序；处理特殊情况，控制程序流；减少错误处理的代码等等。
+
+2、What happens to exception if you don't do anything special to handle it?
+
+3、How can your script recover from an exception？
+
+4、Name two ways to trigger exceptions in your script？
+
+5、Name two ways to specify actions to be run at termination time,
+whether an exception occurs or not.
+
+

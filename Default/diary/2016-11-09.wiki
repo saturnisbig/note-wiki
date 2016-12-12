@@ -1,0 +1,23 @@
+# Exception Designing
+
+
+2016-11-09 21:44:37 - 2016-11-09 22:38:07
+p1141 - p1151
+
+p1145
+raise is like 'go to', can be used to break through more than one loop.
+
+functions can signal conditions with raise
+
+closing files and server connections
+
+debugging with outer try statements
+
+running in-process tests
+
+displaying errors and tracebacks
+
+
+
+
+

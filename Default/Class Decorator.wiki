@@ -1,0 +1,17 @@
+### Class Decorator
+
+
+用于给类添加装饰器，作用是用于管理类或是用于在实例被创建前添加logic层等。
+
+def decorator(aClass): ...
+@decorator
+class C:...
+
+或者
+
+class C:...
+C = decorator(C)
+
+Metaclass是个类似基于类的高级工具，很多功能跟装饰器重叠。
+
+
