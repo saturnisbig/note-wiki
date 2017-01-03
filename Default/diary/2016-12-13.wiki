@@ -1,0 +1,33 @@
+### WSWP - Chapter 1 复习
+2016-12-13 06:40:11 - 2016-12-13 07:19:39
+p8-p16(9)
+
+retry download
+如果是服务器错误的问题，则可以再次尝试下载页面。'http://httpstat.us/500'来测试。
+
+setting a user agent
+在headers中设置，首先构建`request=urllib2.Request(url, headers)`，再通过urllib2来打开request。
+
+sitemap crawler
+
+ID iteration crawler
+根据数据库自增ID爬取内容。
+可能会碰到有些内容删除，ID不连续的情况；很多网站限制了通过ID访问；ID非数字的情况。
+所以ID遍历爬虫也不实用
+
+*Link crawler*
+
+relative link问题；交叉链接导致在两个页面之间不停重复下载问题。
+
+*Advanced features*
+
+- parsing robots.txt
+
+- support proxies
+
+2016-12-13 21:25:17 - 2016-12-13 22:12:41
+练习到链接爬虫
+
+
+
+

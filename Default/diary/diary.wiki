@@ -1,8 +1,18 @@
 # Diary
 
+## 2017
+
+### January
+        * [[2017-01-03|PP4E Ch01 -- Preview]]
+
 ## 2016
 
 ### December
+        * [[2016-12-27|Chapter3 缓存 - 复习和练习]]
+        * [[2016-12-26|Chapter 3 缓存]]
+        * [[2016-12-22|Chapter2 练习和看代码]]
+        * [[2016-12-14|WSWP - Chapter 1 - 复习]]
+        * [[2016-12-13|WSWP - Chapter 1 复习]]
         * [[2016-12-12|WSWP - Chapter 2 - 复习]]
 
 ### November
