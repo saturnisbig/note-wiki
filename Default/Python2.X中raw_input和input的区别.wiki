@@ -1,0 +1,5 @@
+## Python2.X中raw_input和input的区别
+
+[raw_input()与input()](http://www.cnblogs.com/way_testlife/archive/2011/03/29/1999283.html)
+
+

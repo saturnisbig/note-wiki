@@ -3,6 +3,12 @@
 ## 2017
 
 ### January
+        * [[2017-01-19|Ch01 -- Preview -- Step5内容阅读和代码输入]]
+        * [[2017-01-18|Ch01 -- Preview -- Step4代码练习]]
+        * [[2017-01-10|Ch01 -- Preview -- Step3 代码练习]]
+        * [[2017-01-09|Ch01 -- Preview -- Step3 练习]]
+        * [[2017-01-05|Ch01 -- Preview --- Step2  复习]]
+        * [[2017-01-04|Ch01 -- Preview --- Step2  复习]]
         * [[2017-01-03|PP4E Ch01 -- Preview]]
 
 ## 2016
