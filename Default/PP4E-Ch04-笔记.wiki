@@ -1,0 +1,77 @@
+## PP4E Ch04 文件和目录工具
+
+
+### File Tools
+
+`open`方法为底层文件系统提供了一个可移植的接口，只要系统中运行Python，功能都是
+一样的。
+
+
+#### The File Object Model in Python 3.X
+
+
+#### Using Built-in File Objects
+
+- Output files
+
+`write`和`writelines`方法
+
+需要明确关闭文件的3种情况：
+
+- Ensuring file closure:Exception handlers and context managers
+
+异常处理形式：
+
+    myfile = open(filename, 'w')
+    try:
+    	...process myfile...
+    finally:
+    	myfile.close()
+	
+	
+上下文处理形式：
+
+    with open(filename, 'w') as myfile:
+    	...process myfile, auto-closed on statement exit...
+	
+Python3.1 and later:
+    with A() as a, B() as b:
+        ...statements...
+等价形式Python(3.1, 3.0, 2.6)
+    with A() as a:
+    	with B() as b:
+	    ...statements...
+	    
+- Input files
+
+`read(N)`、`readline()`、`read()`、`readlines()`及文件迭代器，其中前两个每次
+读取指定或者一行数据，后两个一次行读取文件所有内容，费内存，但速度快，
+现在读取行文字的方法是通过文件迭代器在需要的时候读取，速度快又不耗费
+内存。
+
+- Other Open options
+
+#### Binary and Text Files
+
+- Unicode encoding for text files
+
+- End-of-line translations for text files
+
+- ??Parsing packed binary data with the struct module
+
+-
+
+#### Lower-Level File Tools in the os Module
+为什么还有这个工具，主要用于处理更底层的东西。
+比如，在一些系统中可以添加'O_EXCL'或'O_NONBLOCK'标记，进行一些特殊的处理。
+第一个是文件可执行，第二个是在多进程中同步问题。
+
+- Wrapping descriptor in file objects
+
+- Other os module file tools
+`os.rename`, `os.remove`, `os.chown`, `os.chmod`
+
+#### Directory Tools
+
+
+

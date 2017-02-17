@@ -14,4 +14,41 @@
 
 `pydoc -p 0`：查看Python文档，'0'使用任何空闲的port。
 
+### sys模块介绍
 
+`sys.path`：包含了Python程序运行时查找的路径列表，该列表可以被修改，
+但是仅在程序运行时有效。*运行在服务器上的脚本无法依赖'PYTHONPATH'，
+只能通过在开始运行时配置sys.path来确保需要import的路径都被包括进来。*
+
+`sys.modules`：包含Python会话或程序import的模块
+
+详细异常信息：通过`sys.exc_info`函数，可以获取最新异常的类型、值和
+*traceback对象*, 查看'traceback'模块的文档。
+
+`sys.argv`：命令行参数
+`sys.stdin, sys.stdout, sys.stderr`：标准流
+`sys.exit`：退出程序
+
+### os模块介绍
+
+该模块的调用可以用于处理路径、进程、shell变量等，提供了
+*POSIX* 标准的工具。`os`模块提供了主要的系统调用接口，用
+os.path和os写的脚本通常都能跨平台运行。
+
+os模块的工具：p90
+
+- 管理工具
+
+`os.getpid, os.getcwd, os.chdir`
+
+- 跨平台常量
+
+`os.pathsep, os.sep, os.pardir, os.curdir, os.linesep`
+
+- 常用的os.path工具
+`os.path.isdir, os.path.isfile, os.path.exists, os.path.getsize, `
+`os.path.split, os.path.join, os.path.dirname, os.path.basename, os.path.splitext`
+`os.path.normpath, os.path.abspath`
+
+- 在脚本中运行shell命令
+`os.system`和`os.popen`

@@ -1,0 +1,64 @@
+## PP4E Ch01 笔记 -- Script Execution Context
+
+
+- Current Working Directory
+
+p104: 脚本总是从当前目录被执行，而不是脚本所在的目录。
+比如，当前位置是'/home/teddy/project'，你在当前目录执行了`python toy/weibo.py`，
+则'weibo.py'脚本是在当前目录下执行的，而非'/home/teddy/toy/'目录下。
+
+相反的，`import`优先找的是脚本所在的目录，而不是运行脚本的目录。
+
+- CWD and Command Lines
+
+- Command-Line Arguments
+
+- Parsing Command-Line Arguments
+
+有两个模块可以参考，`getopt`和`optparse`，第一个以Unix/C基础为模型，
+第二个功能更强大。
+
+- Shell Environment Variables
+
+获取环境变量，`os.environ['TEMP']`等方式
+
+修改环境变了，`os.environ['TEMP'] = r'c:\temp'`
+
+在一个Shell会话中修改环境变量，会影响在该会话中运行的Python脚本的环境变变量值，
+但是在脚本中修改了环境变了，仅在对该脚本的环境变量有影响。
+
+- Standard Streams
+
+- Redirecting Streams to File and Programs
+
+流重定向可以用于测试的时候，将预先设计好的测试案例作为程序的输入，预期的结果与
+程序的输出进行比较。
+
+通过管道将程序链接起来。
+
+- Redirected Streams and User Interaction
+
+- Redirecting Streams to Python Objects
+
+任何看起来想文件的对象都可以作为输入、输出流；定义了`read`方法的，可以将该对象的read方法
+作为输入；定义了`write`方法的，可以将该对象的`write`方法作为输入
+
+书中的例子是否有错误？p126
+
+- The io.StringIO and io.BytesIO Utility Classes
+
+
+- Capturing the stderr Stream
+
+- Redirection Syntax in Print Calls
+
+`print(stuff, file=afile)`
+
+- Other Redirection Options: os.popen and subprocess Revisited
+
+
+
+
+
+
+
