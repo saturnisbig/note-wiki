@@ -1,0 +1,58 @@
+# PP4E Ch05 笔记
+
+有两种方式让程序并行执行：生成进程和生成线程
+生成进程在windows中不支持，线程被多数主要平台所支持。
+
+- Forking Processes
+
+
+- The fork/exec Combination
+
+## Threads
+
+- _thread Module
+
+`_thread.start_new_thread(func, (tuple,))`来创建线程，第一个参数是一个函数或可调用的对象，
+第二个参数是这个函数的参数数组。
+
+子线程执行完后退出，如果发生异常也会退出，但不会影响其他子线程和主线程，主线程退出后，
+则程序执行完毕，所有子线程也将退出。
+
+- Synchronizing access to shared objects and names
+
+通过对共享且可能被修改的值加锁，确保某一时刻只有一个线程在修改该值，以此避免数据不同步的
+问题，代码：
+
+    mutex = thread.allocate_lock()
+    mutex.acquire()
+    ... do some code ...
+    mutex.release()
+
+- Waiting for spawned thread exits（等待生成的线程退出）
+
+可以给生成的每个子线程配一个锁，如果代码执行结束则，锁上。如果所有的锁都锁上了，证明所有的
+
+## The queue Module
+
+
+## Preview: GUIs and Threads
+
+## More on the Global Interpreter Lock
+
+"global interpreter lock" -- GIL
+
+
+子线程都执行完毕，主线程就可以退出了。
+
+- Coding alternatives: busy loops, arguments and context managers
+
+把要锁定的对象的锁作为参数传入，作为创建线程的函数参数，通过采用`with`语句，可以确保异常发生
+时，锁被正确的释放。
+
+## The threading Module
+
+- Other ways to code threads with threading
+
+
+- Synchronizing access to shared objects and names revsited
+

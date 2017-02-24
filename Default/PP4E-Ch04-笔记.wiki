@@ -72,6 +72,20 @@ Python3.1 and later:
 `os.rename`, `os.remove`, `os.chown`, `os.chmod`
 
 #### Directory Tools
+`os.popen`,`os.listdir`, `glob.glob`
+其中后两种在各种平台比较通用，`os.listdir`速度更快。
+
+- os.walk visitor
+返回三个元素的数组：当前目录、子目录列表、当前目录文件列表
+改变子目录列表，会改变`walk`的执行顺序。
+
+- recursive os.listdir traversals
+
+#### Handling Unicode Filenames in 3.X:listdir, walk, glob
+看得迷迷糊糊的，等有实际例子再复习。
+
+
+
 
 
 
