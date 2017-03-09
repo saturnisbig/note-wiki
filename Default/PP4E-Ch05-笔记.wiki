@@ -56,3 +56,22 @@
 
 - Synchronizing access to shared objects and names revsited
 
+- Thread Exits and Shared State
+
+## Interprocess Communication
+
+可以跨程序交流的方式：简单的文件；命令行参数；Shell环境变量；标准流重定向；由`os.popen`和
+`subprocess`管理的管道流。
+
+除此之外，还包括套接子、共享内存、信号、匿名和有名管道等。
+
+- Anonymous Pipes
+通过`os.pipe()`创建2个文件描述符，作为管道的输入和输出，从子进程的输出管道传入数据，可以
+在父进程的输入管道读取到数据，但是管道必须先于进程被创建。
+
+- Wrapping pipe descriptors in file objects
+
+- Anoymous pipes and threads
+
+
+
