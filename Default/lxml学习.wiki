@@ -1,0 +1,40 @@
+# lxml相关知识
+
+### 基础知识
+2017-03-20 21:23:36 - 2017-03-20 23:03:08
+- xpath相关知识
+
+2017-03-21 06:51:28 - 2017-03-21 07:01:07
+
+语法：XPath是一门在XML文档中查找信息的语言，可以用来对XML文档中的元素和属性进行遍历，
+是W3C XSLT标准的主要元素，XQuery和XPointer都构建于XPath表达之上。
+
+节点关系：
+
+    <bookstore>
+    <book>
+    <title>Harry Potter</title>
+    <author>K. Rowling</author>
+    <year>2005</year>
+    <price>29.99</price>
+    </book>
+    <book>
+    <title>Potter</title>
+    <author>Rowling</author>
+    <year>2006</year>
+    <price>29.99</price>
+    </book>
+    </bookstore>
+    
+1. 父节点：每一个元素几属性都有一个父节点，上述例子中，book元素是title、author、year、price的父
+
+2. 子节点：元素节点可有零个、一个或多个子，上述例子中，title、author等都是book的子。
+
+3. 同辈（Sibling）
+4. 先辈（Ancestor）
+5. 后代（descendant）
+
+选取某个元素
+
+选取某个元素下面的所有元素
+
