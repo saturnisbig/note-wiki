@@ -1,0 +1,9 @@
+# timeout设置
+
+设置结束响应的时间，有些网站实在响应太慢。
+
+
+    import urllib2
+    resp = urllib2.urlopen(url, timeout=10)
+    # 根据接受参数的循序
+    resp2 = urllib2.urlopen(url, data, 10)

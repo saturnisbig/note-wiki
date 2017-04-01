@@ -1,0 +1,27 @@
+# 设置headers
+
+headers参数中包含了访问页面时的相关请求信息，包括浏览器user-agent类型，
+获取文件的类型等，有些网站会对这些参数进行限制，从而限制是否为爬虫在访问，
+所以设置headers的相关参数信息，可以让爬虫更好的工作。查看headers的信息的
+方法：'Firefox'中可以通过httpfox的插件查看，'chrome'中F12，打开网络监听。
+
+相关header参数说明：
+
+"User-Agent"：有些服务器或Proxy会根据该值来判断是否是浏览器发出的请求
+"Content-Type"：在使用REST接口时，服务器会检查该值，用来确定HTTP BODY中的
+内容该怎样解析，设置错误会导致服务器拒绝服务。
+"application/xml"：在XML RPC，如RESTful/SOAP调用时使用
+"application/json"：在JSON RPC调用时使用
+"application/x-www-form-urlencoded"：向浏览器提交Web表单时使用
+
+
+例子：
+
+    import urllib2
+    url = 'http://www.mzitu.com'
+    user_agent = 'Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:52.0) Gecko/20100101 Firefox/52.0'
+    headers = {'User-Agent': user_agent}
+    headers['Referer'] = 'http://www.mzitu.com/all'
+    request = urllib2.Request(url, headers=headers)
+    resp = urllib2.urlopen(request)
+    print resp.read()

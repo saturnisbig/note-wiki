@@ -1,0 +1,48 @@
+# Cookie的使用
+
+Cookie指某些网站为了辨别用户身份，进行session跟踪而存储在用户本地终端的数据（通常经过加密）。
+比如，有些网站必须登录才能访问某些资源，要抓取的话，就必须先登录。可以利用ulrlib2库保存登录
+的cookie，然后再抓取其他页面就达到目的了。
+
+- opener
+当获取一个URL时，使用一个opener（urllib2.OpenerDirector），通常都是使用默认的urlopen，如果
+需要用到cookie，用urlopen无法达到目的，要用更一般的opener来实现。
+
+urlopen：调用的是默认的全局OpenerDirector的open方法
+
+- cookielib
+主要作用是存储cookie对象，以便配合urllib2来访问internet资源。可以使用其`CookieJar`类的对象
+来捕获cookie，并在后续连接请求时重新发送，比如可以实现模拟登录。该模块主要对象有CookieJar、
+FileCookieJar、MozillaCookieJar、LWPCookieJar。
+
+    #获取cookie保存到变量
+    import urllib2
+    import cookielib
+    url = 'http://www.baidu.com'
+    cookie = cookielib.CookieJar()
+    handler = urllib2.HTTPCookieProcessor(cookie)
+    opener = urllib2.build_opener(handler)
+    resp = opener.open(url)
+    for item in cookie:
+        print 'Name = ' + item.name
+	print 'Value = ' + item.value
+    # 保存cookie到文件
+    filename = 'cookie.txt'
+    cookie = cookielib.MozillaCookieJar(filename)
+    handler = urllib2.HTTPCookieProcessor(cookie)
+    opener = urllib2.build_opener(handler)
+    resp = opener.open(url)
+    cookie.save(ignore_discard=True, ignore_expires=True)
+    # ignore_discard: save even cookies set to be discarded. 
+    # ignore_expires: save even cookies that have expiredThe file is overwritten if it already exists
+    # 从文件中获取cookie并访问，如果cookie.txt存储的是某人登录百度的cookie，
+    # 那么就可以模拟该人登录了。
+    cookie = cookie.MozillaCookieJar()
+    cookie.load('cookie.txt', ignore_discard=True, ignore_expires=True)
+    req = urllib2.Request(url)
+    opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cookie))
+    resp = opener.open(req)
+    print resp.read()
+    # 利用cookie模拟登录，并将cookie保存到文本文件中
+    import urllib
+    

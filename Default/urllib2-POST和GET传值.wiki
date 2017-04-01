@@ -1,0 +1,26 @@
+# POST和GET传值
+
+
+	# POST传值，表单传值的方式
+	import urllib
+	import urllib2
+	
+	values = {'username': 'teddy', 'password': 'xxxxxxx'}
+	data = urllib.urlencode(values)
+	url = 'http://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn'
+	request = urllib2.Request(url, data)
+	resp = urllib2.urlopen(request)
+	print resp.read()
+	
+	# GET传值，传过去的值会直接在url上面体现
+	values = {}
+	values['username'] = 'admin'
+	values['password'] = 'xxxx'
+	data = values
+	url = 'http://passport.csdn.net/account/login'
+	geturl = url + '?' + data
+	print geturl
+	# 输出：'http://passport.csdn.net/account/login?username=admin&password=xxxx'
+	request = urllib2.Request(geturl)
+	resp = urllib2.urlopen(request)
+	print resp.read()

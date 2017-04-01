@@ -1,0 +1,18 @@
+# 使用HTTP的PUT和DELETE方法
+
+http协议有六种请求方法，get、head、put、delete、post、options，有时候会用到
+PUT或DELETE的请求方式。
+
+PUT：这个方法少见，HTML表单也不支持这个。本质上讲和POST相似，都是向服务器发
+送请求，区别是PUT通常指定了资源存放的位置，而POST则没有，POST的数据存放位置
+由服务器自己决定。
+
+DELETE：删除某个资源，也很少见。
+
+要使用上述两个方法，只能使用比较低层httplib库。
+
+
+    import urllib2
+    request = urllib2.Request(url, data=data)
+    request.get_method = lambda: 'PUT'
+    resp = urllib2.urlopen(request)
