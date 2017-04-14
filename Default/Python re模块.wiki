@@ -1,0 +1,24 @@
+# Python re模块
+
+- 常用方法
+
+    # 返回pattern对象
+    re.compile(string[,flag])
+    # 以下为匹配所用函数
+    re.match(pattern, string[,flags])
+    re.search(pattern, string[,flags])
+    re.split(pattern, string[,maxsplit])
+    re.findall(pattern, string[,flags])
+    re.finditer(pattern, string[,flags])
+    re.sub(pattern, string[,count])
+    re.subn(pattern, string[,count])
+    # flag匹配模式，可以用'|'表示同时生效
+    re.I(IGNORECASE)：忽略大小写
+    re.M(MULTILINE)：多行模式，改变'^'和'$'的行为
+    re.S(DOTALL)：点任意匹配模式，改变'.'的行为，匹配正则转义字符？
+    re.L(LOCALE)：使预定字符类\w \W \b \B \s \S取决于当前区域设定
+    re.U(UNICODE)：使预定字符类\w \W \b \B \s \S取决于Unicode定义的属性
+    re.X(VERBOSE)：详细模式，该模式下表达式可以是多行，忽略空白字符，并可以加入注释
+
+
+- [[re.match例子]]
