@@ -6,3 +6,4 @@
 - [[habits_paper]] - 2016-11-07 13:02:20
 - [[Scraping With Python]] - 2016-11-10 12:48:15
 - [[Python Programming]] - 2016-11-22 18:41:04
+- [[Tools-Practical Vim]] - 2017-04-25 13:12:16 

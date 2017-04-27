@@ -1,0 +1,13 @@
+# The Vim Way
+2017-04-27 13:07:27 - 2017-04-27 13:31:27
+p27 - p32
+
+1. 点'.'命令: let us repeat the last change. Is a micro macro
+
+重复上一次的改变，这个改变可以是在不同的模式下的，知道退出该模式。
+`>G`从当前行开始，增加缩进到文件末尾。
+
+2. Don't repeat yourself(p5)
+
+举了在代码末端添加';'的例子
+

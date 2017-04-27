@@ -1,0 +1,10 @@
+# Practical Vim 阅读记录和笔记
+
+`vim -u None -N`：不适用vimrc中的配置，设置'nocompatible'模式
+
+练习书中的代码示例时使用的vim配置项
+`vim -u ~/projects/vim_sample_code/essential.vim`
+
+- [[PV-Ch01-The Vim Way]] - 2017-04-25 13:30:41 - 
+
+- [[PV-Ch02-The Vim Way]] - 2017-04-25 13:30:41 - 

@@ -1,0 +1,25 @@
+# 完善抓取淘宝MM - 使用PhantomJS来抓取
+
+通过官网上的phantomjs来抓取，能够成功打开页面
+2017-04-26 06:38:37 - 2017-04-26 07:24:52
+通过Ubuntu的apt安装的版本有问题，出现了'unable to atom find_element'的情况，
+参考[stackoverflow来解决](http://stackoverflow.com/questions/36770303/phantomjs-with-selenium-unable-to-load-atom-find-element)
+抓取图片并保存
+2017-04-26 21:57:20 - 2017-04-26 22:53:23
+2017-04-26 23:05:23 - 2017-04-26 23:24:16 
+保存图片时文件夹和文件名都还有点问题
+
+# 编译selenium
+2017-04-26 06:30:55 - 2017-04-26 06:37:57 
+
+通过Ubuntu自带的apt工具安装了PhantomJS在使用时出现了错误：
+[PhantomJS with Selenium - Unable to load Atom "find_element"](http://stackoverflow.com/questions/36770303/phantomjs-with-selenium-unable-to-load-atom-find-element)
+通过该方式安装的并不是具有完整功能的PhantomJS版本，建议通过官网上介绍的
+方式安装。有两种方式，在官网下载相应版本的二进制包，或是源码编译。编译比较耗时。
+
+
+    $git clone git://github.com/ariya/phantomjs.git
+    $cd phantomjs
+    $git checkout 2.1.1
+    $git submodule init
+    $git submodule update

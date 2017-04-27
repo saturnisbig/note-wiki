@@ -16,7 +16,7 @@
 	values = {}
 	values['username'] = 'admin'
 	values['password'] = 'xxxx'
-	data = values
+	data = urllib.urlencode(values)
 	url = 'http://passport.csdn.net/account/login'
 	geturl = url + '?' + data
 	print geturl

@@ -14,4 +14,3 @@
   * [[Dropbox]]
   * [[DjangDeploys]]
   * [[Sqlite]]
-  * [[Ubuntu-terminal-中文]]?

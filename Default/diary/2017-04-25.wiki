@@ -1,0 +1,12 @@
+# selenium基础知识学习
+
+2017-04-25 06:47:44 - 2017-04-25 07:28:07
+页面操作
+2017-04-25 20:05:59 - 2017-04-25 21:04:39
+
+## 抓取淘宝MM
+通过selenium+phantomjs来抓取需要动态加载的内容
+2017-04-25 21:25:57 - 2017-04-25 22:32:51 
+
+通过Ubuntu的apt安装的版本有问题，出现了'unable to atom find_element'的情况，
+参考[stackoverflow来解决](http://stackoverflow.com/questions/36770303/phantomjs-with-selenium-unable-to-load-atom-find-element)
