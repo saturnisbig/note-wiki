@@ -3,6 +3,7 @@
 ## 2017
 
 ### May
+        * [[2017-05-08|Ch03 Insert Mode (p27-p34)]]
         * [[2017-05-07|阅读PV-Ch02-Normal Mode]]
         * [[2017-05-02|PV-Ch01-The Vim Way]]
 
