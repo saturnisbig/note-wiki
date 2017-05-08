@@ -1,0 +1,31 @@
+# Ch03 Insert Mode (p27-p34)
+
+2017-05-08 12:56:20 - 2017-05-08 13:28:47  (p27-p32)
+
+13. Make Corrections Instantly from Insert Mode. p27
+
+在插入模式下，如何快速删除一个字符、词或者一行，通常可以使用删除键或者
+切换模式进行删除，插入模式下也提供了快速删除的命令：`<C-h>,<C-w>, <C-u>`。
+分别对应删除字符，单词和行，但是都是英文下的以空格区分的。
+
+14. Get Back to Normal Mode. p28
+
+`<Esc>, <C-[>`回到正常模式；
+`<C-o>`回到插入正常模式(用于执行一个正常模式下的命令，后返回到插入模式)。
+`zz`使当前行成为窗口的中心位置，可以看到更多的内容。作者提及经常在插入
+模式中使用该命令，查看当前位置上下文。
+
+15. Paste from a Register Without Leaving Insert Mode. p29
+
+作者建议把大写字母锁定键重新映射，避免错按出现奇怪的现象。
+`<C-r>{register}`将寄存器的内容在插入模式下复制，如果设置自动换行或者文本
+宽度，则会自动切换。
+`<C-r><C-p>{register}`避免多余的自动缩进、换行。
+
+16. Do Back-of-the-Envelope Calculations in Place. p31
+
+举'expression register'的例子，用于在插入模式下进行数学计算，通过按`<C-r>=`来
+触发命令。
+
+17. Insert Unusual Characters By Charater Code. p32
+

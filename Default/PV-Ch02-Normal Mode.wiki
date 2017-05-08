@@ -1,0 +1,44 @@
+# Ch02 Normal Mode
+
+2017-05-06 13:12:26 - 2017-05-06 13:37:30 
+
+7. Pause with Your Brush Off the Page.
+
+
+8. Chunk Your Undos.
+Vim能够使每次的undo都根据你的需要来设置，这样与我们的正常思维比较
+接近。
+
+9. Compose Repeatable Changes. p17
+在使用Vim的过程中，可以有很多种方式来实现改变，高效的通常就是合适
+的。
+
+2017-05-07 16:17:44 - 2017-05-07 16:57:30 (p20-p27)
+
+10. Use Counts to Do Simple Arithmetic. p20
+
+<C-a>进行加的运算，<C-x>进行减的运算。如果光标不在数字的字符下，则往后
+查找最近的字符。
+
+对于'007'使用<C-a>会变成'010'，因为默认VIM将带前缀0的数字当作八进制来处理，
+所以才会有'010'的结果，可以在配置文件中设置'set nrformats='使默认都是十进制的。
+
+11. Don't Count If You Can Repeat. p21
+
+举的例子是，要删除一个句子里的两个单词，可以用`2dw`、`d2w`和`dw.`，作者推荐用
+`dw.`，理由是免去统计可能的错误，虽然需要多按几次`.`命令。因为可能存在需要
+删除3个或更多单词的情况。
+
+在有些情况下，作者也建议使用计数删除的方式，但总的来说还是建议以点命令来重复。
+
+12. Combine and Conquer. p24
+
+Operator(p25表) + Motion = Action
+
+Vim语法的规则：一个动作是由操作和行动组成的；一个操作被重复，作用效果是针对
+这一行的。
+
+可以将自己定义的Operator和Vim自带的motion结合起来使用，':h :map-operator'查看帮助
+举了Tim Pope[commentary.vim](https://github.com/tpope/vim-commentary)的例子。
+
+也可以自定义Motion，通过':h omap-info'查看帮助，举了Kana Natsuno的例子[vim-textobj-entire](https://github.com/kana/vim-textobj-entire)

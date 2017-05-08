@@ -1,22 +1,7 @@
-# The Vim Way
-2017-04-27 13:07:27 - 2017-04-27 13:31:27
-p27 - p32
-2017-04-28 13:15:06 - 2017-04-28 13:28:53
-p32 - p33
+# PV-Ch01-The Vim Way
+
 2017-05-02 13:04:07 - 2017-05-02 13:28:18
 p33 - p38
-
-1. 点'.'命令: let us repeat the last change. Is a micro macro
-
-重复上一次的改变，这个改变可以是在不同的模式下的，知道退出该模式。
-`>G`从当前行开始，增加缩进到文件末尾。
-
-2. Don't repeat yourself(p5)
-
-举了在代码末端添加';'的例子
-
-[[一个键具有两个键功能]]
-
 3. Take one step back, the three forward. (p7)
 示例：`var foo = "method("+arg1+","+arg2+")";`在运算符两边插入空格，使效果看起来
 像：`var foo = "method(" + argument1 + "," + argument2 + ")";`
@@ -33,4 +18,4 @@ p33 - p38
 所有的词，而是要找出需要替换的词，根据文本内容确定是否需要替换。
 
 6. Meet the Dot Formula. (p11)
-一个按键移动，另一个按键执行任务，作者称为'Dot Formula'，点范式？
+一个按键移动，另一个按键执行任务，作者成为'Dot Formula'，点范式？
