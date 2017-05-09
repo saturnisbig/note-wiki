@@ -29,3 +29,18 @@
 
 17. Insert Unusual Characters By Charater Code. p32
 
+2017-05-09 13:22:18 - 2017-05-09 13:41:04 (p32-p37)
+
+插入字符码`<C-v>{code}`来实现，`ga`来查看光标下字符的编码。
+
+18. Insert Unusual Characters by Digraph. p33
+
+查看`:h digraphs-default`来查看对应的字符。
+¿½«»
+
+19. Overwrite Existing Text with Replace Mode. p34
+
+Virtual Replace Mode：通过gR触发，把tab当作是由空格组成的而非一个字符。
+作者建议能够使用`gR`就使用，避免带来像tab那样的问题。
+
+

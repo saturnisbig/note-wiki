@@ -1,0 +1,3 @@
+# 安装flash插件
+
+`sudo apt-get install flash-installer`
