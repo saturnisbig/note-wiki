@@ -1,0 +1,67 @@
+# Xpath语法基础知识
+
+语法：XPath是一门在XML文档中查找信息的语言，可以用来对XML文档中的元素和属性进行遍历，
+是W3C XSLT标准的主要元素，XQuery和XPointer都构建于XPath表达之上。
+
+节点关系：
+
+    <bookstore>
+    <book>
+    <title>Harry Potter</title>
+    <author>K. Rowling</author>
+    <year>2005</year>
+    <price>29.99</price>
+    </book>
+    <book>
+    <title>Potter</title>
+    <author>Rowling</author>
+    <year>2006</year>
+    <price>29.99</price>
+    </book>
+    </bookstore>
+    
+1. 父节点：每一个元素几属性都有一个父节点，上述例子中，book元素是title、author、year、price的父
+
+2. 子节点：元素节点可有零个、一个或多个子，上述例子中，title、author等都是book的子。
+
+3. 同辈（Sibling）
+4. 先辈（Ancestor）
+5. 后代（descendant）
+
+## 选取某个元素
+
+'nodename'       选取此节点的所有子节点；  bookstore
+'/'              从根节点选取；  /bookstore
+'//'		 从匹配选择的当前节点选择文档中的节点而不考虑它们的位置； bookstore/book
+'.'              选取当前节点
+'..' 选取当前节点的父节点
+'@'  选取属性  @lang
+'*'：匹配任何元素节点
+'@*'：匹配任何属性节点
+'node()'：匹配任何类型的节点
+
+例子：
+'//book'：选取所有的book标签而不管在文档的位置
+'bookstore//book'：选取bookstore下的所有book标签而不管在后面的位置
+'/bookstore/*'：bookstore下的所有子元素
+'//*'：文档中所有元素
+'//title[@*]'：包含属性的所有title元素
+
+### 谓语(Predicates)
+
+用来查找特定的节点或者包含某个指定的值的节点，嵌在方括号中。
+例子：
+'/bookstore/book[1]'：选取bookstore子元素的第一个book标签
+'/bookstore/book[last()]'：选取bookstore子元素的最后一个book标签
+'/bookstore/book[last()-1]'：选取bookstore子元素的倒数第二个book标签
+'/bookstore/book[position()<3]'：选取最前面的2个book子标签
+'//title[@lang]'：选取所有含lang属性的title
+'//title[@lang="eng"]'：选取所有lang属性为eng的title标签
+'/bookstore/book/[price>35.00]'：选取bookstore的所有book，且其中price元素值大于35.00
+'/bookstore/book/[price>35.00]/title'：bookstore下的所有book中price>35.00的所有title
+
+### 支持运算符
+
+逻辑运算、算输运算、比较大小等
+
+

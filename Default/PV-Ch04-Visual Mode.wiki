@@ -1,0 +1,49 @@
+# Visual Mode (p37-p48)
+
+2017-05-10 13:12:53 - 2017-05-10 13:43:03 (p37-42)
+
+20. Grok Visual Mode. p37
+
+在视图模式中，每个键有不同的功能。
+
+'Select Mode'：应用与类似textmate的snippet功能的时候，做占位符。
+
+21. Define a Visual Selection. p38
+
+Visual Mode由三个子模式，作者介绍三个子模式的触发及切换方式。
+
+a. 'character-wise visual mode'：可以选择单个字符及一系列字符，在一行内或者
+跨多行，多用于单个词或短语的情况。
+b. 'line-wise visual mode'：作用于整行。
+c. 'block-wise visual mode'：作用于列区域，比较特殊，详见tip24, 25, 26
+
+触发：`v`进入a模式， `V`进入b模式，`<C-v>`进入c模式，`gv`重选上一次的模式选择的。
+切换：`<Esc>, <C-[>`正常模式，`v, V, <C-v>`与正常模式切换，`o`选择文本的另一端。
+
+22. Repeat Line-Wise Visual Commands. p41
+
+2017-05-11 13:16:01 - 2017-05-11 13:43:13 (p43-p51)
+
+23. Prefer Operators to Visual Commands Where Possible. p43
+重复视图命令，影响的是同范围的文本，作者举了例子。
+对于需要用点命令重复的，最好是通过操作符命令来实现。
+
+24. Edit Tabular Data with Visual-Block Mode. p45
+对于块区域操作的好模式。
+
+25. Changes Columns of Text. p46
+
+修改某个区域内的内容，同时跨多行的情况。
+
+26. Append After a Ragged Visual Block. p48
+Visual Mode下的`i`和`a`的功能和Normal Mode下的不同，在视图模式下，
+使用`I`和`A`，来取得想要的效果。因为`i`和`a`涉及到'text object'的概念，
+将在tip51介绍。
+
+
+
+
+
+
+
+

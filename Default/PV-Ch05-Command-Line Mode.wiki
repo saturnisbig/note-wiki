@@ -1,0 +1,22 @@
+# Command-Line Mode
+
+2017-05-12 12:45:28 - 2017-05-12 13:07:07 
+
+p51 - p56
+
+27. Meet Vim's Command Line. p51
+
+p52 Ex commands that operate on the text in a buffer.
+可以通过帮助命令查看Ex命令，`:h ex-cmd-index`
+
+Ex命令的优势是能够同时跨多行执行，正常模式下通常是光标下或所在行的作用范围。
+
+28. Execute a Command on One or More Consecutive Lines. p54
+
+`%s`代表当前文档的当前行
+
+
+
+
+
+

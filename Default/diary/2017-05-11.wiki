@@ -1,0 +1,27 @@
+# PV-Ch04-Visual Mode
+
+2017-05-11 13:16:01 - 2017-05-11 13:43:13 (p43-p51)
+
+23. Prefer Operators to Visual Commands Where Possible. p43
+重复视图命令，影响的是同范围的文本，作者举了例子。
+对于需要用点命令重复的，最好是通过操作符命令来实现。
+
+24. Edit Tabular Data with Visual-Block Mode. p45
+对于块区域操作的好模式。
+
+25. Changes Columns of Text. p46
+
+修改某个区域内的内容，同时跨多行的情况。
+
+26. Append After a Ragged Visual Block. p48
+Visual Mode下的`i`和`a`的功能和Normal Mode下的不同，在视图模式下，
+使用`I`和`A`，来取得想要的效果。因为`i`和`a`涉及到'text object'的概念，
+将在tip51介绍。
+
+
+
+
+
+
+
+
