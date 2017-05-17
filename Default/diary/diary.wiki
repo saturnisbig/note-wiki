@@ -3,6 +3,10 @@
 ## 2017
 
 ### May
+        * [[2017-05-17|PV-Ch05 Command-Line Mode和爬取淘宝匿名旺旺号-数据存储]]
+        * [[2017-05-16|lxml选取节点文本内容 - PV-Cho5-Command-Line Mode]]
+        * [[2017-05-15|PV-Ch04 Command-Line Mode]]
+        * [[2017-05-11|PV-Ch04-Visual Mode]]
         * [[2017-05-09|PV-Ch03-Insert Mode学习]]
         * [[2017-05-08|Ch03 Insert Mode (p27-p34)]]
         * [[2017-05-07|阅读PV-Ch02-Normal Mode]]
