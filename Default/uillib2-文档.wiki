@@ -14,3 +14,7 @@ urllib2.build_opener([handler, ...])
 返回一个`OpenerDirector`，包含传入的有序的handlers。handlers可以是`BaseHandler`或
 其子类(必须能够调用不带参数的构造函数)
 
+存在服务器返回时：Connection: Closed的长连接问题，在处理微博m.weibo.cn返回
+json数据时碰到，准备改用requests。[urllib2长连接问题](http://blog.chinaunix.net/uid-74941-id-5727108.html)
+
+

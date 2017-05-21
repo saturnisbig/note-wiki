@@ -1,0 +1,15 @@
+# PV-Ch08-Navigate Indside Files with Motions
+
+2017-05-21 20:24:41 - 2017-05-21 20:39:01 (p107-p110)
+
+46. Keep Your Fingers on the Home Row. p108
+
+47. Distinguish Between Real Lines and Display Line. p110
+
+vim在显示的时候，如果行的文本太多，超出了vim本身的宽度，则超出的部分会
+以display line的形式显示，区分真正的行和显示行的方法时设置行号：`:number`，
+在display line下的移动方式是`gj, gk`。
+
+
+
+

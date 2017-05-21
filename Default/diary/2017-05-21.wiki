@@ -1,0 +1,63 @@
+# Requests基础和PV-Ch07完Ch08开始
+
+2017-05-21 08:47:01 - 2017-05-21 09:18:21
+2017-05-21 21:17:08 - 2017-05-21 22:34:09
+
+#### 安装
+
+基本的请求GET和POST
+
+
+	import requests
+	import json
+
+	url = 'http://httpbin.org/'
+
+	playload = {'key1': 'v1', 'key2': 'v2'}
+	r = requests.get(url+'get', params=playload)
+
+	data = {'key1': 'v1', 'key2': 'v2'}
+	r = requests.post(url+'post', data=data)
+
+	# 以json的形式传递参数
+	r = requests.post(url+'post', data=json.dumps(data))
+
+#### Cookie
+
+
+#### 会话对象
+在一些需要登录访问的网站，模拟登录后的访问必须在同一个会话当中，否则
+访问的时候会有问题。
+
+	s = requests.Session()
+	s.get(url + 'cookies/set/sessioncookie/123456789')
+	r = s.get(url + 'cookies')
+	print(r.text)
+	
+#### 代理
+
+	proxies = {'http': 'http://41.118.132.69:4433'}
+	r = requests.post('http://httpbin.org/post', proxies=proxies)
+	print r.text
+
+
+2017-05-21 20:02:55 - 2017-05-21 20:23:25 (p101-p103)
+44. Save Files to Nonexistent Directories. p101
+打开不存在的路径下的文件，vim会创建一个缓存，在保存的时候会提示
+文件不存在，这是因为，路径不存在，所以要先创建路径，`:!mkdir -p %:h`
+
+45. Save a File as the Super User. p102
+`:w !sudo tee % > /dev/null`将打开的需要root权限的文件的修改保存到文件中去。
+
+
+# PV-Ch08-Navigate Indside Files with Motions
+
+2017-05-21 20:24:41 - 2017-05-21 20:39:01 (p107-p110)
+
+46. Keep Your Fingers on the Home Row. p108
+
+47. Distinguish Between Real Lines and Display Line. p110
+
+vim在显示的时候，如果行的文本太多，超出了vim本身的宽度，则超出的部分会
+以display line的形式显示，区分真正的行和显示行的方法时设置行号：`:number`，
+在display line下的移动方式是`gj, gk`。

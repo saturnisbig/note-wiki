@@ -16,3 +16,9 @@
 - [[PV-Ch05-Command-Line Mode]] - 2017-05-12 12:45:15 - 2017-05-17 13:42:12
 
 - [[PV-Ch06-Manage Multiple Files]] - 2017-05-17 13:42:48 -
+
+- [[PV-Ch07-Open Files and Save them to disk]] - 2017-05-20 23:59:07 - 2017-05-21 20:23:40 
+
+- [[PV-Ch08-Navigate Indside Files with Motions]] - 2017-05-21 20:24:23 -
+
+
