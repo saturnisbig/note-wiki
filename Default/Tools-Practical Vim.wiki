@@ -19,6 +19,10 @@
 
 - [[PV-Ch07-Open Files and Save them to disk]] - 2017-05-20 23:59:07 - 2017-05-21 20:23:40 
 
-- [[PV-Ch08-Navigate Indside Files with Motions]] - 2017-05-21 20:24:23 -
+- [[PV-Ch08-Navigate Indside Files with Motions]] - 2017-05-21 20:24:23 - 2017-05-31 13:22:03
+ 
+- [[PV-Ch09-Navigate Between Files with Jumps]] - 2017-05-31 13:22:42 - 2017-06-01 22:05:31
+
+- [[PV-Ch10-Copy and Paste]] - 2017-06-02 13:16:56 - 
 
 

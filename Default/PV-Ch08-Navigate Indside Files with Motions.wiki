@@ -10,6 +10,55 @@ vim在显示的时候，如果行的文本太多，超出了vim本身的宽度�
 以display line的形式显示，区分真正的行和显示行的方法时设置行号：`:number`，
 在display line下的移动方式是`gj, gk`。
 
+2017-05-22 13:18:43 - 2017-05-22 13:39:14 (p112-p117)
 
+48. Move Word-Wise. p112
+
+`w`前进到下一个单词的开头；`b`返回到前一个单词的开头
+`e`前进到下一个单词的词尾；`ge`返回到前一个词的词尾。
+`ea`在当前词的后面插入；`ge`在当前词的前面插入。
+
+`words`和`WORDS`前者是单词，后者以空格为分界。eg：
+'e.g. we're going too slow'包括10words和5个WORDS。
+
+49. Find by Character. p114
+`f {char}`跳到字符{char}的位置, ':h f', 
+`;`重复上一次的`f {char}`；`,`和`;`一样，但相反方向查找。
+作者通常在Normal模式中使用f{char}、F{char}而在Operator-Pending模式中使用
+t和T。使用中尽量使用较少出现的字符来定位，速度快！
+
+2017-05-24 12:47:40 - 2017-05-24 13:06:21 (p118-p123)
+
+50. Search to Navigate. p118
+`v, /ge, d`：切换到v模式，查找ge，删除之间的文本。
+`d/ge<CR>`：当前位置到ge的文本。
+
+51. Trace Your Selection with Precision Text Objects. p120
+Text object：让我们能够和括号、引号、xml标签和其他常见模式交互。定义了
+结构化的文本。`:h text-objects`
+通常以i和a打头，inside和around，注意it和at的区分。
+p122有一份内置text objects列表。
+所有看到带{motion}的命令都可以使用text-object，
+
+2017-05-30 16:56:38 - 2017-05-30 17:16:44 (p124-p127)
+ 
+52. Delete Around, or Change Inside. p124
+`iw(W), aw(W)`当前单词，当前单词加1个空格；
+`is, as`当前句子
+`ip, ap`当前段落
+
+53. Mark Your place and Snap Back to it. p126
+`m{a-ZA-Z}`用字母标记当前的位置，小写字母标记的是当前缓存，大写标记的是整个
+会话。
+`'{mark}`移动到标记的位置所在行，`\`{mark}`移动到标记光标所在位置。
+vim自动打的标识列表在p127详细介绍。
+
+2017-05-31 13:05:39 - 2017-05-31 13:21:51 (p127-p129)
+54. Jump Between Matching Parentheses. p127
+`%`匹配括号，举例要修改括号`%w{London Berlin New\ York}`中的{为[，如果先
+修改了前面的{，则无法通过%进行匹配，%符号会自动打上标签，通过``可以返
+回到先前的命令上。
+
+作者推荐使用[surround.vim插件](https://github.com/tpope/vim-surround)，能够自动完善括号等。
 
 

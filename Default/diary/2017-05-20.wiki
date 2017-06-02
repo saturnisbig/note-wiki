@@ -5,3 +5,22 @@
 重写代码，能够获取到微博的json数据，下步添加代理ip和解析数据
 
 
+2017-05-20 23:59:41 - 2017-05-21 00:25:46 (p93-p100)
+
+Vim有很多打开文件的方法，`:edit`可以用来打开带路径的文件。
+
+41. Open a File By Its Filepath using ':edit'. p93
+
+`%<Tab>`代表的使当前缓存窗口，按tab键会扩展文件路径，显示当前文件
+的绝对路径
+`:edit %:h<Tab>`':h'会把当前文件名移除，显示当前文件所在的路径。
+
+42. Open a File by Its Filename Using ':find'. p96
+
+`:find`让我们不需要输入文件路径就能打开文件，但是要先配置'path'.
+
+43. Explore the File System with netrw. p98
+
+`:edit, :e` 打开文件或目录
+`:Explore, :E`打开当前缓存的浏览
+

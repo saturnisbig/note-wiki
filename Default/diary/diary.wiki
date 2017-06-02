@@ -2,6 +2,9 @@
 
 ## 2017
 
+### June
+        * [[2017-06-01|Scrapy文档学习和Ch09-Navigate Between Files with Jumps]]
+
 ### May
         * [[2017-05-21|Requests基础和PV-Ch07完Ch08开始]]
         * [[2017-05-20|免登录爬取新浪微博]]

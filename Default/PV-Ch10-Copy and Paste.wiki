@@ -1,0 +1,20 @@
+# Ch10-Copy and Paste
+
+2017-06-02 13:17:18 - 2017-06-02 13:48:09 (p141-p146)
+
+59. Delete, Yank, and Put with Vim's Unnamed Register. p141
+`xp`更换字符位置，光标下和光标后的；
+`ddp`更换两行的位置
+`yyp`复制行
+`yiw`复制单词，不包括单词后的空格，`yw`会连空格一起复制
+`diw`删除单词
+
+60. Grok Vim's Registers. p144
+`"{register}`在名为register的寄存器上操作，默认是到无名寄存器
+`""`无名寄存器，`x, s, d{motion}, c{motion}, y{motion}`都是用的无名寄存器
+`"0`复制寄存器，当时用yank命令的时候，会将文本存到无名和该寄存器
+
+
+
+
+
