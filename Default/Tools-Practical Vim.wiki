@@ -13,4 +13,16 @@
 
 - [[PV-Ch04-Visual Mode]] - 2017-05-10 13:43:23
  
-- [[PV-Ch05-Command-Line Mode]] - 2017-05-12 12:45:15 - 
+- [[PV-Ch05-Command-Line Mode]] - 2017-05-12 12:45:15 - 2017-05-17 13:42:12
+
+- [[PV-Ch06-Manage Multiple Files]] - 2017-05-17 13:42:48 -
+
+- [[PV-Ch07-Open Files and Save them to disk]] - 2017-05-20 23:59:07 - 2017-05-21 20:23:40 
+
+- [[PV-Ch08-Navigate Indside Files with Motions]] - 2017-05-21 20:24:23 - 2017-05-31 13:22:03
+ 
+- [[PV-Ch09-Navigate Between Files with Jumps]] - 2017-05-31 13:22:42 - 2017-06-01 22:05:31
+
+- [[PV-Ch10-Copy and Paste]] - 2017-06-02 13:16:56 - 
+
+

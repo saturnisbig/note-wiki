@@ -1,0 +1,25 @@
+# PV-Ch04 Command-Line Mode
+
+2017-05-15 13:16:21 -  2017-05-15 13:43:57 (p56-p66)
+
+29. Duplicate or Move Lines Using ':t' and ':m' Commands. p59
+
+31. Repeat the Last Ex Command. p63
+`@:`来重复上一次正常模式下的命令。
+如果需要返回撤销上一次执行的，可以用`<C-o>`
+
+32. Tab-Complete Your Ex Commands. p65
+
+`<Tab>`能够自动补全命令，`<S-Tab>`则从反方向补全命令。
+`<C-d>`能够显式备选的内容，比如像更改colorschem，但忘记了名字，可以这样做：
+`:colorscheme<C-d>`这样就会显式配色方案的列表了。
+通过`:h :command-complete`来查看帮助文档。
+
+# 制定周计划
+
+
+
+
+
+
+

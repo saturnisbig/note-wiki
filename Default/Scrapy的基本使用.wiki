@@ -1,0 +1,46 @@
+# 基本使用
+
+创建项目：`scrapy startproject xxoo`
+
+在IDE中进行调试的小技巧，需要在根目录创建entrypoint.py文件，写入以下内容：
+`from scrapy cmdline import execute, execute(['scrapy', 'crawl', 'dingdian'])`
+
+scrapy的执行过程：参考之前的图片，要自己能作出说明。
+
+创建项目后要做几件事：
+第一在items.py中定义一些字段，用来临时存储需要保存的字段，方便后面保存到数据库中；
+第二在spiders文件夹中编写自己的爬虫；
+第三在pipelines.py中存储自己的数据；
+第四在settings.py配置文件中进行相应的设置。
+
+以顶点小说爬取为例做了介绍：
+
+2017-06-01 06:50:41 - 2017-06-01 07:27:12
+看文档，爬虫执行的过程：
+name设置爬虫名字，必须是唯一的；
+start_requests发起请求
+parse对下载的内容进行解析
+`$scrapy shell 'url'`在shell中执行爬虫，抓取url内容，常用于对抓取内容进行解析前的
+检验。
+
+
+2017-06-01 22:26:13 - 2017-06-01 23:03:04
+文档项目练习，文档即将看完，明早看完，然后进行练习。
+
+2017-06-02 06:22:02 - 2017-06-02 06:57:30
+看文档和练习
+response.follow可以发起新的Request，用于继续下载页面中的链接的进一步爬取，支持
+相对路径链接地址。
+关于在抓取页面中提取新的链接地址，重新下载，发起请求要用`yield`关键字来发起，类似
+`yield Request(response.follow(a::attr(href), callback=self.parse))`
+*保存数据*
+`scrapy crawl quotes -o quotes.json`将抓取到的内容保存到'quotes.json'的文件，
+由于历史原因，如果输出文件已经存在，scrapy会往文件里添加新的内容而不是重写已经
+存在的文件，所以如果运行两遍上面的命令会出现错误，建议用json lines格式输出。
+*提取数据*
+在解析完后，将数据以字典的形式返回，要需要用关键字`yield`
+
+
+
+
+

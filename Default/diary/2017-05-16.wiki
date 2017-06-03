@@ -1,4 +1,4 @@
-# 选取节点文本内容
+# lxml选取节点文本内容 - PV-Cho5-Command-Line Mode
 
 参考：
 - [xpath提取多个标签下的text](http://www.cnblogs.com/xieqiankun/p/xpath_extract_text.html?utm_source=tuicool&utm_medium=referral)
@@ -26,3 +26,24 @@
     t = tree.xpath('//div[@id="test3"]')[0]
     # 获取的是标签下所有元素文本内容拼接在一起的内容
     text = t.xpath('string()')
+    
+    
+2017-05-16 12:40:30 - 2017-05-16 13:13:19 (p66-p72)
+
+33. Insert the Current Word at the Command Prompet. p66
+`<C-r><C-w>`映射光标下的单词，拷贝到命令行
+查找与替换，`*`查找光标下的单词。
+
+34. Recall Command from History. p68
+进入命令模式':'，通过向上箭头就可以切换历史命令，默认保存20条命令，可以
+通过`set history=200`来设置保存的历史命令数，还是跨会话的。
+`q:`可以打开历史命令窗口，如果在光标所在行按<CR>键，光标行命令就会被执行。
+历史命令行窗口打开后，不能切换到其他窗口，执行命令后有效的文件是进入历史
+命令窗口前的文件（注意切割窗口的情况）。
+在命令行模式时，可以通过`<C-f>`快速切换到历史窗口。p70
+
+35. Run Commands in the Shell. p71
+`:!ls`来执行外部命令，':ls'和':!ls'的区别是，前者执行VIM自带的命令，后者
+执行的是shell命令，和在终端中执行ls是一样的。
+`:shell, $exit`来临时进入和返回到VIM。
+

@@ -1,0 +1,14 @@
+# Scrapy框架
+
+2017-05-31 06:38:10 - 2017-05-31 07:22:48
+
+Ubuntu下的安装：
+
+    $sudo pip install lxml
+    $sudo pip install scrapy
+    # 测试安装是否成功
+    $scrapy
+
+官方文档建议在virtualenv下安装scrapy，避免与系统包发生冲突，已安装了，如何卸载？
+    
+- [[Scrapy的基本使用]]

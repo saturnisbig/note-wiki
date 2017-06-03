@@ -1,0 +1,19 @@
+# PV-Ch07 Open Files and Save Them to Disk
+
+2017-05-21 20:02:55 - 2017-05-21 20:23:25 (p101-p103)
+44. Save Files to Nonexistent Directories. p101
+打开不存在的路径下的文件，vim会创建一个缓存，在保存的时候会提示
+文件不存在，这是因为，路径不存在，所以要先创建路径，`:!mkdir -p %:h`
+
+45. Save a File as the Super User. p102
+`:w !sudo tee % > /dev/null`将打开的需要root权限的文件的修改保存到文件中去。
+
+
+
+
+
+
+
+
+
+

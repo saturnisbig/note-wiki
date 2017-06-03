@@ -13,6 +13,7 @@ Ex命令的优势是能够同时跨多行执行，正常模式下通常是光标
 
 28. Execute a Command on One or More Consecutive Lines. p54
 
+<<<<<<< HEAD
 `%`代表当前整个文档，相当于'1,$'
 
 2017-05-13 15:56:57 - 2017-05-13 16:28:35 (p56-p62)
@@ -36,9 +37,58 @@ Ex命令的优势是能够同时跨多行执行，正常模式下通常是光标
 
 
 30. Run Normal Mode Commands Across a Range. p62
+`%s`代表当前文档的当前行，`%p`打印当前文档。
 
+2017-05-15 13:16:21 -  2017-05-15 13:43:57 (p56-p66)
 
+29. Duplicate or Move Lines Using ':t' and ':m' Commands. p59
 
+31. Repeat the Last Ex Command. p63
+`@:`来重复上一次正常模式下的命令。
+如果需要返回撤销上一次执行的，可以用`<C-o>`
 
+32. Tab-Complete Your Ex Commands. p65
 
+`<Tab>`能够自动补全命令，`<S-Tab>`则从反方向补全命令。
+`<C-d>`能够显式备选的内容，比如像更改colorschem，但忘记了名字，可以这样做：
+`:colorscheme<C-d>`这样就会显式配色方案的列表了。
+通过`:h :command-complete`来查看帮助文档。
+
+2017-05-16 12:40:30 - 2017-05-16 13:13:19 (p66-p72)
+
+33. Insert the Current Word at the Command Prompet. p66
+`<C-r><C-w>`映射光标下的单词，拷贝到命令行
+查找与替换，`*`查找光标下的单词。
+
+34. Recall Command from History. p68
+进入命令模式':'，通过向上箭头就可以切换历史命令，默认保存20条命令，可以
+通过`set history=200`来设置保存的历史命令数，还是跨会话的。
+`q:`可以打开历史命令窗口，如果在光标所在行按<CR>键，光标行命令就会被执行。
+历史命令行窗口打开后，不能切换到其他窗口，执行命令后有效的文件是进入历史
+命令窗口前的文件（注意切割窗口的情况）。
+在命令行模式时，可以通过`<C-f>`快速切换到历史窗口。p70
+
+35. Run Commands in the Shell. p71
+`:!ls`来执行外部命令，':ls'和':!ls'的区别是，前者执行VIM自带的命令，后者
+执行的是shell命令，和在终端中执行ls是一样的。
+`:shell, $exit`来临时进入和返回到VIM。
+
+2017-05-17 13:20:52 - 2017-05-17 13:41:54 (p72-p74)
+
+Using the contents of a buffer for standard input or output.
+`:read !{cmd}`会将命令执行结果写入到当前编辑的文件中。
+`:write !{cmd}`与上面相反，将当前文件的每行作为命令的输入。
+
+Filtering the Contents of a buffer through an external command.
+`:!{cmd}`接受一个范围range，范围内的文本作为输入，执行命令后的结果作为输出，
+输出内容会替换掉输入范围的内容。
+例子p74
+`!{motion}`：用来设置范围，相当于`:[range]!{filter}`
+
+常见的调用外部命令的方法：p74
+`:shell`：启用shell，退出方式exit
+`:!{cmd}`：通过shell执行{cmd}
+`:read !{cmd}`：通过shell执行{cmd}，执行结果插入到光标下。
+`[range]write !{cmd}`：通过shell执行{cmd}，[range]内的行作为执行的输入。
+`:[range]! {filter}`：通过外部程序{filter}过滤[range]内的内容。
 
