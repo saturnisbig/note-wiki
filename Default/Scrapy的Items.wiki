@@ -1,0 +1,59 @@
+# Items
+
+2017-06-09 06:36:11 - 2017-06-09 07:03:00 
+
+爬虫的主要目标是将非结构化的内容结构化，Python的dict缺乏结构化，Item则可以
+解决这个问题，并提供了和字典类似的API。
+
+#### Declaring Items
+使用的是`Field`对象，有点类似Django，但是没有区分不同的类型，例子如下：
+
+	import scrapy
+
+	class Product(scrapy.Item):
+	    name = scrapy.Field()
+	    price = scrapy.Field()
+	    stock = scrapy.Field()
+	    last_updated = scrapy.Field(serializer=str)
+
+#### Item Fields
+`Field`对象用于设置为每个项设置元数据，比如上述例子中的last_updated项。
+可以声明任何类型的元数据，Field对象接受的值并无限制。？？
+
+#### Working with Items
+创建和获取值
+
+	>>>product = Product(name='Desktop PC', price=1000)
+	>>>product['name']
+	>>>product.get('name')
+	>>>product['price']
+	>>>product['last_updated'] # KeyError
+	>>>product.get('last_updated', 'not set') # not set
+	>>>product['lala'] # KeyError
+	>>>product.get('lala', 'unknown field') # unknown field
+	>>>'last_updated' in product # False
+
+设置field值
+
+	>>>product['last_updated'] = 'today'
+	>>>product['last_updated'] # today
+
+获取所有创建的项
+
+	>>>product.keys()
+	>>>product.items()
+
+复制
+
+	>>>product2 = Product(product)
+	>>>product3 = product2.copy()
+
+从items到dict
+
+	>>>dict(product)
+
+从dict到item
+
+	>>>Product({'name': 'Laptop PC', 'price': 1500})
+	>>>Product({'name': 'Laptop PC', 'lala': 1500}) # warning: unknown field in dict
+

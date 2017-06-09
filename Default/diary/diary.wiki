@@ -3,6 +3,8 @@
 ## 2017
 
 ### June
+        * [[2017-06-08|Scrapy命令行、Spiders介绍和PV-Macros]]
+        * [[2017-06-07|Scrapy爬虫练习和PV-Macros]]
         * [[2017-06-03|Ch10-Copy and Paste]]
         * [[2017-06-01|Scrapy文档学习和Ch09-Navigate Between Files with Jumps]]
 

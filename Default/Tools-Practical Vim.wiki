@@ -23,6 +23,7 @@
  
 - [[PV-Ch09-Navigate Between Files with Jumps]] - 2017-05-31 13:22:42 - 2017-06-01 22:05:31
 
-- [[PV-Ch10-Copy and Paste]] - 2017-06-02 13:16:56 - 
+- [[PV-Ch10-Copy and Paste]] - 2017-06-02 13:16:56 - 2017-06-05 22:42:06
+- [[PV-Ch11-Macros]] - 2017-06-06 21:41:11 
 
 

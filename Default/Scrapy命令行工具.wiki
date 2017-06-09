@@ -1,0 +1,101 @@
+# Scrapy命令行
+
+2017-06-08 06:27:10 - 2017-06-08 07:22:46
+
+通常都是通过scrapy命令行工具来进行操作，Scrapy命令行工具提供了不同
+的命令来实现一些操作，每个都有自己的参数和选项集。
+
+#### 配置设置
+
+1. `/etc/scrapy.cfg` or `c:\scrapy\scrapy.cfg`系统级别的配置
+2. `~/.config/scrapy.cfg`或`~/.scrapy.cfg`所有用户有效
+3. `scrapy.cfg`某个项目内的，对该项目有效
+
+优先级是：3>2>1
+
+也能够接受系统的环境变量：
+- `SCRAPY_SETTING_MODULE, SCRAPY_PROJECT, SCRAPY_PYTHON_SHELL`
+
+#### 项目结构
+
+	scrapy.cfg
+	myproject/
+	    __init__.py
+	    items.py
+	    pipelines.py
+	    settings.py
+	    spiders/
+		__init__.py
+		spider1.py
+		spider2.py
+		...
+
+#### 工具使用
+
+`scrapy`运行后会提示一些相关的命令，在项目内和不在项目内提示会又不同。
+
+*创建项目*
+`scrapy startproject myproject [project_dir]`在目录project_dir下创建
+名为myproject的项目，如果没有project_dir参数，则使用myproject为名
+
+*控制项目*
+创建项目后，就能够在项目中使用命令行工具进行一些操作，比如：
+`scrapy genspider mydomain mydomain.com`，有些命令必须在项目的目录下执行
+才有效，比如crawl。还有就是fetch命令，在项目中执行会时，如果有对应的爬虫，
+则会重写一些属性，比如user_agent重写user-agent。
+
+*命令行工具*
+`scrapy <command> -h`查看帮助，`scrapy -h`
+有两种类型的命令，一种是全局性的，一种是基于具体项目的。如下：
+全局性：`startproject, genspider, settings, runspider, shell ,fetch, view, version`
+基于项目的：`crawl, check, list, edit, parse, bench`
+
+`scrapy genspider [-t template] <name> <domain>`
+在当前项目的spider目录下创建名为name的爬虫，domain用设置`allowed_domain, start_urls`
+
+`scrapy crawl <spider>`启动爬虫
+
+`scrapy check [-l] <spider>`基于对则对爬虫进行检测
+
+`scrapy list`当前项目下的所有爬虫列表
+
+`scrapy edit <spider>`编辑项目下的爬虫
+
+`scrapy fetch <url>`如果在项目下运行，而又定义了抓取该url的爬虫，则可用来测试爬虫的
+工作情况，如果在项目外运行，则使用scrapy默认的设置，支持下列参数：
+`--spider=SPIDER`使用某个爬虫；`--headers`输出headers信息；`--no-redirect`不重定向。
+
+`scrapy view <url>`以爬虫看到的视角打开浏览器来查看url的内容，有时候爬虫看到的和
+浏览器显示的会有不同，支持的参数：`--spider=SPIDER, --no-redirect`
+
+`scrapy shell [url]`启用针对url的scrapy shell，支持UNIX-style的本地路径或绝对路径。
+支持参数：`--spider=SPIDER, -c code, --no-redirect, fetch(url)`
+
+`scrapy parse <url> [options]`爬取url并用项目定义的爬虫进行解析，支持的参数：
+`--spider=SPIDER, --callback or -c, --a NAME=VALUE`
+`--pipeline`通过管道处内容
+`--rules, -r`使用CrawlSpider规则来发现回调方法，对返回的内容进行解析。
+`--noitems`不显示抓取的内容
+`--nolinks`不显示抓取的链接
+`--nocolor`不用着色
+`--depath, -d`递归抓取的层次，默认是1
+`--verbose, -v`显示每个层级
+
+`scrapy settings [options]`获取配置的值
+
+`scrapy runspider <spider_file.py>`无需项目，运行单独的爬虫文件
+
+`scrapy version [-v]`显示版本信息，用于提交bug等
+
+`scrapy bench`
+
+*创建自己的命令行工具*
+参考[scrapy/commands](https://github.com/scrapy/scrapy/tree/master/scrapy/commands)
+将自己的命令行工具添加到项目中，需如下设置：
+`COMMAND_MODULE='mybot.commands'`
+也可以通过setup.py入口的地方进行设置。
+
+
+
+
+

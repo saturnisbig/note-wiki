@@ -1,0 +1,130 @@
+# Spiders介绍
+
+2017-06-08 21:22:05 - 2017-06-08 22:51:41 
+
+爬虫工作流程如下：
+1. 设置第一个要抓取的初始页面请求，设置抓取后处理的回调函数。通常是
+在`start_requests()`方法中获得第一个请求页面，在该方法中生成`start_urls`
+设置的`Request`，默认的回调函数`parse()`方法。
+
+2. 在回调函数`parse()`中解析下载的内容，返回解析完后数据的字典、Item、
+Request对象，或者这些对象的可迭代类型。如果是Request对象，则应包含
+处理结果的回调函数，该函数会处理请求下载的内容。
+
+3. 在回调函数中，对解析页面内容，可以通过Selectors或者bs、lxml等，
+然后生成items。
+
+4. 最后，爬虫返回的items会通过Item pipeline存到数据库或者通过Feed exports
+写到文件。
+
+#### scrapy.Spider
+最简单的爬虫，所有的爬虫必须继承自该爬虫（不管是自己写的还是scrapy自带的）。
+该类没有提供更多功能，仅将start_urls中的链接生成请求，发送到默认的回调函数
+parse上。
+
+*name*
+爬虫的名字，必须是唯一的，但是可以有该爬虫的多个实例，这是最重要的爬虫属性，
+不能缺。如果只抓取一个域名的内容，一般名字就是域名，比如：mysites.com，则
+name一般设置为mysites。_在Python2中，该值只能是ASCII_
+
+*allowed_domains*
+允许爬虫抓取的域名的地址列表，可选。
+
+*start_urls*
+包含爬虫开始抓取的地址列表，接下来下载的将是从这些页面解析欻里的请求。
+
+*custom_settings*
+对项目中的相关设置进行重写，当该爬虫运行时。必须被定义成类的属性，因为这些设置
+会在初始化前更新。
+
+*crawler*
+通过`from_crawler()`类方法设置，链接到Crawler对象，该爬虫被限定的。
+
+*settings*
+对该爬虫的运行进行相关设置。
+
+*logger*
+以爬虫名命名的Python logger，可以运来发送日志消息
+
+*from_crawler(crawler, \*args, \*\*kwargs)*
+scrapy用来创建爬虫的方法，该方法设置了`crawler`和`settings`属性
+
+*start_requests()*
+返回可迭代的第一个Requests请求，默认被scrapy调用，仅调用一次，可以将该方法定义成
+一个generator.???
+默认会为start_urls中的每个链接生成Request请求。
+如果你需要修改抓取的请求，则必须重写该方法，比如需要先登录再抓取的例子：
+
+	class MySpider(scrapy.Spider):
+	    name = 'myspider'
+
+	    def start_requests(self):
+		return [scrapy.FormRequest("http://www.example.com/login",
+					   formdata={'user': 'john', 'pass': 'secret'},
+					   callback=self.logged_in)]
+
+	    def logged_in(self, response):
+		# here you would extract links to follow and return Requests for
+		# each of them, with another callback
+		pass
+
+*parse(response)*
+默认的处理下载responses的回调函数，该方法必须返回可迭代的Request、dicts、Item
+
+*log(message[,level,component])*
+记录日志
+
+*closed(reason)*
+当爬虫结束的时候调用
+
+#### Spider Arguments
+参数通过`crawl`命令的`-a`选项传递，比如：`scrapy crawl myspider -a category=electronics`
+在爬虫的__init__方法中能够访问到参数，参数也会变成爬虫的属性，比如：
+一个有效的案例是，设置http验证，或者设置user agent.
+`scrapy crawl myspider -a http_user=myuser -a http_pass=mypass -a user_agent=mybot`
+
+import scrapy
+
+class MySpider(scrapy.Spider):
+    name = 'myspider'
+    def __init__(self, category=None, *args, **kwargs):
+        super(MySpider, self).__init__((*args, **kwargs)
+	self.start_urls = ['http://www.example.com/categories/%s' % category]
+    def start_requests(self):
+        yield scrapy.Request('http://www.example.com/categories/%s' % self.category)
+
+#### Generic Spiders
+
+###### CrawlSpider
+`scrapy.spiders.CrawlSpider`是最常见的爬虫，用于抓取常规网站，该类提供了方便
+跟踪链接的机制（通过设置一些规则），可能不是最适合的爬虫，但是在一些情况下是可以用
+的，你可以根据自己的需要重写。除了继承的属性外，额外属性如下：
+*rules*
+Rule对象列表，每个对象定义了抓取网站的一些规则，如果多个规则适配，则以第一个
+匹配的为主。
+*parse_start_url(response)*
+该方法为start_urls的responses而调用，必须返回一个Item或Request对象，或者是任何
+一个的可迭代对象。
+
+*Crawling rules*
+`scrapy.spiders.Rule(link_extractor, callback=None, cb_kwargs=None, follow=None, process+links=None, process_request=None)`
+`link_extractor`是一个Link Extractor对象，定义了每个抓取页面中的链接如何被解析
+`callback`上述参数解析出的链接请求处理回调函数，接受response作为第一个参数，
+必须返回列表，包含Item、Request或二者的子类对象。
+__在写爬取规则时，避免使用parse作为回调，CrawlSpider使用了该方法来实现自己的逻辑__
+__如果你重写了那么该爬虫类将不起作用__
+`cb_kwargs`字典，包含要传给回调函数的参数
+`follow`布尔值，确定每个response解析出的链接是否要跟进，如果callback值为None，该值
+为True，否则默认为False。
+`process_links`可调用或字符串，为解析出的每个链接调用该方法，主要用于过滤。
+`process_requests`可调用或字符串，为每个规则解析出的请求调用，必须返回请求或者
+None（过滤请求）
+
+##### XMLFeedSpider
+`scrapy.spiders.XMLFeedSpider`主要用于解析XML feeds
+
+##### CSVFeedSpider
+`scrapy.spiders.CSVFeedSpider`
+
+##### SitemapSpider
+
