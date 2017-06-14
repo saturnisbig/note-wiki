@@ -1,0 +1,134 @@
+# Item Loaders
+
+2017-06-13 06:42:06 - 2017-06-13 07:12:56
+
+提供了抓取过程中更为方便的生成Item的方式，将一些常规的操作自动化。
+主要用于提供更灵活、高效、简单的机制用于扩展和重写Item中field的解析规则，
+不管是通过爬虫，还是通过源数据的格式如html、xml等。
+
+#### 用来生成items
+
+例子：
+
+	from scrapy.loader import ItemLoader
+	from myproject.items import Product
+
+	def parse(self, response):
+	    l = ItemLoader(item=Product(), response=response)
+	    l.add_xpath('name', '//div[@class="product_name"]')
+	    l.add_xpath('name', '//div[@class="product_title"]')
+	    l.add_xpath('price', '//p[@id="price"]')
+	    l.add_css('stock', 'p#stock')
+	    l.add_value('last_updated', 'today') # 
+	    return l.load_item()
+
+name列的值可以从两个地方获取，name、price用的是xpath解析，stock用的是css，还有一个
+用的是value
+
+#### Input and Output processors
+2017-06-14 20:42:07 - 2017-06-14 21:44:20
+复习
+l = Itemloader(Product(), some_selector)
+l.add_xpath('name', xpath1) # (1) xpath1的数据被解析，传给name列的处理器，处理器将值保存在item oader中。
+l.add_xpath('name', xpath2) # (2) 过程同上，结果被append到namelie的后面
+l.add_css('name', css) # (3) 同上
+l.add_value('name', 'test') # (4) 值被传到处理器，转成可迭代的值
+return l.load_item() # (5) 收集的数据传到output处理器，name列的，值被赋给name列。
+
+值得注意的是processor是callable objects，待处理数据为参数，所以可以将任意函数作为
+处理器，该函数仅接受一个参数，必须是可迭代的。输入处理器返回的值在内部以类表形式
+保存，然后再传给输出处理器。Scrapy自带了一些[常用的处理器](https://docs.scrapy.org/en/latest/topics/loaders.html#topics-loaders-available-processors)
+#### Declaring Item Loaders
+
+from scrapy.loader import Itemloader
+from scrapy.loader.processors import TakeFirst, MapCompose, Join
+
+class ProductLoader(Itemloader):
+
+    default_output_processor = TakeFirst()
+    
+    name_in = MapCompose(unicode.title)
+    name_out = Join()
+    
+    price_in = MapCompose(unicode.title)
+
+#### Declaring Input and Output Processors
+
+import scrapy
+from scrapy.loader.processors import Join, MapCompose, TakeFirst
+from w3lib.html import remove_tags
+
+def filter_price(value):
+    if value.isdigit():
+        return value
+
+class Product(scrapy.Item):
+    name = scrapy.Field(
+        input_processor = MapCompose(remove_tags),
+	output_processor = Join(),
+    )
+    price = scrapy.Field(
+        input_processor=MapCompose(remove_tags, filter_price),
+	output_processor=TakeFirst(),
+    )
+
+输入和输出处理器的优先级：
+Item loader field-specific attributes：field_in、field_out，最优先
+Field metadata(input_processor, output_processor)
+Item loader defaults: ItemLoader.default_input_processor, ItemLoader.default_output_processor
+
+#### Item Loader Context
+一个有任意键值对的字典，在输入、输出处理器间共享，可以在声明时传入（处理器），
+初始化时（ItemLoader）或使用ItemLoader，用于更改输入输出处理器的行为。例如：
+
+def parse_length(text, loader_context):
+    unit = loader_context.get('unit', 'm')
+    #... lenth_parsing code
+    return parsed_length
+    
+传入loader_context参数告知ItemLoader，能够接受Item loader context，传入当前上下文
+参数。有三种方式修改上下文值：
+# 1
+loader = ItemLoader(product)
+loader.context['unit'] = 'cm'
+# 2
+loader= ItemLoader(product, unit='cm')
+# 3
+class ProductLoader(ItemLoader):
+    length_out = MapCompose(parse_length, unit='cm')
+
+2017-06-14 22:44:01 -  2017-06-14 22:59:34
+#### Nested Loaders
+例子：
+<footer>
+    <a class="social" href="http://facebook.com/whatever">Like Us</a>
+    <a class="social" href="http://twitter.com/whatever">Follow Us</a>
+    <a class="email" href="mailto:whatever@example.com">Email Us</a>
+</footer>
+解析：
+loader = ItemLoader(item=Item())
+# load stuff not in the footer
+loader.add_xpath('social', '//footer/a[@class = "social"]/@href')
+loader.add_xpath('email', '//footer/a[@class = "email"]/@href')
+loader.load_item()
+使用nested loader:
+loader = ItemLoader(item=Item())
+# load stuff not in the footer
+footer_loader = loader.nested_xpath('//footer')
+footer_loader.add_xpath('social', 'a[@class = "social"]/@href')
+footer_loader.add_xpath('email', 'a[@class = "email"]/@href')
+# no need to call footer_loader.load_item()
+loader.load_item()
+
+#### Reusing and extending Item Loaders
+例子：
+	from scrapy.loader.processors import MapCompose
+	from myproject.ItemLoaders import ProductLoader
+
+	def strip_dashes(x):
+	    return x.strip('-')
+
+	class SiteSpecificLoader(ProductLoader):
+	    name_in = MapCompose(strip_dashes, ProductLoader.name_in)
+
+

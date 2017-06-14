@@ -24,6 +24,11 @@
 - [[PV-Ch09-Navigate Between Files with Jumps]] - 2017-05-31 13:22:42 - 2017-06-01 22:05:31
 
 - [[PV-Ch10-Copy and Paste]] - 2017-06-02 13:16:56 - 2017-06-05 22:42:06
-- [[PV-Ch11-Macros]] - 2017-06-06 21:41:11 
+
+- [[PV-Ch11-Macros]] - 2017-06-06 21:41:11 - 2017-06-14 13:08:04
+
+## Patterns
+将学习的`:substitute, :global`进行替换，和在文本匹配项上运行Ex命令。
+- [[PV-Ch12-Matching Patterns and Literals]] - 2017-06-14 13:10:28 
 
 

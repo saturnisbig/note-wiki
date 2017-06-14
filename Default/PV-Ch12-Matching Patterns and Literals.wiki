@@ -1,0 +1,11 @@
+# Matching Patterns and Literals 
+
+2017-06-14 13:10:48 - 2017-06-14 13:20:45 (p183-p184)
+
+72. Tune the Case Sensitivity of Search Patterns. p183
+启用'ignorecase'会让Vim大小写不敏感，但是对自动补全会产生一定的影响，详见p276
+`\c, \C`小写的c是大小写不敏感，`\C`大写的C是大小写敏感，查找时如果进行了该设置，
+则'ignorecase'设置会被重写。
+*启用智能默认大小写敏感*
+'smartcase'选项，如果我们查找字符串中都是小写，则大小写不敏感，如果有大写字符，
+则大小写敏感。
