@@ -1,0 +1,13 @@
+# Terminator
+
+安装：`sudo apt-get install terminator`
+
+常用快捷键：
+<C-S-E> 垂直分割
+<C-S-O> 水平分割
+F11	全屏
+<C-S-C> 复制
+<C-S-V> 粘贴
+<C-S-N> 在分割窗口间切换，<C-Tab>
+<C-S-X> 将分割的某个窗口放大到全屏使用
+<C-S-Z> 从放大到全屏的某个窗口退回到多窗口界面

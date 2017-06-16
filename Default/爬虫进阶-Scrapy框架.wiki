@@ -16,3 +16,5 @@ Ubuntu下的安装：
 - [[Scrapy爬虫介绍]] - 2017-06-08 21:21:51 
 - [[Scrapy的Items]] - 2017-06-09 06:36:03 
 - [[Scrapy的Item Loaders]] - 2017-06-13 06:41:51
+- [[Scrapy的Shell]] - 2017-06-15 06:53:51
+- [[Scrapy的Item Pipeline]] - 2017-06-15 21:57:37 

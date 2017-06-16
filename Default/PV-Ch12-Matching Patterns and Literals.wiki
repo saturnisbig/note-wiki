@@ -9,3 +9,62 @@
 *启用智能默认大小写敏感*
 'smartcase'选项，如果我们查找字符串中都是小写，则大小写不敏感，如果有大写字符，
 则大小写敏感。
+
+2017-06-15 13:34:17 - 2017-06-15 13:59:13 (p185-p188)
+
+73. Use the \v Pattern Switch for Regex Searches. p184
+下列正则表达式可以用来匹配十六进制的颜色格式：'#\([0-9a-fA-F]\{6}\|[0-9a-fA-F]\{3}\)'
+({需要转义，但是只需对其中的一半转义即可，另一半会自动匹配。
+
+`\v`模式切换让Vim的正则表达式类似于Python、Perl等，便于记忆。除了'_'字符外，
+其他字符均有特殊的意义，上述正则表达式可改写：
+'/\v#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})'，使用Hex字符集后，\x就相当于[0-9a-fA-F]，改写：
+'/\v#(\x{6}|\x{3})'
+
+74. Use the \V Literal Switch for Verbatim Searches. p187
+
+`\V`verynomagic，取消字符的特殊意义，在查找带'., *, ?'等的字符时有效。
+
+2017-06-16 12:58:57 - 2017-06-16 13:37:47 (p189-p193)
+
+75. Use Parentheses to Capture Submatches. p189
+
+可以匹配字符串中的某些子字符串，然后在别的地方使用这些字符串。
+'/\v<(\w+)\_s+\1>'匹配重复的单词，会为匹配的字符串分配\1-\9的数字，代表的
+对应括号中匹配的字符串，\0代表整个匹配的字符串。
+*使用括号而不获取匹配的字符串*
+有时，我们仅仅是为了分类而不打算获取匹配的子字符串内容，比如：
+/\v(And|D)rew Neil，可匹配And和D，但是我们对此不感兴趣，可以告诉Vim，不
+必把匹配值赋给\1，即在\v后加%
+
+使用字符串的情况不多，另一个是在匹配XML或HTML标签的时候用。
+
+76. Stake the Boundaries of a Word. p190
+在匹配字符串的时候，会碰到某个单词是另一个单词的子字符串的情况，如：the和these等，如何界定单词的边界，在very magic查找下，可以使用<和>符号，比如：
+/\v<the><CR>，结果就是只匹配the。关于<和>的定义，我们可以通过\w\W\zs\ze来
+模拟功能。\ze\zs在tip 77，\w匹配单词字符包括，字母、数字、和_符号，\W匹配
+除单词字符外的字符。
+
+77. Stake the Boundaries of a Match. p192
+`\zs, \ze`前者匹配匹配模式中匹配项的开始，将此后匹配的字符高亮显示，后者
+则代表匹配项的结束，此前的匹配字符串高亮显示，此后的不高亮。比如：
+'/\vPractical \zsVim<CR>'会高亮显示匹配项中的Vim，但是不高亮显示Practical，
+高亮的Vim必须是符合匹配模式的字符串中的Vim。
+例子2:
+{start}     	   Match "quoted words"---not quote marks.
+/\v"[^"]+"<CR>     Match "quoted words"---not quote marks.   匹配"quote words"
+/\v"\zs[^"]+\ze"<CR>     Match "quoted words"---not quote marks. 匹配quote words
+
+
+
+
+
+
+
+
+
+
+
+
+
+

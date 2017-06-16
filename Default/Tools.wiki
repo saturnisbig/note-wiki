@@ -17,3 +17,4 @@
 
     $sudo mkdir -p /usr/share/stardict/dic
     $sudo cp extracted-file to /usr/share/stardict/dic
+## [[Terminator使用]] - 2017-06-15 22:52:26 

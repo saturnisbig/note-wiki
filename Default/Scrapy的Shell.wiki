@@ -1,0 +1,65 @@
+# Scrapy Shell
+
+2017-06-15 06:54:03 - 2017-06-15 07:24:35 
+
+用于交互调试爬虫代码，而不需要运行爬虫，可以用于测试解析数据及其他任意的Python
+代码，因为也是个Python Shell。
+
+你可以通过该shell测试xpath和css表达式的解析情况，并且可以交互测试，而不用每次
+都运行爬虫。
+
+#### 配置
+如果安装了IPython，scrapy默认会使用它。如果没有，则会使用bpython，
+可以在scrapy.cfg中进行设置：
+[settings]
+shell = bpython
+
+#### Launch th shell
+`scrapy shell <url>`其中，url是要爬取的链接地址，也可以爬取本地文件，支持语法如下：
+	# UNIX style
+	scrapy shell ./path/to/file.html
+	scrapy shell ../other/path/to/file.html
+	scrapy shell /absolute/path/to/file.html
+	# File URI
+	scrapy shell file:///absolute/path/to/file.html
+*在使用相对路径时，要加上./或../，像scrapy shell index.html是无效的，把index.html当作域名*
+
+#### Using the shell
+
+*Available Shortcuts*
+`shelp()`打印当前对象和快捷方式
+`fetch(url, redirect=True)`抓取新的url，更新相关的对象数据，可以选择不支持HTTP 3xx重定向
+`fetch(request)`根据request抓取，更新相关对象数据
+`view(response)`用浏览器打开response，会在本地创建一个临时文件，不会自动删除
+
+*Available Scrapy objects*
+`crawler`当前爬虫对象；`spider`处理url的爬虫，或者是爬虫对象
+`request`最后抓取页面的请求对象，可以用replace()修改该请求，或者用fetch抓取新的请求
+`response`最近抓取的页面的Response对象
+`settings`当前Scrapy设置
+
+*Example of shell session*
+抓取'http://scrapy.org'，然后'https://reddit.com'
+
+#### Invoking the shell from spiders to inspect responses
+有时会在爬虫的某个节点想看下爬取的情况，这里探讨的是只查看response的情况，通过
+`scrapy.shell.inspect_response`函数可以实现，按<C-D>或<C-Z>可以恢复爬虫，例子如下：
+
+	import scrapy
+
+	class MySpider(scrapy.Spider):
+	    name = 'myspider'
+	    start_urls = [
+		'http://example.com',
+		'http://example.org',
+		'http://example.net',
+	    ]
+	    
+	    def parse(self, response):
+		# we want to inspect one_specific response.
+		if '.org' in response.url:
+		    from scrapy.shell import inspect_response
+		    inspect_response(response, self)
+		# Rest of parsing code.
+
+
