@@ -55,16 +55,17 @@
 /\v"[^"]+"<CR>     Match "quoted words"---not quote marks.   匹配"quote words"
 /\v"\zs[^"]+\ze"<CR>     Match "quoted words"---not quote marks. 匹配quote words
 
+2017-06-19 22:38:37 - 2017-06-19 23:02:26 (p194-p197)
+78. Escape Problem Characters. p193
+`\V`可以使一些特殊功能的字符失效，但是仍有一些字符能够越过这一层，这一点就是探讨这个的。
 
+*Escape / Character When Searching Forward*
+当使用往前查找的时候，查找会在字符'/'前结束，如果没有进行转义的话。
+*Escape ? Character When Searching Backward*
+当使用往后查找的时候，查找会在字符'?'前结束，如果没有进行转义的话。
+*Escape \ Character Every Time*
 
-
-
-
-
-
-
-
-
-
-
+通过VimScript过滤字符串
+`escape({string}, {chars})`查看帮助`:h escape`
+`/\V<C-r>=escape(@u, getcmdtype().'\')<CR><C-r>u`
 

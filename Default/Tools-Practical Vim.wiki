@@ -29,6 +29,8 @@
 
 ## Patterns
 将学习的`:substitute, :global`进行替换，和在文本匹配项上运行Ex命令。
-- [[PV-Ch12-Matching Patterns and Literals]] - 2017-06-14 13:10:28 
+- [[PV-Ch12-Matching Patterns and Literals]] - 2017-06-14 13:10:28 - 2017-06-19 23:02:52 
+- [[PV-Ch13-Search]] - 2017-06-19 23:02:52 
+  
 
 

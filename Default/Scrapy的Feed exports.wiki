@@ -1,0 +1,58 @@
+# Feed exports
+
+2017-06-19 06:38:46 - 2017-06-19 07:10:20 
+
+将爬取到的数据以多种序列化等形式存储成一个feed文件。
+
+使用的是'item exporters'工具，支持JSON、JSON lines、CSV、XML格式。
+也可以通过'FEED_EXPORTERS'来扩展支持的格式。
+
+*JSON*
+FEED_FORMAT: json, 使用：JsonItemExporter，[存储大的feeds时需要注意的](https://docs.scrapy.org/en/latest/topics/exporters.html#json-with-large-data)
+*JSON lines*
+FEED_FORMAT: jsonlines，使用：JsonLinesItemExporter
+
+*CSV*
+FEED_FORMAT: csv，使用：CsvItemExporter，要设置导出的列和列的顺序，使用
+FEED_EXPORT_FIELDS设置，其他的feed导出工具也可使用该设置，但是对CSV格式来说
+很重要，因为使用的是fixed header。
+
+*XML*
+FEED_FORMAT: xml，使用：XmlItemExporter
+
+*Pickle*
+FEED_FORMAT: pickle，使用：PickleItemExporter
+
+*Marshal*
+FEED_FORMAT: marshal，使用：MarshalItemExporter
+
+## 存储器
+支持的存储器后端包括：
+Local filesystem、FTP、S3（依赖botocore或boto，仅Python2）、Standard output
+
+*Storage URI parameters*
+
+在Storage创建feed的时候可以传入参数，支持参数有：
+`%{time}s`被feed创建时的时间戳替换
+`%{name}s`替换成spider的名称
+例如：
+'ftp://user:password@ftp.exmple.com/scraping/feeds/%{name}s/%{time}s.json'
+'s3://mybucket/scraping/feeds/%{name}s/%{time}s.json'
+
+*存储后端*
+本地文件系统：URI协议file，Example URI：file:///tmp/export.csv
+FTP：协议ftp，示例：ftp://user:pass@ftp.example.com/path/to/export.csv
+S3：协议s3，存储在Amazon S3上，示例：s3://mybucket/path/to/export.csv，依赖：botocore, boto
+标准输入输出：协议stdout，示例：stdout:
+
+*配置项*
+FEED_URI，默认无
+FEED_FORMAT，序列化格式
+FEED_STORAGES
+FEED_EXPORTERS
+FEED_STORE_EMPTY
+FEED_EXPORT_ENCODING
+FEED_EXPORT_FIELDS，默认无，导出列表
+FEED_EXPORT_INDENT
+
+
