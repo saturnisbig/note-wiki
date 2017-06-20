@@ -19,3 +19,4 @@ Ubuntu下的安装：
 - [[Scrapy的Shell]] - 2017-06-15 06:53:51
 - [[Scrapy的Item Pipeline]] - 2017-06-15 21:57:37 
 - [[Scrapy的Feed exports]] - 2017-06-19 06:38:27 
+- [[Scrapy的Requests和Responses]] - 2017-06-20 06:49:36 

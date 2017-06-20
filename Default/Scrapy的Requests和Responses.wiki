@@ -1,0 +1,43 @@
+# Requests and Response
+
+2017-06-20 06:49:50 - 2017-06-20 06:59:59
+2017-06-20 22:56:02 - 2017-06-20 23:25:33
+
+二者用于抓取网页，通常Req在爬虫中生成，在系统在传递，直到
+碰到Downloader，执行request然后返回一个Response对象，回到生成该
+请求的爬虫中。
+
+二者都有相应的子类用于实现额外的功能。
+
+## Request objects
+`scrapy.http.Request(url[,callback,method='GET',headers,body,cookies,meta,encoding='utf-8',priority=0,dont_filter=False,errback,flags])`
+相应的参数
+
+*传递额外的参数给回调函数*
+示例：
+	def parse_page1(self, response):
+	    return scrapy.Request("http://www.example.com/some_page.html",
+				  callback=self.parse_page2)
+				  
+	def parse_page2(self, response):
+	    self.logger.info("Visited %s", response.url)
+	    
+	# 传递参数的版本
+	def parse_page1(self, response):
+	    item = MyItem()
+	    item['main_url'] = response.url
+	    request = scrapy.Request("http://www.example.com/some_page.html,",
+				     callback=self.parse_page2)
+	    request.meta['item'] = item
+	    yield request
+	    
+	def parse_page2(self, response):
+	    item = response.meta['item']
+	    item['other_url'] = response.url
+	    yield item
+    
+*Using errback to catch exceptions in request processing*
+
+			  
+
+

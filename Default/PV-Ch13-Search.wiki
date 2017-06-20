@@ -1,0 +1,34 @@
+# Search
+
+2017-06-20 18:57:18 - 2017-06-20 19:20:06 (p199-p201)
+2017-06-20 20:27:32 - 2017-06-20 20:55:10 (p201-p203)
+
+本章将学习如何使用查找命令，执行查找、高亮匹配，在匹配项之间跳转；
+接着将学习一些欺骗的技巧能够exploit Vim's增长查找特征，不仅能给我们
+即时的反馈而且能够自动补全；还将学习如何对匹配项进行计数。
+
+search offsets feature让我们将鼠标的位置放置到相对匹配项的某个位置，
+将了解某个场景，即search offsets让我们的工作流呈流线型。
+
+构造一个正则表达式，并能够工作往往需要几次测试，因此开发一个工作流，
+用于对匹配模式进行迭代测试非常关键，这里将学习两种方式，调用历史查找记录和
+在命令行窗口工作。
+
+79. Meet the Search Command. p199
+`/, ?`向前查找和向后查找，`n`跳到下一个匹配项
+
+80. Highlight Search Matches. p201
+`hlsearch, :h 'hlsearch'`能够让所有匹配项高亮
+*Mute Search Highlighting*
+`:set nohlsearch, :se hls!, :senohls`能够启用和禁用高亮。
+`:nohlsearch`用于暂时禁用高亮，会一直保持禁用直到下次开始一个新的或重复
+的查找。
+
+81. Preview the First Match Before Execution.
+
+*Check for the Existence of a Match*
+在输入的过程中，会自动跳转到匹配所在的位置，最后按<ESC>就会退回到原来的
+位置。
+*Autocomplete the search Field based on preview match*
+在输入'carr'的时候，如果我们要匹配的是'carrot'整个单词，那么可以查找的
+时候输入整个单词，也可以在输入的时候'/carr<C-r><C-w>'，自动补全。
