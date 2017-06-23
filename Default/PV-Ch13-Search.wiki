@@ -32,3 +32,35 @@ search offsets feature让我们将鼠标的位置放置到相对匹配项的某�
 *Autocomplete the search Field based on preview match*
 在输入'carr'的时候，如果我们要匹配的是'carrot'整个单词，那么可以查找的
 时候输入整个单词，也可以在输入的时候'/carr<C-r><C-w>'，自动补全。
+
+2017-06-21 13:40:24 - 2017-06-21 14:01:51 (p204-p208)
+82. Count the Matches for the current pattern. p204
+`:%s///gn`匹配之前的查找模式，不进行替换，n标识让替换忽略掉替换项。
+其中的/不能少，可以创建映射来实现快速输入。
+
+83. Offset the Cursor to the End of a Search Match. p204
+'search offset'能够将光标放置在离匹配字符串（开头或末尾）固定数量字符的地方。
+匹配的时候，鼠标总是放置在匹配项的起始位置，可以通过设置进行改变，`:h search-offset`
+在查找的时候加入`/e`将光标放在匹配项的末端。
+如果光标一开始是默认的开头位置，我们想换到末尾，可以`//e<CR>`自动匹配之前的
+匹配项，并设置search offset。
+
+84. Operate on a Complete Search Match. p206
+
+例子需要实际测试下。
+
+2017-06-22 13:26:11 - 2017-06-22 13:54:17 (p209-p214)
+
+85. Create Complex Patterns by Iterating upon search history. p209
+`q/`可以触发command-line 窗口，类似Vim的缓存，但是内容是我们的查找历史，
+跳转到要修改命令的行，进行相应的修改后按<C-R>则会执行该命令。
+`c%`改变到与当前字符匹配的字符位置，插入内容
+`<C-r>"`
+
+86. Search for the current visual window. p212
+
+
+
+
+
+

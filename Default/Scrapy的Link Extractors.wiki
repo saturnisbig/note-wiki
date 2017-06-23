@@ -1,0 +1,36 @@
+# Link Extractors
+2017-06-21 21:46:57 - 2017-06-21 22:03:44
+
+主要目的就是解析网页中的链接地址，然后让爬虫继续爬取页面。
+`scrapy.linkextractors.LinkExtractor`可以作为你要提取的父类，只需实现
+`extract_links`方法即可，该方法接受Response对象作为参数，返回
+`scrapy.link.Link`对象的列表，链接提取类可以初始化一次，但是提取
+链接的方法可以多次调用。
+
+链接提取主要是在CrawlSpider中使用，采用一系列的提取规则，你也
+可以在自己的爬虫中使用，即使不是继承自CrawlSpider。
+
+默认的链接提取类是`LinkExtractor`和`LxmlLinkExtractor`是一样的。
+
+`scrapy.linkextractors.lxmlhtml.LxmlLinkExtractor(allow=(), allow_domains=(),...)`
+参数：
+allow:正则表达式或者其列表，用于提取链接，如果为空，则匹配所有链接；
+deny：正则表达式或者其列表，用于排除不提取链接，优先级高于allow，空则不排除任何链接
+allow_domains：域名或其列表，用于在提取链接时
+deny_domains：域名或其列表，用于排除提取链接时
+restrict_xpaths:提取链接将在限定的xpath范围内进行
+restrict_css：同上
+tags:提取链接时会被参考的标签，默认是('a', 'area')
+attrs:对tags中的具有某些attrs的值的链接进行提取，默认是('href',)
+canonicalize:默认False
+unique:
+process_value(可调用的)：接收每个从标签和属性中提取出来的值为参数，进行相关处理，
+返回处理后的值，默认返回提取的值，例如：
+`<a href="javascript:goToPage('../other/page.html'); return false">Link text</a>`
+要提取链接：
+	def process_value(value):
+	    m = re.search("javascript:goToPage('(.*?)')", value)
+	    if m:
+		return m.group(1)
+strip:去除提取链接两端的空白字符
+

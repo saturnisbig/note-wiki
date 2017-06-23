@@ -1,0 +1,32 @@
+# Substitution
+
+2017-06-23 13:00:50 - 2017-06-23 13:35:44 (p215-p221)
+
+87. Meet the Substitute Command. 216
+`:[range]s[ubstitute]/{pattern}/{string}/[flags]`
+range的范围和Ex命令是一样的，flags用于微调替换命令。`:h :s_flags`
+'g'标签对一行中所有匹配进行替换；'c'标签让我们确定或拒绝替换；
+'n'标签压缩通常的替换行为，报告将替换的数量；'e'标签对错误信息不显示。
+'&'标签让Vim重用之前的标签。
+
+*Special Characters for the Replacement String*
+`\r, \t, \\, \1, \2, \0, &, ~, \={Vim script}`'&'插入整个匹配项，
+'\={Vim script}'执行{Vim script}，使用结果作为替换的{string}
+
+88. Find and Replace Every Match in a File. p217
+默认只替换第一个出现的匹配项，为了替换所有项，使用g标签。
+'%'代表的是整个文件，'g'代表的是水平方向。
+
+89. Eyeball Each Substitution. p219
+`:h :s_c`在选择是否替换的时候可以进行的操作。
+
+90. Reuse the Last Search Pattern. p220
+
+
+
+
+
+
+
+
+
