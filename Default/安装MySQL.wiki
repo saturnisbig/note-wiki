@@ -1,0 +1,12 @@
+# Ubuntu安装MySQL
+
+- 安装命令
+`sudo apt install mysql-server mysql-client libmysqlclient-dev`
+- 查看是否安装即启动成功
+`sudo netstat -tap | grep mysql`
+
+- 简单的使用命令
+登录：`mysql -u root -p`，在输入密码即可登录；
+`show databases;`列出数据库
+`use mysql`；使用mysql这个数据库
+`show tables;`显示表

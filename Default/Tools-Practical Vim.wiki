@@ -32,7 +32,13 @@
 - [[PV-Ch12-Matching Patterns and Literals]] - 2017-06-14 13:10:28 - 2017-06-19 23:02:52 
 - [[PV-Ch13-Search]] - 2017-06-19 23:02:52 
 
-- [[PV-Ch13-Substitution]] - 2017-06-23 13:00:41 
-  
+- [[PV-Ch14-Substitution]] - 2017-06-23 13:00:41 
+
+- [[PV-Ch15-Global Commands]] - 2017-07-01 12:24:55 - 2017-07-02 22:22:46
+
+## Tools
+学习Vim的工具集
+
+- [[PV-Ch16-Index and Navigate]] - 2017-07-02 22:24:13 
 
 

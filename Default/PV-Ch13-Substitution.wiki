@@ -22,6 +22,56 @@ range的范围和Ex命令是一样的，flags用于微调替换命令。`:h :s_f
 
 90. Reuse the Last Search Pattern. p220
 
+2017-06-26 13:13:11 - 2017-06-26 13:40:45 (p222-p224)
+
+91. Replace with the s of a register. p222
+
+可以将要查找或替换的文本复制到寄存器中，需要的时候将内容粘贴到查找的地方。
+通过传值：
+`:%s//<C-r>0/g`。存在的问题是如果是多行或者有特殊字符，那么就得重新编辑。
+通过引用：
+`:%s//\=@0/g`\=告诉vim后面是个Vim script，@0引用寄存器0上的值。
+通过引用的话，查找替换的语句比较简洁，但是可能存在寄存器换成别的的情况。
+
+92. Repeast the Previous Substitute Command. p224
+比如执行了`:s/target/replace/g`命令后，发现少了%，那么可以使用g&命令，
+`:h g&`查看帮助，以上一次的标签和查找、替换的内容执行命令。
+
+2017-06-27 13:38:52 - 2017-06-27 13:58:41 (p225-p228)
+`:&&`第一个&重复上一次查找，第二个重复之前的:s命令，仅对当前行起作用；
+`:'<,'>&&`对选择的范围起作用，`:%&&`对整个文件起作用，和`g&`效果一样。
+
+93. Rearrange CSV Fields Using Submatches. p228
+`/\v^([^,]*),([^,]*),([^,]*)$`
+`:%s//\3,\2,\1`
+
+2017-06-29 13:02:19 - 2017-06-29 13:51:56 (p229-p334)
+
+94. Perform Arithmentic on the Replacement. p229
+`h\zs\d`匹配h后面跟着数字的，但不包括h本身，在77.有介绍关于\zs的。
+`submatch(0)`获取当前的匹配项
+
+95. Swap Two or Moare Words. p230
+
+插件abolish.vim
+
+96. Find and Replace Across Multiple Files. p233
+`\ze`排除单词从匹配项里。
+
+2017-06-30 13:00:05 - 2017-06-30 13:28:37 (p235-p237)
+`:args **/*.txt`将项目下的所有文件加载到argument list；
+`:argdo %s//Practical/ge`对每个文件进行替换操作
+使用该方法，如果文件很多的话，就会进行许多不必要的操作。
+另一种方法是：
+先在项目所有文件中查找出包含匹配字符串的文件；接着在这些文件中进行替换操作。
+要在项目下进行文件查找，必须要用`:vimgrep`命令，p269有介绍。
+`<C-r>/`插入最近匹配的模式，vimgrep查找的结果被记录在quickfix列表上，
+可以通过`:copen`来打开quickfix窗口查看结来
+
+上述操作可以用如下命令实现：`/Pragmatic\ze Vim, :vimgrep /<C-r>//**/*.txt, :Qargs`
+`:argdo %s//Practical/g, :argdo update`
+`:update`命令会对修改过的文件进行保存。
+
 
 
 

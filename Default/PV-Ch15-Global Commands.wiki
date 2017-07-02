@@ -1,0 +1,49 @@
+# Global Commands
+
+2017-07-01 12:27:01 - 2017-07-01 12:54:52 (p237-p241)
+
+97. Meet the Global Command. p237
+
+`:[range] global[!]/{pattern}/[cmd]`，默认的作用范围是整个文件，{pattern}和
+查找历史关联，如果放空的话，会用当前的查找项。
+[cmd]可以是任意的Ex命令，除了:global外。实际使用中，和操作文本有关的命令是
+最有用的，就像p52列出的那些。
+
+98. Delete Lines Containing a Pattern. p238
+
+`:g/re/d`删除匹配项所在的行，举例子：删除html文档中带标签的行
+
+`:v/re/d`保留匹配项所在行，:v与:g相反
+
+99. Collect TODO Items in a Register. p240
+`qaq`清空a寄存器，`:reg a`查看是否为空，`:g/TODO/yank A`将查找出来的匹配项的
+行复制到a寄存器上。
+如果有多个文件，可以结合`:bufdo, :argdo`来实现多个文件的操作。
+`:g/TODO/t$`将匹配项所在行的内容复制到文件末。
+
+2017-07-02 21:50:19 - 2017-07-02 22:22:26 (p242-p245)
+100. Alphabetize the Properties of Each Rule in a CSS File. p242
+要对某个范围内的字符，按照字母表循序排列，可以用`:h sort`命令，接受range
+范围内的排序。
+在这里range的范围可以是行号地址，.代表当前行，%代表整个文件，.+1当前行
+的下一行（偏移量为1），对css文件中的属性值进行排序，可以用该方法：
+`:g/{/.+1,/}/-1 sort`匹配{}范围内的文本行，其中{、}所在行不匹配，所以就
+要增加偏移量。
+
+`:g/{start}/ .,{finish} [cmd]`对每个{start}开始{finish}结束范围内的每行，
+执行[cmd]命令。
+`:h sil`不输出提示信息。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
