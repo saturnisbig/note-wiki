@@ -1,0 +1,21 @@
+# Search Project-Wide with grep, vimgrep, and others 
+2017-07-24 13:13:45 - 2017-07-24 13:33:55 (p269-p273)
+
+108. Call grep Without Leaving Vim. p269
+直接调用`:grep -i Waldo *`命令，就会出来quickfix list显示。
+
+109. Customize the grep Program. p271
+`:grepprg`命令，当进行:grep命令时需要调用的程序；
+`:grepformat`格式，
+
+2017-07-26 13:21:12 - 2017-07-26 13:30:40 (p274)
+
+110. Grep with Vim's Internal Search Engine.
+
+
+
+
+
+
+
+

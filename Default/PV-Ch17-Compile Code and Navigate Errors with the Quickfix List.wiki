@@ -1,0 +1,51 @@
+# PV-Ch17-Compile Code and Navigate Errors with the Quickfix List
+
+2017-07-10 13:12:18 - 2017-07-10 13:28:44 (p259-p261)
+
+104. Compile Code Without Leaving Vim. p260
+打开文件，输入:make命令，如果有错误，会提示出错的信息，如果有多条错误信息，
+为跳转到下一条，则可用命令：`:cnext`。默认的话，运行make后，光标会自动跳转到
+第一条错误所在的文件，如果不想跳转，可以输入`:make!`，如果不小心已经跳转了，
+要回到之前的位置，可以输入：`:make?`或者`<C-o>`回到之前的位置。
+
+2017-07-11 13:57:22 - 2017-07-11 14:13:14 (p262-p264)
+105. Browse the Quickfix List.
+quickfix保存了一个来自一个或多个文件位置的集合，这里将查看如何浏览quickfix list。
+Command Action
+:cnext Jump to next item
+:cprev Jump to previous item
+:cfirst Jump to first item
+:clast Jump to last item
+:cnfile Jump to first item in next file
+:cpfile Jump to last item in previous file
+:cc N Jump to nth item
+:copen Open the quickfix window
+:cclose Close the quickfix window
+`:h quickfix`。localtion list仅对当前的窗口有效，并为每个独立打开的文件
+创建对应的list记录，quickfix是对vim会话打开的所有文件创建list记录。
+*向前和重置*
+`:cnext, :5cnext`接受数字为参数，往后跳转。
+`:copen`打开quickfix窗口，该窗口与vim的缓存窗口类似，有个特殊的地方：如果
+我们在quickfix窗口中按下<CR>键，会打开光标所在行匹配的文件，通常会在该窗口
+的上方打开。
+
+106. Recall Results from a Previous Quickfix List. p265
+
+
+2017-07-24 13:09:40 - 2017-07-24 13:11:40
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

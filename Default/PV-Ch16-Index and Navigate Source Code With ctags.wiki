@@ -1,0 +1,54 @@
+# PV-Ch16-Index and Navigate Source Code With ctags
+
+2017-07-03 12:41:52 - 2017-07-03 13:18:01 (p249-p253)
+
+101. Meet ctags. p249
+安装，在Ubuntu下：`sudo apt install exuberant-ctags`，通过`ctags --help`看
+是否安装成功，如果没有成功，需要检查path路径。
+为代码库建立索引：
+`$cd code/ctags, $ls, $ctags *.rb, $ls`，会生成一个tags文件，里面建立
+函数、类等的索引。
+索引文件中的关键词是通过匹配模式进行定位，而不是通过行号的（行号可能改变）
+关键词通过元数据打上标签，标签可以用于标注类、方法等。
+
+102. Configure Vim to Work with ctags. p252
+让Vim知道去哪查找tags文件，通过`:h 'tags'`查看介绍及用法。如果设置为`./`，
+则在当前文件所在的目录下进行查找，可以通过`:set tags?`查看设置清空。
+
+*生成标签文件*
+在vim下运行`:!ctags -R`，该命令会递归的遍历当前目录及子目录，并在当前目录下
+生成配置文件，如果要进行微调，还可以加上参数进行设置，`--exclude=.git --language=sql`等。
+可以隐射命令，`:nnoremap <f5> :!ctags -R<CR>`。
+*文件保存的时候，自动更新标签文件*
+`:autocmd BufWritePost * call system("ctags -R")`，文件保存的时候重新生成tags
+文件，如果文件改动频繁，则造成不断的生成，会浪费计算资源，还有一种方式就是，
+在版本控制提交的时候，重新生成，即commit的时候。相关的介绍是Tim Pope提出来的，
+地址在这[Effortless Ctags with Git](http://tbaggery.com/2011/08/08/effortless-ctags-with-git.html)
+2017-07-04 13:17:21 - 2017-07-04 13:28:37(p254-p255)
+103. Navigate Keyword Definitions with Vim's Tag Navigation Commands. p254
+`<C-]>`跳转到光标下定义的关键词，`<C-t>`返回按钮，跳转到函数后，可以按该键返回到
+之前的位置。
+
+2017-07-10 12:51:08 - 2017-07-10 13:12:41 (p256-p258)
+出现重复方法时，如何进行选择？`:h tag-priority`查看vim是如何对匹配标签进行排序的。
+在唯一匹配的清空下，<C-]>和g<C-]>效果是一样的，如果有多个匹配，则g<C-]>会显示
+匹配标签列表。
+还可以使用`:tselect`来调出匹配标签的列表，输入对应的数字进行选择。
+还可以通过输入Ex命令来实现跳转，`:tag {keyword}, :tjump {keyword}`，一般输入
+命令会比移动光标快，vim还会输入提供了补全功能，并且接受正则表达式作为参数。
+`:tag /{pattern}, :tjump /{pattern}`，匹配带正则功能的表达式。
+
+用于浏览代码库的相关命令：
+Command Effect
+<C-]> Jump to the first tag that matches the word under the cursor
+g<C-]> Prompt user to select from multiple matches for the word under the cursor. If only one match exists, jump to it without prompting.
+:tag {keyword} Jump to the first tag that matches {keyword}
+:tjump {keyword} Prompt user to select from multiple matches for {keyword} . If only one match exists, jump to it without prompting.
+:pop or <C-t> Reverse through tag history
+:tag Advance through tag history
+:tnext Jump to next matching tag
+:tprev Jump to previous matching tag
+:tfirst Jump to first matching tag
+:tlast Jump to last matching tag
+:tselect Prompt user to choose an item from the tag match list
+

@@ -1,0 +1,23 @@
+# 
+
+
+## [[Ch07-Pattern Matching with Regular Expressions]]
+2017-10-14 21:57:49 - 2017-10-14 22:06:22
+2017-10-15 16:20:29 - 2017-10-15 16:31:05
+
+2017-10-23 19:27:56 - 2017-10-23 19:56:17 
+
+match regex that matches a number with commas for every three digits?
+r'^\d{1,3}?(,\d{3})*$'
+
+2017-10-24 19:32:07 - 2017-10-24 20:00:44
+r'^[A-Z]\w+\sNakamoto'
+
+p192 Q22
+r'^(Alice|Bob|Carol)\s(eats|pets|throws)\s(apples|cats|baseballs)[\s\w]+.$', re.IGNORECASE
+
+2017-10-25 20:59:05 - 2017-10-25 21:47:01
+r'[a-z]', r'[A-Z]', r'\d+'
+
+
+

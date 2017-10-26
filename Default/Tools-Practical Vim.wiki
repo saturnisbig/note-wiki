@@ -39,6 +39,10 @@
 ## Tools
 学习Vim的工具集
 
-- [[PV-Ch16-Index and Navigate]] - 2017-07-02 22:24:13 
+- [[PV-Ch16-Index and Navigate Source Code With ctags]] - 2017-07-02 22:24:13 - 2017-07-10 13:11:01 
+  
+- [[PV-Ch17-Compile Code and Navigate Errors with the Quickfix List]] - 2017-07-10 13:11:01 
+ 
+- [[PV-Ch18 Search Project-Wide with grep, vimgrep, and others]] - 2017-07-24 13:13:45 -
 
 
