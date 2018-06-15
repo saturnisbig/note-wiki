@@ -1,0 +1,26 @@
+# 遍历目录文件生成器
+
+
+```python
+
+def all_files(path, patterns='*', single_level=False, yield_folder=False):
+    """
+    遍历目录，找出匹配模式的文件，返回一个匹配文件的生成器
+    """
+    pats = patterns.split(';')
+    for dir_path, subdirs, files in os.walk(path):
+        if yield_folder:
+            files = files.extend(subdirs)
+        files.sort()
+        for name in files:
+            for pat in pats:
+                if fnmatch.fnmatch(name, pat):
+                    fname = os.path.join(dir_path, name)
+                    yield fname
+                    break
+        if single_level:
+            break
+```
+
+        find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+	find . -path "*/migrations/*.pyc" -delete`

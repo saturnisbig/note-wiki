@@ -1,0 +1,505 @@
+# 使用Python从PDF文档中提取数据
+
+2018-05-13 07:49:53 - 2018-05-13 08:58:39 
+2018-05-13 11:51:57 - 2018-05-13 12:00:40 
+2018-05-13 13:04:20 - 2018-05-13 13:52:32 
+
+你经常会需要从PDF中提取数据或者将PDF中的数据转换为其他格式。可惜的是，
+在处理提取PDF数据方面并没有太多Python的库支持。本章中，会带你了解一系列的库，这
+些库可以帮助你提取数据。我们还会学习如何从PDF文档中提取某些照片。虽然不存在使用
+Python能完美解决这些需求的方案，但你可以结合这里掌握的知识来处理遇到的问题。
+一旦提取出我们想要的数据，我们还将学习如何处理这些数据及将数据导出为其他格式。
+
+让我们从学习如何提取文本开始。
+
+### 使用PDFMiner提取文本
+
+为我们所熟知的包非*PDFMiner*莫属。这个包从Python2.4开始就有了。主要的目的就是
+从PDF中提取文本。实际上，PDFMiner不仅能够提供文本的位置，还能提供关于字体的信息。
+针对Python2.4-2.7，可以参考以下网站有关该包的介绍：
+
+- Github – https://github.com/euske/pdfminer
+- PyPI – https://pypi.python.org/pypi/pdfminer/
+- Webpage – https://euske.github.io/pdfminer/
+
+PDFMiner不兼容Python3，幸运的是，有一个该库的分支叫*PDFMiner.six*提供了支持。
+可以从这里 https://github.com/pdfminer/pdfminer.six了解有关该包的知识。
+
+关于安装PDFMiner的介绍已经过时，你可以按照下列方式使用pip安装：
+
+    $python -m pip install pdfminer
+    # 针对python3
+    $python -m pip install pdfminer.six
+    
+有关PDFMiner的文档相当少，除了本文介绍的内容外，你最好通过google或者stackoverflow了解有关如何高效
+使用该包的内容。
+
+##### 提取所有的文本
+
+有时，你可能需要提取PDF文档中的所有文本。PDFMiner提供了许多不同的方法
+可以用。我们先了解下其中的一些方法。让我们先试着读取关于[Internal Revenue Service W9](https://www.irs.gov/pub/irs-pdf/fw9.pdf)
+的文本。
+
+```python
+
+import io
+ 
+from pdfminer.converter import TextConverter
+from pdfminer.pdfinterp import PDFPageInterpreter
+from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfpage import PDFPage
+ 
+def extract_text_from_pdf(pdf_path):
+    resource_manager = PDFResourceManager()
+    fake_file_handle = io.StringIO()
+    converter = TextConverter(resource_manager, fake_file_handle)
+    page_interpreter = PDFPageInterpreter(resource_manager, converter)
+ 
+    with open(pdf_path, 'rb') as fh:
+        for page in PDFPage.get_pages(fh, 
+                                      caching=True,
+                                      check_extractable=True):
+            page_interpreter.process_page(page)
+ 
+        text = fake_file_handle.getvalue()
+ 
+    # close open handles
+    converter.close()
+    fake_file_handle.close()
+ 
+    if text:
+        return text
+ 
+if __name__ == '__main__':
+    print(extract_text_from_pdf('w9.pdf'))
+    
+```
+
+直接使用PDFMiner看起来有点冗长。在代码中，我们从PDFMiner的多个地方导入
+了许多小的方法。关于这些类并没有文档及docstrings介绍，因此我不会深入介绍
+这些方法的功能。如果好奇的话，可以自己去查看源码。然而，我认为只要照着这些
+代码做就可以了。
+
+我们先创建一个resource manager实例。接着用Python的`io`模块创建一个类文件对象。
+如果使用的Python2，你可以使用`StringIO`模块。下一步是创建一个转换器。示例中
+我们使用`TextConvert`，你还可以使用HTMLConverter或XMLConverter。最后，我们
+创建一个PDF的解析对象，该对象使用resource manager和convert对象来提取文本。
+
+#### 按页提取文本
+
+坦白讲，从一个多页文档中提取所有文本并不是那么有用。通常，我们需要对部分
+的文档进行提取。那么，让我们重写代码，让它按页提取文本。这样，我们就能够
+一次一页校验文本。
+
+```python
+# miner_text_generator.py
+ 
+import io
+ 
+from pdfminer.converter import TextConverter
+from pdfminer.pdfinterp import PDFPageInterpreter
+from pdfminer.pdfinterp import PDFResourceManager
+from pdfminer.pdfpage import PDFPage
+ 
+def extract_text_by_page(pdf_path):
+    with open(pdf_path, 'rb') as fh:
+        for page in PDFPage.get_pages(fh, 
+                                      caching=True,
+                                      check_extractable=True):
+            resource_manager = PDFResourceManager()
+            fake_file_handle = io.StringIO()
+            converter = TextConverter(resource_manager, fake_file_handle)
+            page_interpreter = PDFPageInterpreter(resource_manager, converter)
+            page_interpreter.process_page(page)
+ 
+            text = fake_file_handle.getvalue()
+            yield text
+ 
+            # close open handles
+            converter.close()
+            fake_file_handle.close()
+ 
+def extract_text(pdf_path):
+    for page in extract_text_by_page(pdf_path):
+        print(page)
+        print()
+ 
+if __name__ == '__main__':
+    print(extract_text('w9.pdf'))
+```
+
+在本示例中，我们创建了一个生成器，每次yield一页的文本。`extract_text`函数
+打印每页的文本。在这里我们可以添加解析文本的逻辑，也可以将文本保存为单
+个文件，以备将来使用。
+
+你可能注意到了文本并不是如你期望的顺序组织。所以你必须找到提取你所感兴趣
+文本的最佳方式。
+
+使用PDFMiner的好处是实际上文本已经被导出为text，HTML或XML了。
+
+如果不想自己写PDFMiner代码，你也可以使用PDFMiner的命令行工具`pdf2txt.py`
+和`dumppdf.py`来帮你导出文本。按照`pdf2txt.py`源码介绍，可以用它来将PDF
+导出为纯文本、html、xml或者"tags"。
+
+
+### 使用pdf2txt.py导出文本
+
+PDFMiner自带的`pdf2txt.py`默认会从PDF中提取文本，并打印到stdout。
+它不支持图片中的文本，因为PDFMiner不支持OCR。最简单的就是提供PDF文档的
+路径，这里以w9.pdf文件为例，使用你自己电脑上文件的位置：
+
+    $pdf2txt.py /path/to/w9.pdf
+
+运行后，所有文本会被输出到stdout。可以将文本导出为text, html, xml或"tagged pdf"。
+XML格式的将提供最多有关PDF的信息，包括每个字母在文档中的位置及字体信息。
+不推荐转换为HTML格式，因为pdf2txt.py生成的格式比较Ugly。
+
+    $pdf2txt.py -o w9.html w9.pdf
+    $pdf2txt.py -o w9.xml w9.pdf
+    
+如你所见，最终结果看起来有点糟，但还不算太坏。导出XML格式太冗长，不能提供完整的
+内容，下面是一小段内容：
+
+```xml
+<pages>
+	<page id="1" bbox="0.000,0.000,611.976,791.968" rotate="0">
+		<textbox id="0" bbox="36.000,732.312,100.106,761.160">
+			<textline bbox="36.000,732.312,100.106,761.160">
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="36.000,736.334,40.018,744.496" size="8.162">F</text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="40.018,736.334,44.036,744.496" size="8.162">o</text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="44.036,736.334,46.367,744.496" size="8.162">r</text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="46.367,736.334,52.338,744.496" size="8.162">m</text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="52.338,736.334,54.284,744.496" size="8.162"> </text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="54.284,736.334,56.230,744.496" size="8.162"> </text>
+				<text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="56.230,736.334,58.176,744.496" size="8.162"> </text
+				><text font="JYMPLA+HelveticaNeueLTStd-Roman" bbox="58.176,736.334,60.122,744.496" size="8.162"> </text>
+				<text font="ZWOHBU+HelveticaNeueLTStd-BlkCn" bbox="60.122,732.312,78.794,761.160" size="28.848">W</text>
+				<text font="ZWOHBU+HelveticaNeueLTStd-BlkCn" bbox="78.794,732.312,87.626,761.160" size="28.848">-</text>
+				<text font="ZWOHBU+HelveticaNeueLTStd-BlkCn" bbox="87.626,732.312,100.106,761.160" size="28.848">9</text>
+			<text></text>
+		</textline>
+```
+
+### 使用Slate提取文本
+
+Tim McNamara不喜欢PDFMiner笨拙的使用方式，于是他为该包写了一个wrapper，
+叫做`slate`，让提取文本的方法更加方便。可惜的是，不兼容Python3。如果打算
+试一试，必须使用`easy_install`安装`distribute`包：
+
+    $easy_install distribute
+    $python -m pip install slate
+    
+注意slate的最新版本是0.5.2，pip可能不包含该版本。你也可以直接从github安装：
+
+    $python -m pip install  git+https://github.com/timClicks/slate
+    
+接着，写代码来提取PDF文档。
+
+```python
+# slate_text_extraction.py
+ 
+import slate
+ 
+def extract_text_from_pdf(pdf_path):
+    with open(pdf_path) as fh:
+        document = slate.PDF(fh, password='', just_text=1)
+ 
+    for page in document:
+        print(page)
+ 
+if __name__ == '__main__':
+    extract_text_from_pdf('w9.pdf')
+```
+
+如你所见，使用slate解析PDF，只需导入slate然后创建一个PDF类。PDF类
+是Python内置list的子类，它只返回一个列表或可迭代页的文本。你也会注意到
+如果PDF文档加密，还可以传入一个密码参数。总之，一旦文档被解析，我们
+就能按页打印文本了。
+
+我很喜欢slate的易用性。可惜的是，这个包同样是没有相关的文档。浏览完
+源码后，了解到这个包只支持文本导出。
+
+### 导出数据
+
+解析出文本后，我们将继续学习如何将文本转为其他格式。主要是学习如何
+转换为三种格式：XML、JSON、CSV。
+
+#### 导出为XML
+
+XML格式是最为人所知的输入、输出格式之一，被广泛应用到互联网上。如前面
+所见，PDFMiner支持XML作为它的导出格式。
+
+以下示例是自己创建导出XML的工具：
+
+```python
+# xml_exporter.py
+ 
+import os
+import xml.etree.ElementTree as xml
+ 
+from miner_text_generator import extract_text_by_page
+from xml.dom import minidom
+ 
+ 
+def export_as_xml(pdf_path, xml_path):
+    filename = os.path.splitext(os.path.basename(pdf_path))[0]
+    root = xml.Element('{filename}'.format(filename=filename))
+    pages = xml.Element('Pages')
+    root.append(pages)
+ 
+    counter = 1
+    for page in extract_text_by_page(pdf_path):
+        text = xml.SubElement(pages, 'Page_{}'.format(counter))
+        text.text = page[0:100]
+        counter += 1
+ 
+    tree = xml.ElementTree(root)
+    xml_string = xml.tostring(root, 'utf-8')
+    parsed_string = minidom.parseString(xml_string)
+    pretty_string = parsed_string.toprettyxml(indent='  ')
+ 
+    with open(xml_path, 'w') as fh:
+        fh.write(pretty_string)
+    #tree.write(xml_path)
+ 
+if __name__ == '__main__':
+    pdf_path = 'w9.pdf'
+    xml_path = 'w9.xml'
+    export_as_xml(pdf_path, xml_path)
+```
+
+示例使用Python的XML库，包括minidom、ElementTree。同时导入前面的脚本
+以便抓取所需文本。我们将文件名作为顶层元素，接着添加Pages元素，然后通过
+for循环，将每页的内容保存在相应的标签下。在这里，你可以添加其他的解析函数，
+将页面中的文本转换为按句子和按词，或者解析其他有趣的信息。比如，你可能
+想解析只有日期的句子。可以使用Python的正则表达式来查找或者查看某个句子
+中是否有相应的信息。
+
+本例中，我们仅提取每页的前100个字符，然后存储到XML中。从技术上来说，
+接下来的代码可简化为输出XML。然而，ElementTree并没有对XML进行处理，
+以便阅读。看起来就行简化的javascript那样，是一坨的文本。所以，我们使用
+minodom来美化XML，为XMl增加空格，结果看起来像下面这样：
+
+```xml
+<?xml version="1.0" ?>
+<w9>
+  <Pages>
+    <Page_1>Form    W-9(Rev. November 2017)Department of the Treasury  Internal Revenue Service Request for Taxp</Page_1>
+    <Page_2>Form W-9 (Rev. 11-2017)Page 2 By signing the filled-out form, you: 1. Certify that the TIN you are g</Page_2>
+    <Page_3>Form W-9 (Rev. 11-2017)Page 3 Criminal penalty for falsifying information. Willfully falsifying cert</Page_3>
+    <Page_4>Form W-9 (Rev. 11-2017)Page 4 The following chart shows types of payments that may be exempt from ba</Page_4>
+    <Page_5>Form W-9 (Rev. 11-2017)Page 5 1. Interest, dividend, and barter exchange accounts opened before 1984</Page_5>
+    <Page_6>Form W-9 (Rev. 11-2017)Page 6 The IRS does not initiate contacts with taxpayers via emails. Also, th</Page_6>
+  </Pages>
+</w9>
+```
+
+#### 导出为JSON
+
+JSON是一个轻量级的数据交换格式，便于读写。Python有一个处理json的库，
+能通过代码读写json。参考前面例子，创建一个导出为JSON的脚本。
+
+```python
+# json_exporter.py
+ 
+import json
+import os
+ 
+from miner_text_generator import extract_text_by_page
+ 
+ 
+def export_as_json(pdf_path, json_path):
+    filename = os.path.splitext(os.path.basename(pdf_path))[0]
+    data = {'Filename': filename}
+    data['Pages'] = []
+ 
+    counter = 1
+    for page in extract_text_by_page(pdf_path):
+        text = page[0:100]
+        page = {'Page_{}'.format(counter): text}
+        data['Pages'].append(page)
+        counter += 1
+ 
+    with open(json_path, 'w') as fh:
+        json.dump(data, fh)
+ 
+if __name__ == '__main__':
+    pdf_path = 'w9.pdf'
+    json_path = 'w9.json'
+    export_as_json(pdf_path, json_path)
+```
+
+首先导入所需的模块，创建一个以PDF文档路径和导出为json文件路径的
+函数。JSON在python就是一个字典，因此，先创建顶层的键：Filename, Pages。
+Pages键映射到一个空的列表。接着，遍历每一页，提取每页的前100个字符，
+然后创建一个以页码为键、前100字符为值的字典，将字典添加到Pages映射的
+的列表中。最后，通过python的json模块的dump方法下入文件。内容如下：
+
+```json
+{'Filename': 'w9',
+ 'Pages': [{'Page_1': 'Form    W-9(Rev. November 2017)Department of the Treasury  Internal Revenue Service Request for Taxp'},
+           {'Page_2': 'Form W-9 (Rev. 11-2017)Page 2 By signing the filled-out form, you: 1. Certify that the TIN you are g'},
+           {'Page_3': 'Form W-9 (Rev. 11-2017)Page 3 Criminal penalty for falsifying information. Willfully falsifying cert'},
+           {'Page_4': 'Form W-9 (Rev. 11-2017)Page 4 The following chart shows types of payments that may be exempt from ba'},
+           {'Page_5': 'Form W-9 (Rev. 11-2017)Page 5 1. Interest, dividend, and barter exchange accounts opened before 1984'},
+           {'Page_6': 'Form W-9 (Rev. 11-2017)Page 6 The IRS does not initiate contacts with taxpayers via emails. Also, th'}]}
+```
+
+一旦，我们有了易读的输出，你还可以添加PDF文件的相关信息。输出信息
+可能会不一样，这基于你想从每页中提取的信息。
+
+#### 导出为CSV格式
+
+CSV已经存在挺长时间了。庆幸的是Excel和LibreOffice会自动将csv文件
+打开为表格。也可以通过文本编辑器打开csv文件。
+
+Python自带了一个csv模块用于读写csv文件。在这里，我们将使用该模块
+为提取的文本创建一个csv文件。如下：
+
+```python
+# csv_exporter.py
+ 
+import csv
+import os
+ 
+from miner_text_generator import extract_text_by_page
+ 
+ 
+def export_as_csv(pdf_path, csv_path):
+    filename = os.path.splitext(os.path.basename(pdf_path))[0]
+ 
+    counter = 1
+    with open(csv_path, 'w') as csv_file:
+        writer = csv.writer(csv_file)
+        for page in extract_text_by_page(pdf_path):
+            text = page[0:100]
+            words = text.split()
+            writer.writerow(words)
+ 
+ 
+if __name__ == '__main__':
+    pdf_path = 'w9.pdf'
+    csv_path = 'w9.csv'
+    export_as_csv(pdf_path, csv_path)
+```
+
+首先，导入csv库，创建一个csv文件处理handler，接着初始化一个writer对象，
+然后遍历pdf文档，区别是，我们将前100个字符分成单独的单词。这样，就有一
+些真的数据可以添加到csv文件中。如果不这样做，每行将只包括一个元素，这样
+就不能构成一个csv文件。最后，我们将单词列表写到csv文件中。
+
+```python
+Form,W-9(Rev.,November,2017)Department,of,the,Treasury,Internal,Revenue,Service,Request,for,Taxp
+Form,W-9,(Rev.,11-2017)Page,2,By,signing,the,filled-out,"form,",you:,1.,Certify,that,the,TIN,you,are,g
+Form,W-9,(Rev.,11-2017)Page,3,Criminal,penalty,for,falsifying,information.,Willfully,falsifying,cert
+Form,W-9,(Rev.,11-2017)Page,4,The,following,chart,shows,types,of,payments,that,may,be,exempt,from,ba
+Form,W-9,(Rev.,11-2017)Page,5,1.,"Interest,","dividend,",and,barter,exchange,accounts,opened,before,1984
+Form,W-9,(Rev.,11-2017)Page,6,The,IRS,does,not,initiate,contacts,with,taxpayers,via,emails.,"Also,",th
+```
+
+#### 从PDF文档提取图片
+
+不幸的是，没有Python库可以用于从PDF文档提取图片。最接近的是一个
+叫做*minecart*的项目，声称实现了该功能，但只兼容Python2.7。该项目
+对我的示例PDF文档并无效果。Ned Batchelder's的博客上有一篇文章谈到
+他可以提取照片，代码如下：
+
+```python
+# Extract jpg's from pdf's. Quick and dirty.
+import sys
+ 
+pdf = file(sys.argv[1], "rb").read()
+ 
+startmark = "\xff\xd8"
+startfix = 0
+endmark = "\xff\xd9"
+endfix = 2
+i = 0
+ 
+njpg = 0
+while True:
+    istream = pdf.find("stream", i)
+    if istream < 0:
+        break
+    istart = pdf.find(startmark, istream, istream+20)
+    if istart < 0:
+        i = istream+20
+        continue
+    iend = pdf.find("endstream", istart)
+    if iend < 0:
+        raise Exception("Didn't find end of stream!")
+    iend = pdf.find(endmark, iend-20)
+    if iend < 0:
+        raise Exception("Didn't find end of JPG!")
+ 
+    istart += startfix
+    iend += endfix
+    print("JPG %d from %d to %d" % (njpg, istart, iend))
+    jpg = pdf[istart:iend]
+    jpgfile = file("jpg%d.jpg" % njpg, "wb")
+    jpgfile.write(jpg)
+    jpgfile.close()
+ 
+    njpg += 1
+    i = iend
+```
+
+这段代码对我的PDF文档无效，评论中有些人说有效果，Stackoverflow上有
+很多这样的代码，有些使用了PyPDF2，这些对我的PDF文档都无效。
+
+我建议使用类似Poppler的工具来提取图片。Poppler有个工具叫pdfimages，
+可以结合Python的subprocess模块使用。下面是不用python的用法：
+
+    $pdfimages -all reportlab-sample.pdf images/prefix-jpg
+    
+确保images文件夹存在，pdfimages并不会创建文件夹。下面的代码可以检查
+文件夹是否存在，自动创建文件夹。
+
+```python
+# image_exporter.py
+ 
+import os
+import subprocess
+ 
+def image_exporter(pdf_path, output_dir):
+    if not os.path.exists(output_dir):
+        os.makedirs(output_dir)
+ 
+    cmd = ['pdfimages', '-all', pdf_path, 
+           '{}/prefix'.format(output_dir)]
+    subprocess.call(cmd)
+    print('Images extracted:')
+    print(os.listdir(output_dir))
+ 
+ 
+if __name__ == '__main__':
+    pdf_path = 'reportlab-sample.pdf'
+    image_exporter(pdf_path, output_dir='images')
+```
+
+在这里，我们导入了`subprocess`和`os`模块。如果导出的文件夹不存在，则
+尝试创建新的文件夹。然后使用subprocess的call方法来执行pdfimages。
+使用call是因为该方法会等待pdfimages执行完毕。你也可以使用Popen，
+该方法会在后台执行进程。最后，打印导出路径，确认图片是否导出。
+
+网上还有其他的文章提到`Wand`库，你可以试试。它是ImageMagick的一个wrapper。
+注意的是，还有个捆绑Python的Poppler叫做pypoppler，但是我没找到有关提取
+图片的示例。
+
+### 最后
+
+本章包含了很多内容。你学到了多个用于提取PDF文本的库，比如PDFMiner、Slate。
+还学了如何用Python内置的模块将格式转换为XML、JSON、CSV等。最后，
+我们还了解了提取图片的难点，虽然目前Python并没有很好的库能够完成该任务，
+但是，可以使用其他工具来实现该功能，比如Poppler的pdfimage模块。
+
+参考阅读：
+
+- [Using Wand to extract images from PDFs in python](http://mikelynchgames.com/software-development/using-wand-to-extract-pngs-from-pdfs/)
+- [Ned Batchelder – Extracting JPGs from PDFs](https://nedbatchelder.com/blog/200712/extracting_jpgs_from_pdfs.html)
+- [Extracting PDF Metadata and Text with Python](https://www.blog.pythonlibrary.org/2018/04/10/extracting-pdf-metadata-and-text-with-python/)
+- [StackOverflow: Extracting text from a PDF file using PDFMiner in python?](https://stackoverflow.com/a/26495057/393194)
+
+文章出处：
+
+[Exporting Data from PDFs with Python](https://www.blog.pythonlibrary.org/2018/05/03/exporting-data-from-pdfs-with-python/)

@@ -1,0 +1,4 @@
+
+
+- 翻译[Resetting Django migrations](https://www.techiediaries.com/resetting-django-migrations/)
+- 修改博客界面，添加分页功能

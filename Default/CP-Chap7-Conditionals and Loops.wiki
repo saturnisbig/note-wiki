@@ -1,0 +1,310 @@
+# Chapter 8 Conditionals and Loops
+
+阅读开始
+2018-06-02 11:05:49 - 2018-06-02 11:26:54 
+2018-06-02 13:07:22 - 2018-06-02 13:55:17 
+阅读结束
+笔记开始
+2018-06-02 15:44:11 - 2018-06-02 16:17:41 
+2018-06-02 21:12:48 - 2018-06-02 22:17:15 
+2018-06-03 07:56:20 - 2018-06-03 08:20:48 
+笔记结束
+练习开始
+2018-06-03 09:21:14 - 2018-06-03 10:50:09 
+
+主要内容是关于条件和循环语句以及与二者相关的只是，将会深入探讨if, while, for以及
+对应的else, elif, break, continue, pass语句。
+
+##### if语句
+
+如果一个复合语句（例如if子句，while或for循环）的代码块仅包含一行代码，那么它可以
+和前面的语句写在同一行上：`if make_hard_copy: send_data_to_printer()`
+    
+##### else语句
+
+能够避免"dangling else"问题，一种语义错觉。
+```C
+/* dangling-else in C */
+if (balance > 0.00)
+    if (((balance -amt) > min_bal) && (atm_cashout() == 1))
+        printf("Here's your cash: please take all bills. \n");
+else
+    printf("Your balance is zero or negative. \n");
+```
+上述代码中想实现的是如果用户存款低于0则提示，但是示例代码中，如果用户的余额少于
+最小值也会提示。因为C语言中else匹配的是最近的if，而不是像Python中，根据缩进对应if。
+
+##### elif语句
+
+类似C语言等中的`switch case`，但是要实现C语言中的Switch可以使用字典代替。
+
+```python
+if user.cmd == 'create':
+    action = "create item"
+elif user.cmd == 'delete':
+    action = 'delete item'
+elif user.cmd == 'edit':
+    action = 'edit item'
+else:
+    action = 'invalid choice... try again!'   
+    
+    # 上述代码还可以这样实现
+if user.cmd in ('create', 'delete', 'edit'):
+    action = '%s item' % user.cmd
+else:
+    action = 'invalid choice... try again.'
+    
+    # 也可以这样
+msg = {'create': 'create item', 'delete': 'delete item', 'edit': 'edit item'}
+default = 'invalid choice'
+action = msg.get(user.cmd, default)
+
+```
+使用字典来实现相应情形下的操作会比较快。
+
+##### 条件表达式（即“三元”操作符）
+
+在Python并没有类似`C ? X : Y`这样的三元操作，这是因为Python的作者一直拒绝加入该
+实现。但是，可以这样hack来实现`(C and [X] or [Y])[0]`，这个语句的解释是这样的：
+如果`C`为真，`[X]`也为真，则`C and [X]`为真，且返回`[X]`，如果`C` and`[X]`为真
+，则在语句`or`后面的不会再执行，返回的是前面非零的值，即[X]，最后取索引为0的值。
+
+在Python2.5和更新的版本中，可以使用条件语句，三元操作符就可以这样实现：
+`smaller = x if x < y else y`
+
+##### while语句
+
+- 语法如下：
+
+```python
+while expression:
+    suite_to_repeat
+```
+
+- 计数循环
+
+```python
+count = 0
+while (count < 9):
+    print 'the index is:', count
+    count += 1
+```
+
+- 无限循环
+在服务器/客户端程序的开发中，服务器需要一直等待客户端来连接，所以要一直循环。
+伪代码如下：
+
+```python
+while True:
+    handle, indata = wait_for_client_connect()
+    outdata = process_request(indata)
+    ack_result_to_client(handle, outdata)
+```
+    
+##### for语句
+
+- 一般语法
+
+```python
+    for iter_var in iterable:
+        suite_to_repeat
+```
+
+- 用于序列类型
+ 
+```python
+    for eachLetter in 'Names':
+        print 'current letter:', eachLetter
+	
+```
+	
+迭代序列有三种基本方法：
+
+通过序列项迭代：
+
+```python
+    nameList = ['Walter', 'Nicole', 'Steven', 'Henry']
+    for eachName in nameList:
+        print eachName
+```
+
+通过序列索引迭代：
+```python
+    nameList = ['Walter', 'Nicole', 'Steven', 'Henry']
+    for i in range(len(nameList)):
+        print nameList[i]
+```
+使用项和索引迭代，用到内建的`enumerate`：
+
+```python
+    for i, v in enumerate(nameList):
+        print "%d %s Lee" % (i+1, v)
+```
+
+- 用于迭代器类型
+
+访问迭代器和访问序列差不多，唯一区别是for语句会为你做一些额外的事情。
+迭代器有一个next()方法，调用后返回下一个条目。所有的条目迭代完后，
+迭代器触发`StopIterration`异常告诉程序循环结束。for语句在内部调用next()
+方法，并捕获异常。
+
+很难分辨for迭代的是序列还是迭代器。
+
+- `range()`内建函数
+
+完整语法：`range(start, end, step=1)`，返回一个包含所有k的列表，这里
+start <= k < end，从start到end，k每次递增step。step不可为零。
+
+```python
+# 从2-18，每次递增3
+range(2, 19, 3)
+# 默认的step为1
+range(3, 7) # 返回[3, 4, 5, 6]
+```
+
+简略语法：`range(end), range(start, end)`，比如：`range(5)`, `range(2, 5)`
+
+- `xrange()`内建函数
+
+类似`range()`，但是返回的是可迭代对象，效率比range高。
+
+- 序列相关函数
+
+`sorted()`：返回排序的列表
+
+`reversed()`：返回转置的列表
+
+`enumerate()`：返回迭代器
+
+`zip()`：返回迭代器。
+
+##### break语句
+
+需要立即从循环中跳出的时候使用
+
+##### continue语句
+
+*循环中，该语句后面的代码不会被执行，进入到下一次循环判断，只有验证表达式为*
+真的时候才会开始下一次迭代。
+
+##### pass语句
+
+"NOP"不做任何事。
+
+##### 再谈else语句
+
+在while和for语句中，可以使用else语句，该语句在循环结束后执行，如果是有break语句，
+则else语句也会被跳过。
+
+##### 迭代器和iter()函数
+
+迭代器为类序列对象提供了一个类序列的接口，PEP234中定义如下：
+- 提供了可扩展的迭代器接口
+- 对列表迭代带来了性能上的增强
+- 在字典迭代中性能提升
+- 创建真正的迭代接口，而不是原来随机对象访问
+- 与所有已经存在的用户定义的类以及扩展的模拟序列和映射的对象向后兼容
+- 迭代非序列集合（例如映射和文件）时，可创建更简洁可读的代码。
+
+*如何迭代*
+调用next()方法，在最后捕获StopIteration异常，结束迭代。
+不能向后迭代，不能回到开始，也不能复制迭代器。如果要再次或者同时迭代同个对象，
+只能去创建另一个迭代器对象。
+
+*使用迭代器*
+
+```python
+for i in seq:
+    do_something_to(i)
+    
+# 实际上是这样工作的
+fetch = iter(seq)
+while True:
+    try:
+        i = fetch.next()
+    except StopIteration:
+        break
+    do_something_to(i)
+```
+
+*不要在迭代的时候改变迭代器对象，包括删除，修改等操作。*
+
+*如何创建迭代器*
+iter(obj)或者在一个对象中实现`__iter__()`和`next()`方法的对象可以作为迭代器。
+iter(func, sentinel)
+
+##### 列表解析
+list comprehensions，缩写为list comps，语法：
+
+`[expr for iter_var in iterable]`
+及扩展的语法
+`[expr for iter_var in iterable if cond_expr]`
+
+##### 生成器表达式(PEP289)
+
+是列表解析的一个扩展，
+
+生成器在Python2.2版本中被加入，是特定的函数允许你返回一个值，然后"暂停"代码的执行，稍后恢复。
+
+列表解析一个不足就是需要生成所有的数据，可能会对大量数据的迭代有负面效应
+生成器表达式结合列表解析和生成器解决了这个。
+
+生成器表达式在Python2.4被引入，与列表解析的基本语法基本相同，但并不是真正
+创建数字列表，而是返回一个生成器，生成器每次计算出一个条目后，把这个条目生产("yield")
+出来。生成器表达式用到了延迟计算，所以在内存使用上更有效。
+
+生成器表达式：`(expr for iter_var in iterable if cond_expr)`
+而列表解析：
+`[expr for iter_var in iterable if cond_expr]`
+
+```python
+# 重构样例 - 寻找文件中最长的行
+# 1
+f = open('/etc/motd', 'r')
+longest = 0
+while True:
+    linelen = len(f.readline().strip())
+    if not linelen:
+	break    
+    if linelen > longest:
+        longest = linelen
+f.close()
+return longest
+
+# 2 更老的情形，要使用string的而不是字符串的strip()方法
+import string
+
+len(string.strip(f.readline()))
+
+f = open('/etc/motd', 'r')
+longest = 0
+alllines = f.readlines()
+f.close()
+for line in alllines:
+    linelen = len(line.strip())
+    if linelen > longest:
+        longest = linelen
+return longest
+
+# 3 使用列表解析
+
+f = open('/etc/motd', 'r')
+longest = 0
+alllines = [l.strip() for l in f.readlines()]
+f.close()
+for line in alllines:
+    ...
+    
+# 4 有了迭代器，文件本身就是迭代器，可以获取行的长度
+f = open('/etc/motd', 'r')
+allLineLen = [len(l.strip()) for l in f]
+f.close()
+return max(allLineLen)
+
+# 使用生成器
+f = open('/etc/motd', 'r')
+longest = max(len(l.strip()) for l in f)
+f.close()
+return longest
+```
+

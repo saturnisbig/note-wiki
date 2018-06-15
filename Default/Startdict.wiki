@@ -1,0 +1,13 @@
+# 安装与使用
+
+
+词库地址：http://abloz.com/huzheng/stardict-dic/zh_CN/
+安装：
+-解压词库
+    $tar -xjvf unknown-name.tar.bz2
+    $tar -xjvf unknown-name.tar.bz2
+-拷贝词库到目录下
+
+    $sudo mkdir -p /usr/share/stardict/dic
+    $sudo cp extracted-file to /usr/share/stardict/dic
+

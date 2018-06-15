@@ -1,0 +1,37 @@
+# Ubuntu下重置密码
+
+2018-04-01 11:11:03 - 2018-04-01 11:34:55
+
+思路是通过安全模式登录，通过SQL语句对root的密码进行修改。
+
+环境信息：
+系统：Ubuntu17.10
+MySQL版本： MySQL5.7
+
+### 安全模式登录
+
+    $sudo service mysql stop
+    # 在后台启动MySQL的安全模式
+    $sudo /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
+    # 上面命令执行后，会出现错误"mysqld_safe Directory ‘/var/run/mysqld’ for UNIX socket file don’t exists"
+    # 解决办法是创建对应的文件
+    $sudo mkdir -p /var/run/mysqld
+    $sudo chown mysql:mysql /var/run/mysqld
+    $sudo /usr/bin/mysqld_safe --skip-grant-tables --skip-networking &
+    # 尝试无密码登录
+    $mysql -u root
+    >use mysql;
+    >update user set authentication_string=PASSWORD("password") where User="root";
+    >update user set plugin="mysql_native_password"; # 如果没有这行也会报错
+    >flush privileges; # 更新所有操作权限
+    >quit;
+    
+### 使用修改的密码登录
+
+    $sudo service mysql restart
+    $mysql -u root -p # 使用新的密码登录
+    
+    
+
+#### 参考文档：
+- [ubuntu 16.04系统下解决MySQL 5.7版本的root用户重置密码问题](https://www.cnblogs.com/roadofstudy/p/7446690.html)

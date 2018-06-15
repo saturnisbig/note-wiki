@@ -1,0 +1,64 @@
+# [Resetting Django migrations](https://www.techiediaries.com/resetting-django-migrations/)
+
+原文地址：[Resetting Django migrations](https://www.techiediaries.com/resetting-django-migrations/)
+有时候，你会需要重设你的Django数据迁移或者进行清理。在大多数情况下，
+这个过程比较简单，但是当有许多数据迁移文件和数据库表的时候，情况会
+变得非常复杂。本教程会教你在不影响现有项目的情况下高效的删除或者重
+设数据库迁移。
+
+#### 情况一：可以删除数据库
+
+1. 删除迁移文件，除了Python的模块文件`init.py`，使用下述命令行：
+
+        $find . -path "*/migrations/*.py" -not -name "__init__.py" -delete
+        $find . -path "*/migrations/*.pyc" -delete
+    
+2. 删除数据库，这要基于你使用的数据库类别，使用Sqlite的话，直接
+删除`.sqlite3`文件，如果是MySQL，则需登录到数据库：
+
+        $mysql -u username -p password
+        # 在MySQL命令行下的操作，先删除再新建
+        >drop database your_db_name;
+        >create database your_db_name;
+        # 查看是否创建成功
+        >show databases;
+        
+        # 如果是PostgreSQL的话
+        $psql DBNAME USERNAME;
+        >drop database dbname;
+        >create database dbname;
+    
+3. 重新创建迁移文件
+  
+        $python manage.py makemigrations
+        $python manage.py migrate
+     
+ 上述情况并不是经常碰到的情况，通常情况是如何不影响到数据库中的
+ 测试数据或是生产环境下的数据，如何重设数据迁移而不影响实际的数据库。
+ 
+ #### 情况二：不允许删除数据库
+ 
+1. 清除或回滚数据库迁移，使用下列命令：
+
+        # 该命令将会取消应用数据迁移
+        $python manage.py migrate --fake appName zero
+        # 使用showmigrations查看所有的迁移，跟踪删除的迁移
+        $python manage.py showmigrations
+    
+2. 删除迁移文件
+命令同上面的删除命令。
+
+3. 再次创建数据迁移
+
+        $python manage.py makemigrations
+        # 接着要迁移数据库，由于数据库并未删除，所以进行假的迁移
+        $python manage.py --fake-initial
+        # 没有`-fake`或`--fake-initial`将会提示数据库已存在错误
+        # 增加`-fake`选项，将迁移标示为像执行过一样，实际并未执行
+    
+PS：
+在按照上述步骤开始之前，确保没有未应用的数据迁移，使用命令行：
+`python manage.py makemigrations`进行查看，`No change detected.`
+
+
+时间花费：2018-04-23 20:22:51 - 2018-04-23 20:46:43 

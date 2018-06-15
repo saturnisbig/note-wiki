@@ -5,4 +5,10 @@
 Django suit
 http://djangosuit.com/pricing/
 
+#### ModelAdmin
+2018-05-10 22:25:38 - 
+2018-05-11 23:04:59 - 2018-05-12 00:26:17 
+`list_display`
+
+`list_filter`
 

@@ -1,0 +1,49 @@
+# MySQL添加用户及授权
+
+2018-04-01 11:38:15 - 2018-04-01 12:02:09
+
+针对不同的网站，为对应的数据库新增新的用户，并赋予权限。
+
+### 新建用户
+新建用户：test，密码：1234
+
+    $mysql -u root -p
+    >CREATE USER 'test'@'localhost' IDENTIFIED BY '1234';  # 本地登录用户
+    >CREATE USER 'test'@'%' IDENTIFIED BY '1234';  #远程登录
+    $mysql -u test -p  # 测试是否成功
+    
+### 为用户授权
+授权格式为：`grant 权限 on 数据库 to 用户名@登录主机 identified by '密码'`
+
+    $mysql -u root -p
+    # 创建数据库
+    >create database testDB;
+    >create database testDB default charset utf8 collate utf8_general_ci;
+    # 授权用户testDB的所有权限
+    >grant all privileges on testDB.* to "test"@"localhost" identified by "1234"
+    >flush privileges; # 刷新系统权限
+    # 指定部分权限给用户
+    >grant select,update on testDB.* to "test"@"localhost" identified by "1234"
+    # 授权test用户所有数据库的某些权限
+    >grant select,delete,updae,create,drop on . to "test"@"localhost" identified by "1234"
+    # 删除用户，以root操作
+    >delete from mysql.user where User="test" and Host="localhost";
+    >flush privileges;
+    >drop database testDB;
+    # 或者
+    > drop user 'test'@'localhost';
+
+### 撤销用户权限
+命令：`revoke 'privilege' on db.table from 'test'@'localhost' `
+
+    # 查看用户权限
+    # *GRANT USAGE:mysql usage权限就是空权限，默认create user的权限，只能连库，啥也不能干*
+    >show grants for test@localhost;
+    >revoke select on testDB.* from 'test'@'localhost';
+    # 如果只写用户名，则会对远程用户产生影响。
+    
+
+#### 参考文档：
+
+- [MySql 5.7中添加用户,新建数据库,用户授权,删除用户,修改密码](https://blog.csdn.net/w690333243/article/details/76576952)
+- [MySQL5.7 添加用户、删除用户与授权](https://www.cnblogs.com/xujishou/p/6306765.html)

@@ -1,0 +1,9 @@
+# Core Python - 2nd
+
+- [[CP-Chap2]]
+- [[CP-Chap3]]
+- [[CP-Chap4]]
+- [[CP-Chap5]]
+- [[CP-Chap6]]
+- [[CP-Chap7-Conditionals and Loops]] - 2018-06-02 11:05:36 
+- [[CP-Chap8-Files and Input Output]] - 2018-06-04 23:10:03 

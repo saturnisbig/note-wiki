@@ -25,7 +25,7 @@ Mysql的配置文件一般在`/etc/mysql`目录下的`my.cnf`文件中，设置m
 
 然后通过pip来安装mysql-python
 
-    sudo apt-get install mysql-python
+    sudo pip install mysql-python
 
 打开python交互窗口，检验是否安装成功：
 
@@ -35,4 +35,16 @@ Mysql的配置文件一般在`/etc/mysql`目录下的`my.cnf`文件中，设置m
 
 - 设置Django使用MySQL
 
+DATABASES = {
+    'default': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'NAME': 'tplove',
+        # 'USER': '',
+        # 'PASSWORD': '',
+        # 'HOST': '127.0.0.1',
+        # 'PORT': '3306',
+        # 'OPTIONS': {'charset': 'utf8mb4', }
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    }
 

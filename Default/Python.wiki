@@ -5,12 +5,12 @@
 * [[DjangoBook]]
 * [[TDD-Python]]
 * [[Celery]]
-* [[Automate Deployment]]
 * [[Pygments]]
 * [[Scrapy]]
 * [[Python-hacks]] - 2016-10-24 12:59:37
 - [[爬虫]] -- 2017-03-27 20:42:38 - 
 - [[Python操作Excel]] - 2017-05-12 22:46:24 
+- [[Python-Markdown]] - 2017-11-13 20:30:03 
 
 
 ## HowTos
@@ -29,6 +29,10 @@
 * [[添加pagedown用于markdown编辑]]
 * [[Django-Admin-Customize]]
 * [[Use-MySQL]] 
+* [[部署Django项目到服务器上]] -- 2018-03-31 07:16:29 
+* [[Automate Deployment]]
+  [[Use Custom User Model]] -- 2018-04-17 20:24:33 
+  [[Django migrations]] -- 2018-05-09 20:42:58 
             <div id="stats">
               <!-- STATS: : %(total_time).2fs Python: %(python_time).2fs DB: %(db_time).2fs Queries: %(db_queries)d ENDSTATS -->
             </div>

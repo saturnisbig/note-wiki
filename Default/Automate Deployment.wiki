@@ -1,14 +1,109 @@
 # Automate Deployment
 
+2018-04-01 16:41:41 - 2018-04-01 16:51:42 
+2018-04-01 19:01:58 - 2018-04-01 19:52:01 
+
 ### Install fabric
 
 'fabric'，一个让你将服务器上的命令自动化的工具
 
     $ sudo pip install fabric
-    $ fab function_name, host=SERVER_ADDRESS
+    # 在本地代码仓库会有一个`fabfile.py`文件，通过下面命令行激活
+    # $ fab function_name:host=SERVER_ADDRESS
+    $fab deploy
+    $fab --help
+    
 
 ### Breakdown of a Fabric script for our Deployment
 
 创建`deploy_tools/fabfile.py`文件，添加如下内容：
+在进行数据库的migrate的时候，由于设置了环境变量，需提前设置相关变量，
+在能生效。
 
-    from fabric.contrib.files import 
+	import random
+	from fabric.contrib.files import append, exists
+	from fabric.api import env, run, cd, local, prefix
+	# from fabric.operations import sudo
+	
+	GIT_REPO = "https://github.com/saturnisbig/blogproject.git"
+	env.user = 'server_username'
+	env.password = 'password'
+	env.hosts = ['']
+	env.port = 'ssh_port'
+	
+	
+	def deploy():
+	    site_folder = '/home/teddy/sites/tplove.info/blogproject'
+	    run('mkdir -p %s' % site_folder)
+	    with cd(site_folder):
+	        _get_latest_source()
+	        _update_virtualenv()
+	        _create_or_update_dotenv()
+	        _update_static_files()
+	        _update_database()
+	
+	
+	def _get_latest_source():
+	    if exists('.git'):
+	        run('git fetch')
+	    else:
+	        run('git clone %s .' % GIT_REPO)
+	    current_commit = local("git log -n 1 --format=%H", capture=True)
+	    run('git reset --hard %s' % current_commit)
+	
+	
+	def _update_virtualenv():
+	    if not exists('../venv/bin/pip'):
+	        run('virtualenv ../venv')
+	    run('../venv/bin/pip install -r requirements.txt')
+	
+	
+	def _create_or_update_dotenv():
+	    if exists('.env'):
+	        run('rm .env')
+	    append('.env', 'DJANGO_DEBUG_FALSE=y')
+	    append('.env', 'SITENAME=%s' % env.hosts[0])
+	    # for MySQL settings
+	    append('.env', 'MYSQL_DB=database')
+	    append('.env', 'MYSQL_USER=database_user')
+	    append('.env', 'MYSQL_USER_PASSWORD=password')
+	    # current_contents = run('cat .env')
+	    # if 'DJANGO_SECRET_KEY' not in current_contents:
+	    new_secret = ''.join([random.SystemRandom().choice(
+	        'abcdefghijklmnopqrstuvwxyz0123456789') for _ in xrange(50)])
+	    append('.env', 'DJANGO_SECRET_KEY=%s' % new_secret)
+	
+	
+	def _update_static_files():
+	    run('../venv/bin/python manage.py collectstatic --noinput')
+	
+	
+	def _update_database():
+	    # setting environment var
+	    with prefix('set -a;source .env;set +a'):
+	    	# --noinput remove any interactive yes/no confirmations.
+	        run('../venv/bin/python manage.py migrate --noinput')
+		
+#### 设置Nginx和gunicorn
+
+    $cat ./deploy_tools/nginx.tpl.conf \
+        | sed "s/DOMAIN/staging.tplove.info/g" \
+        | sudo tee /etc/nginx/sites-available/staging.tplove.info
+    $sudo ln -s /etc/nginx/site-available/staging.tplove.info \
+    /etc/nginx/site-enabled/staging.tplove.info
+    $ cat ./deploy_tools/gunicorn-systemd.tpl.service \
+        | sed "s/DOMAIN/staging.tplove.info/g" \
+	| sudo tee /etc/systemd/system/gunicorn-staging.tplove.info.service
+    $sudo systemctl daemon-reload
+    $sudo systemctl reload nginx
+    $sudo systemctl enable gunicorn-staging.tplove.info
+    $sudo systemctl start gunicorn-staging.tplove.info
+    
+#### Git Tag the Release
+    $git tag LIVE
+    $export TAG=$(date +DEPLOYED-%F/%H/%M) # 生成时间戳
+    $echo TAG # show "DEPLOYED-"
+    $git tag $TAG
+    $git push origin LIVE $TAG # pushes the tag up
+    # 查看历史提交记录
+    $git log --graph --oneline --decorate

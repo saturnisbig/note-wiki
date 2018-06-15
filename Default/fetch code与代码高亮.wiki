@@ -8,7 +8,18 @@
 
 在通过markdown生成HTML的时候，传入额外的参数即可，
 扩展的类型可以参考[markdown2-extras](https://github.com/trentm/python-markdown2/wiki/fenced-code-blocks)
-在所以需要显示文章详细内容的地方view方法中做如下补充：`article.body = markdown2.markdown(article.body, extras=['fenced-code-blocks'])`
+在所以需要显示文章详细内容的地方view方法中做如下补充：
+`article.body = markdown2.markdown(article.body, extras=['fenced-code-blocks'])`
+
+>2018-03-08 22:34:14 更新，语法有变更：
+```python
+post.body = markdown.markdown(post.body,
+			      extensions=[
+			      'markdown.extensions.extra',
+			      'markdown.extensions.codehilite',
+			      'markdown.extensions.toc',
+			      ])
+```
 
 这样在后台编辑的时候，即可使用如下语法来插入代码块：
 

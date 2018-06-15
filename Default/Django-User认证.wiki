@@ -1,0 +1,63 @@
+# 第九章 User Authenticaiton
+
+2018-04-17 06:10:39 -
+
+Django的用户认证系统提供了下列的概念和功能实现：
+用户的概念和User模型；
+权限，一系列的二进制标签决定用户能和不能做什么；
+群组，可以向多个用户提供权限；
+一套可配置的密码hashing系统，确保数据安全；
+表单和视图工具，针对登录用户和有限制的内容。
+
+#### 设置认证
+
+确保settings.py中的`INSTALLED_APPS`包括`django.contrib.auth`和`django.contrib.contenttypes`。
+如果有需要的话，记得`python manage.py migrate`一下，确保相应的表格都被创建。
+
+*向项目添加app后记得migrate一下是个好的实践*
+
+#### 密码Hashing
+
+默认使用的是PBKDF2，可以设置其他的，比如`Bcrypt`使用`pip install bcrypt`来安装。
+如果没有设置其他加密算法，就使用默认的`django.contrib.auth.hashers.PBKDF2PasswordHasher`。
+
+#### 密码校验
+在1.9版本中新增了密码校验的功能，在settings.py中可以看到预置的密码校验器，在
+变量`AUTH_PASSWORD_VALIDATORS`中设置。还可以写自己的密码校验器，可以参考[官方文档](https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#password-validation)。
+
+#### User Model
+包括五个关键的属性：username, password, email, first name, surname
+还包含其他属性，可以参考官方文档。
+
+#### 为User模型添加额外属性
+新建一个继承自`models.Model`的模型，设置属性user与User是一对一关系`OneToOneField`。
+添加另外的属性到新建的模型中，这样就将User与包括自定义属性的Model关联
+在一起了。
+website, URLField，存储用户个人站点信息；
+picture, ImageField, 存储用户头像信息，有个upload_to属性，设置头像上传后
+的存储位置，使用配置文件中设置的`MEDIA_ROOT`属性。
+
+*注意*
+使用扩展的方式，实际上并没有创建新的用户表，仅为增加的属性新建表，
+然后在查询的时候通过`JOIN`等方式获取所需数据。也可以尝试使用自定义的
+用户模型，该模型包括增加的属性。
+
+如果是新的项目，建议使用自定义的用户模型，方便将来扩展。
+在已有的项目中，如何使用自定义用户模型，是个比较麻烦的问题，可以
+参考官方的建议方式[#25313](https://code.djangoproject.com/ticket/25313)
+
+#### 使用自定义的模型
+在`setttings.py`中设置`AUTH_USER_MODEL='myapp.MyUser'`，使用的就是
+自定义的模型。
+
+#### 创建用户注册视图和模板
+
+- 创建UserForm和UserProfileForm；
+- 添加视图处理创建新用户；
+- 创建模板来展示UserForm和UserProfileForm；
+- 映射URL到创建的视图上。
+
+#### 用户登录实现
+
+
+

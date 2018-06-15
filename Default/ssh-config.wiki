@@ -1,0 +1,15 @@
+# SSH config 
+
+编辑`/etc/ssh/sshd_config`文件，在文件最后添加：
+
+    # 登录端口
+    Port 1234
+    # 是否允许root登录
+    PermitRootLogin no
+    # 允许用户jim通过SSH登录
+    AllowUsers jim
+    
+    
+参考资料：
+
+[]

@@ -1,0 +1,269 @@
+# Python迭代器介绍
+
+原文地址：[Python Iterators: A Step-By-Step Introduction](https://dbader.org/blog/python-iterators)
+
+理解迭代器对任何使用Python的人来说代表有着里程碑似的意。通过下面的讲解，你
+将会重新理解Python中基于类的迭代器。
+
+与其他很多语言相比，Python的语法清晰、简洁，这是我最看中的。
+
+来看下面的例子：
+
+```python
+numbers = [1, 2, 3]
+for n in numbers:
+    print(n)
+```
+
+Python优雅的循环是如何工作的？如何从正在迭代的对象中取出条目？
+如何让你自己的对象也能够支持同样的编程风格？
+
+在Python的迭代器协议中可以找到答案：
+
+>"Objects that support the `__iter__ `and `__next__` methods automatically work with for-in loops."
+
+让我们一步一步来，跟装饰器类似的，迭代器及相关的技术咋一看会觉得相当晦涩与复杂，所以我们会先
+对语法进行分解。
+
+在本教程中，你会看到如何写若干个支持迭代器协议的类。通过以这些类作为例子，你可以对这些类进行
+相关操作来进行检验，进一步加深理解。
+
+教程会先集中在Python3关于迭代器的核心机制，忽略一些不必要的复杂特性，让你对迭代器有一个
+基本的认识。
+
+我会将每个例子与一开始的`for-in`循环问题联系起来。本教程的最后，还会介绍一些关于Python2和3在
+使用迭代器上的差异。
+
+##### 无限迭代的Python迭代器
+
+我们先写一个基于迭代器协议的类。本例中的内容可能会和你在其他地方看到
+不同，但是请别介意，我认为以这样的方式能让你在应用层面上更好的理解迭
+代器的工作方式。在接下来将会经常用到下面的类，叫做`Repeater`：
+
+```python
+class Repeater:
+    """
+    可迭代对象
+    """
+    def __init__(self, value):
+        self.value = value
+
+    def __iter__(self):
+        return RepeaterIterator(self)
+	
+class RepeaterIterator:
+    """
+    辅助类，才能实现for-in功能
+    """
+    def __init__(self, source):
+        # 接受一个迭代对象
+        self.source = source
+
+    def __next__(self):
+        # 返回迭代对象值
+        return self.source.value
+	
+repeater = Repeater('Hello')
+for item in repeater:
+    print(item)
+    
+```
+
+在本例中，`Repeater`和`RepeaterIterator`一起实现了Python的迭代协议，在
+两个类中定义的`__iter__`和`__next__`是让对象能够被迭代的关键。
+我们先对上述代码做些练习，然后将进一步了解这两个方法。
+
+让我们来确认下上述代码实现是否让`Repeater`成为可在`for-in`循环中使用的迭代对象。
+首先创建一个Repeater的实例，将会无限返回'Hello'字符串。
+
+```python
+>>>repeater = Repeater('Hello')
+>>>for item in repeater:
+...    print(item)
+# 无限打印，要停止可以按Ctrl+C
+Hello
+Hello
+Hello
+Hello
+Hello
+...
+```
+
+##### for-in循环是如何工作的
+
+在上述代码中，我们实现了一个迭代器`Repeater`，能够无限打印，for-in的语法等价于下面的实现：
+
+```python
+repeater = Repeater('Hello')
+# 首先准备迭代，调用__iter__方法，返回真正的迭代对象
+iterator = repeater.__iter__()
+while True:
+    # 重复调用迭代器的__next__方法
+    item = iterator.__next__()
+    print(item)
+```
+
+可以看出，for-in循环是上述代码的"语法糖"，简化了很多代码。
+
+上述代码类似操作数据库游标，如果有类似经验，会很熟悉：首先初始化游标，准备读取，
+接着读取数据赋值给本地变量，一次一条数据。
+
+因为每次只操作一个元素，在内存使用上比较高效。`Repeater`类提供了一个无限循环序列，
+能够被迭代。如果使用Python的列表则无法实现，因为无法创建一个无限循环的列表，这就
+让迭代器的概念显得非常强大。
+
+另一个抽象概念，迭代器提供一个统一的对外接口，让你对容器中的条目进行操作，而无需
+考虑容器的内部结构。
+
+不管是处理列表、字典或者类似`Repeater`的无限循环序列，或者其他序列类型，所有这些可能
+在实现细节上不同，但是强大的迭代器让不同类型对象的每个元素都能被同样的方式遍历。
+
+实际上，for-in循环没有什么特别的。你可以按照下列方式模拟循环是如何使用迭代协议：
+
+```python
+>>> repeater = Repeater('Hello')
+>>> iterator = iter(repeater)
+>>> next(iterator)
+'Hello'
+>>> next(iterator)
+'Hello'
+>>> next(iterator)
+'Hello'
+...
+```
+同样能够无限循环，在这里还使用了内建的`iter()`和`next()`方法，实际上调用的是
+同样的方法，使用内建方法可以提高代码的可读性。
+
+##### 简单点的迭代器类
+
+目前，我们在实现迭代器时用到了两个单独的类`Repeater`和`RepeaterIterator`，
+两个类分别对应迭代器中的两个过程。经常要将两个类合并成一个类，这样可以
+缩减代码。
+
+一开始我并没有这么做，因为合在一个类中混淆了迭代协议的简洁概念。但是，现在
+你已经会以更长且复杂的方式写类了，接下来让我们花费一分钟来简化这个类。
+
+前面之所以添加`RepeaterIterator`是为了提供`__next__`方法，获取迭代对象的下一个
+值，但是并没有规定`__next__`必须定义在新的类中。在迭代器协议中，唯一有影响的
+是`__iter__`返回的是任何一个对象，该对象定义了`__next__`方法。`RepeaterIterator`
+返回同样的值，且不需要保留任何状态信息，所以可以直接将`__next__`方法添加到
+`Repeater`中。
+
+```python
+class Repeater:
+    def __init__(self, value):
+        self.value = value
+
+    def __iter__(self):
+        return self
+    
+    def __next__(self):
+        return self.value
+```
+
+##### 谁会需要一直迭代
+
+无限迭代并不是迭代器的主要使用方式，在开头，对列表的迭代就不是无限的。
+接下来，要写一个会停下来的迭代器，而不是一直重复迭代下去。
+
+下面会写一个叫`BoundedRepeater`的类，类似前面的`Repeater`，但是在执行一定
+的次数后停止。
+
+迭代器会触发`StopIteration`异常信号来作为迭代结束的标识，迭代完最后一个条目
+后，如果接着调用`next()`，就会一直出发该异常，如下代码：
+
+```python
+>>> my_list = [1, 2, 3]
+>>> iterator = iter(my_list)
+
+>>> next(iterator)
+1
+>>> next(iterator)
+2
+>>> next(iterator)
+3
+>>> next(iterator)
+StopIteration
+>>> next(iterator)
+StopIteration
+>>> next(iterator)
+StopIteration
+...
+```
+迭代器不能被重置，一旦迭代完，如果继续迭代就会一直触发`StopIteration`异常。
+要迭代新的，必须使用新的迭代器或者对迭代对象使用`iter()`方法。下面实现`BoundedRepeater`:
+
+```python
+class BoundedRepeater:
+    def __init__(self, value, max_repeats):
+        self.value = value
+	self.max_repeats = max_repeats
+	self.count = 0
+	
+    def __iter__(self):
+        return self
+	
+    def __next__(self):
+        if self.count >= self.max_repeats:
+	    raise StopIteration
+	self.count += 1
+	return self.value
+```
+对新建对象进行检验：
+
+```python
+>>> repeater = BoundedRepeater('Hello', 3)
+>>> for item in repeater:
+        print(item)
+Hello
+Hello
+Hello
+
+# 重写for-in语法糖实现
+repeater = BoundedRepeater('Hello', 3)
+iterator = iter(repeater)
+while True:
+    try:
+        item = next(iterator)
+    except StopIteration:
+        break
+    print(item)
+```
+
+##### 支持Python2.x的迭代器
+
+在支持类的迭代器上，Python2和3的版本有个区别：
+
+- 在Python3中，迭代对象中获取下一个值的方法是`__next__`，在Python2中是`next()`.
+
+上述区别，为我们写支持两个版本的迭代器带来了一些麻烦，但是也有解决的办法，
+上述的`BoundedRepeater`类可以改写为支持2和3的版本：
+
+```python
+# 继承object，支持Python2中的new-style类
+class InfiniteRepeater(object):
+    def __init__(self, value, max_repeats):
+        self.value = value
+	self.max_repeats = max_repeats
+	self.count = 0
+	
+    def __iter__(self):
+        return self
+	
+    def __next__(self):
+        if self.count >= self.max_repeats:
+	    raise StopIteration
+	self.count += 1
+	
+    # 支持python2
+    def next(self):
+        return self.__next__(self)
+```
+
+##### 小结
+
+- 迭代器为python对象提供了一个序列接口，节约内存且Pythonic，保留了for-in循环之美。
+
+- 为了支持迭代，一个对象不许实现迭代协议规定的`__iter__`和`__next__`两个方法。
+
+- 基于类的迭代器只是Python中写可迭代对象的一种方式，还可以考虑生成器和生成器表达式。

@@ -1,0 +1,146 @@
+# Templates和Static Media
+
+可以在项目的settings.py文件中，运行如下代码查看文件路径：
+
+    print __file__
+    print os.path.dirname(__file__)
+    print os.path.dirname(os.path.dirname(__file__))
+
+### 使用模板系统
+
+在project下创建一个templates目录，在该目录下创建和app同名的文件夹，
+用于存储该app的模板文件。
+
+    $cd path/to/your_project/
+    $mkdir -p templates/app_name
+    
+在`settings.py`中设置模板查找路径，使视图函数能够查找到模板文件，
+找到`TEMPLATES`变量，修改其中的`'DIRS':[]`为`'DIRS': [os.path.join(BASE_DIR, 'templates'),]`
+在模板文件夹下创建`templates/app_name/index.html`，内容可以如下：
+
+    <!DOCTYPE html>
+    <html>
+    	<head>
+    		<meta charset="utf-8" />
+    		<meta name="viewport" content="width=device-width" />
+    		<title>Rango</title>
+    	</head>
+    	<body>
+    		<h1>Rango says...</h1>
+    		hello world! <strong>{{ boldmessage }}</strong><br />
+    		<a href="/rango/about/">About</a><br />
+    	</body>
+    </html>
+    
+在`app_name/views.py`文件中：
+
+    from django.shortcuts import render
+    
+    def index(request):
+    	context = {'boldmessage': 'I am the bold font message!'}
+        return render(request, 'app_name/index.html', context)
+
+在`app_name/urls.py`中：
+
+    from django.conf.urls import url
+    from . import views
+    
+    urlpatterns = [
+        url(r'^$', views.index, name='index'),
+        url(r'^about/$', views.about, name='about'),
+    ]
+    
+### 在模板中使用相对路径
+
+使用标签`{% url 'about' %}`，这样就会在app下的`urls.py`中，查找对应name为about的
+url(..., name='about')，使用该url作为模板中url的值。一个projects下可能存在多个app，可能存在多个
+名字为about的url，可以设置`app_name`属性的值来限定名称的命名空间，这样在`urls.py`
+文件下，大概内容如下：
+
+    from django.conf.urls import url
+    from rango import views
+
+    app_name = 'rango'
+    urlpatterns = [
+        url(r'^$', views.index, name='index'),
+	url(r'^about/$', views.about, name='about'),
+    ]
+
+这样就可以使用`{% url 'rango:about' %}`，通过':'限定了about是在rango这个app下的。
+
+### 模板的继承
+
+在模板中使用继承的几个步骤如下：
+1. 找出应用页面中重复出现的部分（如header bar, side bar, footer, content pane等）。
+有时候在纸上写出不同页面的结构会有利于你发现共同的部分。
+2. 在父模板中，提供基础页面的框架结构，以及常见的内容如底部的版权信息，logo和标题等。
+然后，创建一系列的blocks当用户访问不同页面时，信息会跟着改变的。
+3. 为app创建特定的页面，继承自父模板，然后对不同的blocks设置内容。
+
+注意：DOCTYPE必须在最先的位置，继承的页面根据需要加载{% load staticfiles %}
+
+
+
+
+### 设置静态媒体访问
+
+在项目文件夹下创建一个新的文件夹`static`，该文件夹用于存放静态文件，
+比如css，js，images等，可以在该文件夹下创建对应要存储的文件类型。
+现在，先新建一个`images`文件夹，用于存储图片。
+
+    $cd path/to/django-project
+    $mkdir -p static/images
+    
+在settings.py文件中找到`STATIC_URL`，在后面新增
+`STATIC_DIR=os.path.join(BASE_DIR, 'static')`变量，新增并设置`STATICFILES_DIRS`
+为`STATICFILES_DIRS=[STATIC_DIRS,]`，目前只设置一个存放静态文件的目录，
+如果要在模板中引用静态文件，可以先加载静态模板标签，后用`{% static %}`模板标签
+引用相应的文件。
+
+在模板文件中，添加用于引用静态文件的代码：
+
+    <!DOCTYPE html>
+    {% load staticfiles %} <!--加载静态文件相关的模板标签-->
+    <html>
+    	<head>
+    		<meta charset="utf-8" />
+    		<meta name="viewport" content="width=device-width" />
+    		<title>Rango</title>
+    	</head>
+    	<body>
+    		<h1>Rango says...</h1>
+    		hello world! <strong>{{ boldmessage }}</strong><br />
+    		<a href="/rango/about/">About</a><br />
+		<!-- 引用静态图片文件 -->
+		<img src="{% static 'images/rango.jpg'%}" alt="The Rango Image" />
+    	</body>
+    </html>
+
+
+### Media Server
+
+为了能够存储用户上传的图片文件资料，需要用到媒体服务器，
+主要用于存储用户上传的头像、资料等，可以通过下列方法设置：
+在项目下新建文件夹`media`，设置`settings.py`文件，
+新增`MEDIA_URL, MEDIA_ROOT, MEDIA_DIR`三个变量，设置如下：
+
+    # settings.py
+    MEDIA_DIR = os.path.join(BASE_DIR, 'media')
+    MEDIA_ROOT = MEDIA_DIR
+    MEDIA_URL = '/media/'
+    
+修改项目的`urls.py`文件，增加下列内容：
+
+    from django.conf import settings
+    from django.conf.urls.static import static
+    
+    urlpatterns = [
+    	url(r'^rango/', include('rango.urls')),
+    ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    
+在模板文件中，可以通过{{ MEDIA_URL }}引用模板的位置
+
+假设有图片在`project/media/rango.jpg`，可以在浏览器中，输入'http://127.0.0.1/media/rango.jpg'查看图片。
+访问'http://127.0.0.1/media/'的时候是无法显示文件的，因为该目录下没有列出文件的
+实现。
+

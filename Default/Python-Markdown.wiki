@@ -1,0 +1,16 @@
+# [Python Markdown](https://pythonhosted.org/Markdown/extensions/index.html)
+
+To support TOC, use the code below.
+
+    >>>md = markdown.Markdown(extensions=['markdown.extensions.toc'])
+    >>>html = md.convert(text)
+    >>>page = render_some_template(context={'body': html, 'toc': md.toc})
+    
+To support slugfy anchor:
+
+    >>>from markdown.extensions.toc import TocExtension
+    >>>from django.utils.text import slugify  # support Chinese well.
+    >>>md = markdown.Markdown(extensions=['markdown.extensions.toc',
+        TocExtension(slugify=slugify)
+    ])
+

@@ -1,0 +1,15 @@
+# django-allauth使用
+
+2018-04-10 22:57:06 -2018-04-11 00:11:08 
+
+#### 准备工作
+
+增加github的授权登录：
+在[Github OAuth注册页面](https://github.com/settings/applications/new)注册授权信息，
+要将回调地址'callback URL'设置为： http://127.0.0.1:8000/accounts/github/login/callback/
+这个是用于本地测试用，如果你有自己的域名，可以相应进行设置。
+
+接着登录本地网站后台，在站点管理下，修改站点的域名及显示信息。
+然后点击Social Accounts下的Social application，增加一个application，
+如下图所示：
+

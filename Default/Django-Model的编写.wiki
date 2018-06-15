@@ -1,4 +1,84 @@
-# 7
+# Model编写流程及相关知识
+
+### 设置使用的数据库
+在项目的`settings.py`文件中查找到DATABASES变量，默认的是使用sqlite3数据库，
+这个在开发测试的时候不需要做修改。如果要使用其他类型数据库，可以参考文档
+进行相应的设置，无需更改models.py文件中创建的模型。
+
+初次使用的时候，要将系统自带的一些app的Model先创建，比如admin和auth等功能
+模块，使用命令`python manage.py migrate`，接着创建一个管理员账号信息，使用
+`python manage.py createsuperuser`，输入管理员相关信息，注意要记住密码！
+
+*注意*：如果使用git管理代码版本信息，要将.sqlite3加入到.gitignore文件中，
+不然其他人的修改信息会提交到代码库，造成不断会有冲突。
+
+### 分析需求，根据需求创建相应的Model
+根据需求，在继承的类中创建相应的列。通常，需要设置`__str__`(python3)或者
+`__unicode__`(python2)这样，在显示类信息的时候就能够比较清楚该类的相关信息，
+比如<Category:python>而不是<Category:object>这样不够友好的方式。
+
+在创建好Model后，要让数据库创建表，需要使用命令`python manage.py makemigrations rango`
+这样在app的'migrations'文件夹下就会生成用于创建数据库表的代码，接着执行
+`python manage.py migrate rango 001`就能创建表了。如果要查看创建的代码，执行
+`python manage.py sqlmigrate rango 001`其中rango是app，001是makemigrations对应
+的更改逻辑的代码。
+
+可以通过`python manage.py shell`在交互shell中对创建的数据模型进行测试，
+看是否有问题。
+
+*Model内部排列顺序*
+* 数据库列
+* 自定义的manager属性
+* `class Meta`
+* `def __str__()`
+* `def save()`
+* `def get_absolute_url()`
+* 其他自定义的方法
+
+### 更新admin.py文件以便在后端能够编辑Model数据
+为了能够使用Django自带的admin管理app的Model，需要在app下的admin.py文件中增加代码.
+
+    # admin.py
+    from django.contrib import admin
+    from rango.models import Category, Page
+    
+    admin.site.register(Category)
+    admin.site.register(Page)
+
+注意：在admin后台显示Model复数的问题，默认是在对应的Model名称后面加上's'，
+如果需要自定义复数的显示方式，按如下设置：
+
+    class Category(models.Model):
+        name = models.CharField(max_length=100, unique=True)
+	
+	class Meta:
+	    verbose_name_plural = 'Categories'
+	    
+	def __str__(self):
+	    return self.name
+	    
+### 编写生成测试数据的脚本，生成测试数据
+
+为了能够方便的测试应用的功能，需要为让应用生成相应的数据，虽然可以在
+Django自带的admin应用上创建，但是这样比较慢，写一个生成脚本可以事半功倍。
+
+在项目的目录下创建一个文件`populate_rango.py`，写上如下内容:
+
+    import os
+    # 设置环境变量，非常关键
+    os.environ.setdefault('DJANGO_SETTINGS_MODULE',
+                          'tango_with_django_project.settings')
+    import django
+    django.setup()
+    
+    from rango.modles import Category, Page
+    
+    def populate():
+        python = []
+	# 生成类别
+	add_cat()
+	add_page()
+
 
 2017-09-25 21:16:43 - 2017-09-25 21:54:10 
 表单

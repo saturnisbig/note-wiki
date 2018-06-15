@@ -8,7 +8,7 @@
         email = forms.EmailField()
 	password1 = forms.CharField(max_length=30,
 				    widget=forms.PasswordInput(render_value=False))
-	password2 - forms.CharField(max_length=30,
+	password2 = forms.CharField(max_length=30,
 				    widget=forms.PasswordInput(render_value=False))
 				    
 	def clean_username(self):

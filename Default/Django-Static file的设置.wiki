@@ -1,0 +1,29 @@
+# Django Howto -- Static Files
+
+### 配置static files
+
+1. 确保'django.contrib.staticfiles'包含在`INSTALLED_APPS`中，
+2. 在项目配置文件中(settings.py)定义`STATIC_URL`变量，例如：`STATIC_URL='/static/'`
+3. 在模板文件中，要么硬编码`/static/my_app/example.jpg`或者使用`static`模板
+标签来构建相对路径的URL；例如，
+        {% load static %}
+	<img src="{% static 'my_app/example.jpg' %}"
+4. 将你的static files保存在app下，例如：`my_app/static/my_app/example.jpg`。
+
+### 静态设置变量说明
+
+`STATIC_URL`：引用存储于STATIC_ROOT下静态文件的URL的时候使用。
+如果设置非空值，则必须以'/'结尾；在开发环境中可能需要对该变量进行设置，但在
+生产环境中必须设置；
+
+`STATIC_ROOT`：设置集中存放静态文件的位置。如果设置该变量，
+通过命令行`python manage.py collectstatic`，会将项目下的静态文件集中收集到该目录下，
+一般部署到生产环境中使用。
+
+`STATICFILES_DIRS`：设置staticfile app额外查找静态文件的目录，如果启用了`FileSystemFinder`，
+尤其是在使用`collectstatic`或者`findstatic`命令时，应该设置一系列包含
+全路径的字符串列表，比如：
+`STATICFILES_DIRS=['/home/polls.com/polls/static', '/opt/website/common',]`
+
+
+

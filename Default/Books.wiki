@@ -9,3 +9,4 @@
 - [[Automate the boring thing with Python]] - 2017-10-14 21:56:50 
 - [[Tools-Practical Vim]] - 2017-04-25 13:12:16 
 - [[Fluent Python]] - 2017-05-31 19:29:33
+- [[Core Python]] - second edition 2018-01-07 22:37:07

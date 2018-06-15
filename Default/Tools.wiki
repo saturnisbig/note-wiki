@@ -6,15 +6,8 @@
 ## Version Control
 [[Git]]
 
-## Startdict
+## [[Startdict]]
 
-词库地址：http://abloz.com/huzheng/stardict-dic/zh_CN/
-安装：
--解压词库
-    $tar -xjvf unknown-name.tar.bz2
-    $tar -xjvf unknown-name.tar.bz2
--拷贝词库到目录下
-
-    $sudo mkdir -p /usr/share/stardict/dic
-    $sudo cp extracted-file to /usr/share/stardict/dic
 ## [[Terminator使用]] - 2017-06-15 22:52:26 
+
+## [[Shadowsocks]] -- 2018-03-22 22:56:38 

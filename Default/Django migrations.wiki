@@ -1,0 +1,9 @@
+# Django migrations
+
+`--fake-initial`：如果使用了这个参数，会先检查数据库中是否有对应的表，
+如果没有就会创建，否则就会假的像apply一样。如果表已经存在，会检查是否
+需要修改表的列，如果存在则不创建。
+
+关于migration的记录，存储在`django_migrations`数据库表中
+
+

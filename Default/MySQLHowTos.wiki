@@ -1,55 +1,6 @@
 
-1- Login
-$ mysql -u root -p
-2- show tables
-> show tables;
-show create table tbl_name; 查看表创建信息
-3- column information
-> desc table_name;
-4- add column
-> alter table table_name add column_name varchar(10) not Null;
-5- drop column
-> alter table t_name drop col_name;
-6- modify col type
-> alter table t_name change col_name col_new_name type null?
-alter table tbl_name modify column col_name new type;
-
-- select column that is not null
-select * from table where col is not null;
-
-7-添加外键依赖关系
-eg:
-7.1- create table `dage` ( `id` int(11) not null auto_increment, `name` varchar(32) default '', primary key (`id`) )engine=InnoDB default charset=utf8;
- create table `xiaodi` ( 
-         `id` int(11) not null auto_increment, 
-         `name` varchar(32) default '', 
-         primary key (`id`) 
-         )engine=InnoDB default charset=utf8
-add foreign key columns:
-Define:
-[CONSTRAINT symbol] FOREIGN KEY [id] (index_col_name,...)
-    REFERENCES tbl_name (index_col_name, ...)
-    [ON DELETE {RESTRICT|CASCADE|SET NULL| NO ACTION| SET DEFAULT}]
-    [ON UPDATE {RESTRICT|CASCADE|SET NULL| NO ACTION| SET DEFAULT}]
-ON DELETE and ON UPDATE 表示事件触发的限制,
-RESTRICT:限制外表中的外键改动
-CASCADE: 跟随外键改动
-SET NULL:设空值
-SET DEFAULT:
-NO ACTION
-    mysql> alter table xiaodi add columns dage_id int(11) default null;
-    mysql> alter table xiaodi add 
-    mysql> alter table xiaodi add constraint xiaodi_ibfk_1  foreign key(dage_id) reference dage (id);
-    mysql> insert into dage(name) values('铜锣湾');
-    mysql> insert into xiaodi(dage_id, name) values(1, '铜锣湾_小弟A');
-ERROR: 
-    mysql> insert into xiaodi(dage_id, name) values(2, '铜锣湾_小弟B');
-    
-remove foreign key:
-alter table tbl_name drop foreign key fk_name;
-错误信息：
-1005：作为外键的列类型和引用外键的类型不同。
-
-10-修改表格的默认编码集 07/08/12 20:43:12 
-
-alter table tbName CONVERT TO CHARACTER SET utf8 COLLATE utf8_unicode_ci;
+- [[安装MySQL]] - 2017-06-27 07:13:58 
+- [[MySQL简单操作]] 
+- [[在Ubuntu下重置root密码]] - 2018-04-01 11:10:49 
+- [[MySQL中添加用户及授权]] - 2018-04-01 11:37:44 
+- [[MySQL插入中文问题]] -- 2018-04-02 21:08:49 

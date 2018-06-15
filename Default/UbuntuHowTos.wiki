@@ -6,9 +6,9 @@
 - [[阻止软件包升级]] -- (指定的软件包不升级)
 - [[Ubuntu使用中文输入法]] - 2017-04-19 22:12:42 
 - [[安装falsh插件]] - 2017-05-09 22:05:56
-- [[安装MySQL]] - 2017-06-27 07:13:58 
 - [[安装Redis]]
-
+- [[ssh-config]] - 2018-03-26 23:12:53
+- [[卸载unity]] - 2018-04-30 07:22:29  
 # sheng
 stevedore.extension Could not load 'user_scripts': distribute
 stevedore.extension Could not load 'project': distribute

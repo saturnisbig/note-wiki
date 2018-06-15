@@ -1,0 +1,120 @@
+# Django-mptt的使用
+
+
+##### 安装
+
+    $pip install django-mptt
+
+##### 问题
+
+解决继承结构，树型数据，包括组织机构、多层类别等，甚至是CMS中有许多继承页面，
+一些页面是其他页面的子页面。像这样的面包屑导航：`Home > Products > Food > Meat > Spam > Spammy McDelicious`
+
+##### 解决方案
+
+修改先序遍历树的方法咋看之下会有点难，但确实解决问题的好方法之一。
+如果想进一步了解原理，可以查看这两个资料：[Storing Hierarchical Data in a Database](https://www.sitepoint.com/hierarchical-data-database/)、[Managing Hierarchical Data in Mysql](http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/)
+MPTT让树型结构的查询操作耗时减少，实际上很多操作仅进行一次查询，有时候一次都
+不用：
+
+- 获取一个节点的所有子节点
+- 节点的祖先
+- 在某个层级的所有节点
+- 获取叶子节点
+
+获取一个节点的子孙节点数不需要查询到数据库。
+
+##### 简单的使用
+
+将`mptt`添加到`settings.py`文件的`INSTALLED_APPS`中。
+
+###### 创建model
+
+创建了一个国家及国家里的组织机构的`Model`：
+
+```python
+from django.db import models
+from django.utils.six import python_2_unicode_compatible
+
+from mptt.models import MPTTModel, TreeForeignKey
+
+
+@python_2_unicode_compatible
+class Country(MPTTModel):
+    name = models.CharField('名称', max_length=100, unique=True)
+    desc = models.TextField('网站简介', blank=True)
+    link = models.URLField('网站地址', blank=True)
+    c_time = models.DateTimeField(auto_now_add=True)
+
+    parent = TreeForeignKey('self', verbose_name='上一级', null=True,
+                            blank=True, related_name='children')
+    class Meta:
+        verbose_name = verbose_name_plural = '国家/组织'
+	
+    class MPTTMeta:
+        order_insertion_by = ['name']
+
+    def __str__(self):
+        return self.name
+	
+```
+
+代码解释：
+`TreeForeignKey`和Django的`ForeignKey`差不多，就是生成表单的时候在admin和几个地方显示上有点差别。
+
+因为是继承自`MPTTModel`，所以会多几个列`level、lft、rght、tree_id`，这些列是由MPTT进行管理，
+大多数情况下不会直接使用。
+
+`MPTTMeta`对`django-mptt`进行一些微调，上述代码中`order_insertion_by`修改了显示的顺序，对
+同一level的按照姓名的字母表顺序排序。
+
+接下来创建数据库表：`python manage.py makemigrations <you-app>; python manage.py migrate`
+
+###### 创建视图
+
+```python
+from django.shortcuts import render
+
+from .models import Country
+
+
+def index(request):
+    nodes = Country.objects.filter(name__isnull=False)
+    return render(request, 'country/index.html', context={'nodes': nodes})
+```
+
+urls.py中设置：`url(r'^country/$', views.index, name='index')`
+
+###### 模板
+
+```html
+{% load mptt_tags %}
+
+{% block title %}
+各国信息导览
+{% endblock %}
+
+{% block main %}
+
+<ul>
+	<li>各国信息</li>
+	<ul>
+		{% recursetree nodes %}
+		<li>
+			{% if node.is_leaf_node %}
+			<a href="#">{{ node.name }}</a>
+			{% else %}
+			<a href="#">{{ node.name }}</a>
+			<ul>
+				{{ children }}
+			</ul>
+			{% endif %}
+		</li>
+		{% endrecursetree %}
+	</ul>
+</ul>
+{% endblock %}
+```
+django-mptt内置了一些模板标签，要先加载，recursetree会对节点进行遍历。
+
+更多的内容可以参考[django-mptt官方文档](https://django-mptt.readthedocs.io/en/latest/index.html)

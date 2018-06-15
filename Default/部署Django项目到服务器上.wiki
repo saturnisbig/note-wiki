@@ -1,0 +1,210 @@
+# 部署Django项目到服务器上
+
+2018-03-31 16:20:05 - 2018-03-31 18:10:49
+
+#### 准备工作
+
+购买服务器
+设置域名
+安装相关软件
+python, virtualenv, git
+
+#### 配置
+
+创建文件目录，文件结构如下:
+
+/home/elspeth
+├── sites
+│   ├── www.live.my-website.com
+│   │    ├── db.sqlite3
+│   │    ├── manage.py
+│   │    ├── [etc...]
+│   │    ├── static
+│   │    │    ├── base.css
+│   │    │    ├── [etc...]
+│   │    └── virtualenv
+│   │         ├── lib
+│   │         ├── [etc...]
+│   │
+│   ├── www.staging.my-website.com
+│   │    ├── db.sqlite3
+│   │    ├── [etc...]
+
+接着新建虚拟环境并从代码仓库github拷贝源码，安装项目依赖：
+
+    teddy@server:$export SITENAME=staging.tplove.info
+    teddy@server:cd $SITENAME
+    $virtualenv venv
+    $git clone https://github.com/saturnisbig/blogproject.git
+    # 安装依赖
+    $../venv/bin/pip install -r requirements.txt
+    # 创建数据库
+    $../venv/bin/python manage.py migrate
+    # 关闭Django的调试模式，设置`ALLOWED_HOSTS`的值
+    $vim blogproject/settings.py
+    DEBUG=True
+    ALLOWED_HOSTS=['*']
+    # /home/teddy/sites/staging.tplove.info/blogproject
+    $../venv/bin/python manage.py runserver 0.0.0.0:8000
+    # 打开浏览器，访问'staging.tplove.info:8000/blog'查看网站情况
+    
+##### 使用Nginx来作为服务器
+
+    teddy@server:$ sudo apt install nginx
+    $sudo systemctl start nginx
+    
+配置Nginx：`/etc/nginx/sites-available/staging.tplove.info`
+
+    server {
+        listen 80;
+	server_name staging.tplove.info;
+	
+	location / {
+	    proxy_pass http://localhost:8000;
+	}
+    }
+    # 监听80端口，将http://localhost:8000 代理到域名上
+    
+    teddy@server:$ export SITENAME=staging.tplove.info
+    $cd /etc/nginx/site-enabled
+    $sudo ln -s /etc/nginx/site-available/staging.tplove.info staging.tplove.info
+    # 检查链接是否成功
+    $readlink -f staging.tplove.info
+    $sudo rm /etc/nginx/site-enabled/default
+    # 重启服务，运行Django服务器
+    $sudo systemctl reload nginx
+    $cd ~/sites/staging.tplove.info
+    $../venv/bin/python manage.py runserver 8000
+    
+ 关于调试Nginx的建议：
+查看Nginx错误信息文件：`/var/log/nginx/error.log`
+让Nginx检查配置是否正确：`nginx -t`
+确保浏览器没有缓存内容，通过`Ctrl+F5`刷新页面
+可以尝试重启服务器: `sudo reboot`
+
+##### 使用gunicorn
+
+    # /home/teddy/sites/staging.tplove.info/blogproect
+    teddy@server:$../venv/bin/pip install gunicorn
+    $../venv/bin/gunicorn blogproject.wsgi:application
+ 
+ 浏览器访问后，会发现网站的样式没了。因为gunicron不支持static文件，必须配置nginx，
+ 让nginx支持静态文件。
+ 
+    teddy@server:$../venv/bin/python manage.py collectstatic --noinput
+    # 查看是否成功收集静态文件到项目的static目录下
+    $ls static
+    # 更改nginx配置文件，增加
+    +location /static {
+    +    alias /home/teddy/sites/staging.tplove.info/blogproect/static;
+    +}
+    $sudo systemctl reload nginx
+    $../venv/bin/gunicorn blogproject.wsgi:application
+    
+##### 使用Unix socket
+
+    # 修改nginx的proxy_pass设置
+    -location / {
+    -    proxy_pass http://localhost:8000;
+    -}
+    +location / {
+    +    proxy_pass http://unix:/tmp/staging.tplove.info.socket;
+    +}
+    $sudo systemctl reload nginx
+    $../venv/bin/gunicorn --bind unix:/tmp/staging.tplove.info.socket blogproject.wsgi:application
+    
+#### 使用环境变量来调整开发和生产环境配置
+按照[the 12-factor app](http://www.clearlytech.com/2014/01/04/12-factor-apps-plain-english/)建议
+`settings.py`中的三个变量我们想进行修改：
+`ALLOWED_HOSTS, DEBUG, SECRET_KEY`，
+对本地代码仓库中的`settings.py`进行修改
+
+   # blogproject/settings.py
+   if 'DJANGO_DEBUG_FALSE' in os.environ:
+       DEBUG = False
+       SECRET_KEY = os.environ['DJANGO_SECRET_KEY']
+       ALLOWED_HOSTS = [os.environ['SITENAME']]
+   else:
+       DEBUG = True
+       SECRET_KEY = 'insecure-key-for-dev'
+       ALLOWED_HOSTS = []
+    $git commit -am "使用env变量设置生产环境DEBUG, SECRET_KEY, ALLOWED_HOSTS"
+    $git push
+    
+    # 服务器上
+    teddy@server:$git pull
+    $export DJANGO_DEBUG_FALSE=y DJANGO_SECRET_KEY=abc123
+    $../venv/bin/gunicorn --bind unix:/tmp/staging.tplove.info.socket blogproject.wsgi:application
+
+出现了"Bad Request(400)"错误，跟"ALLOWED_HOSTS"有关，需要修改nginx配置。
+
+    # /etc/nginx/site-available/staging.tplove.info
+    location / {
+        proxy_pass http://unix:/tmp/staging.tplove.info.socket;
+	+proxy_set_header Host $host;
+    }
+    teddy@server:$sudo systemctl reload nginx
+    
+##### 使用.env文件存储环境变量
+
+    # 本地机器上
+    $echo .env >> .gitignore
+    $git commit -am "gitignore .env file'
+    $git push
+    # 服务器上
+    # /home/teddy/sites/staging.tplove.info/blogproect
+    $echo DJANGO_DEBUG_FALSE=y >> .env
+    $echo SITENAME=staging.tplove.info >> .env
+    # for python3.6 only, because `choices` with k is new in this version
+    $echo DJANGO_SECRET_KEY=$(python -c"import random; print(''.join(random.SystemRandom().choices('abcdefghijklmnopqrstuvwxyz0123456789', k=50)))") >> .env
+    # for Python2.7.12
+    $echo DJANGO_SECRET_KEY=$(python -c"import random; print(''.join([random.SystemRandom().choice('abcdefghijklmnopqrstuvwxyz0123456789') for _ in xrange(50)]))") >> .env
+    $cat .env
+    # 重新设置服务器上的环境变量
+    # /home/teddy/sites/staging.tplove.info/blogproect
+    $unset DJANGO_SECRET_KEY DJANGO_DEBUG_FALSE SITENAME
+    $echo $DJANGO_DEBUG_FALSE
+    $set -a; source .env; set +a
+    $echo $DJANGO_DEBUG_FALSE
+    $../venv/bin/gunicorn --bind unix:/tmp/staging.tplove.info.socket blogproject.wsgi:application
+    
+##### 使用`Systemd`来确保gunicorn在系统启动后自己启动
+
+    # 服务器上 /etc/systemd/system/gunicorn-staging.tplove.info.service
+    [Unit]
+    Description=Gunicorn server for staging.tplove.info
+    
+    [Service]
+    Restart=on-failure
+    User=teddy
+    WorkingDirectory=/home/teddy/sites/staging.tplove.info/blogproject
+    EnvironmentFile=/home/teddy/sites/staging.tplove.info/blogproject/.env
+    ExecStart=/home/teddy/sites/staging.tplove.info/venv/bin/gunicorn --bind unix:/tmp/staging.tplove.info.socket blogproject.wsgi:application
+    
+    [Install]
+    WantedBy=multi-user.target
+    
+    # 下面的命令用于告诉Systemd加载新的配置文件，每次修改了配置文件
+    # 都要重新运行下面的命令
+    $sudo systemctl daemon-reload
+    # 让Systemd在系统启动后加载服务
+    $sudo systemctl enable gunicorn-staging.tplove.info
+    # 启动服务
+    $sudo systemctl start gunicorn-staging.tplove.info
+    
+*调试建议*
+- 查看`Systemd`的日志文件`sudo journalctl -u gunicorn-staging.tplove.info`
+- 让`Systemd`检查配置文件：`systemd-analyze verify /path/to/my.service`
+- 修改后记得重启服务。
+- 如果修改了`Systemd`配置文件，记得在重启前`systemctl restart`运行`daemon-reload`来查看修改的影响。
+
+本地更改，将gunicorn加入'requiremnts.txt'文件
+    $pip install gunicorn
+    $pip freeze | grep gunicorn >> requirements.txt
+    $git commit -am "Add gunicorn to virtualenv requirements"
+    $git push
+    
+##### 保存配置文件模板
+
+    $mkdir deploy_tools
+    

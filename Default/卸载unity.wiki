@@ -1,0 +1,5 @@
+# 卸载Unity8
+
+    $sudo apt purge unity8 ubuntu-system-settings
+    $sudo apt autoremove
+    

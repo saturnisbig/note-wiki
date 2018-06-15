@@ -1,0 +1,79 @@
+# Django Model文档学习笔记
+
+2018-04-02 23:16:05 - 2018-04-03 00:15:55
+2018-04-04 06:09:10 - 2018-04-04 06:44:59 
+2018-04-04 12:55:49 - 2018-04-04 13:31:52
+
+#### Fields
+是一个Model唯一需要的部分，关联数据库定义的Field，选择名称的时候，
+注意不要与`model API`重名。
+
+##### Field types
+告知数据库要存储的数据类型，比如正数、文本或者字符串；
+生成表单列时使用的默认HTML控件；
+满足最小需求的数据验证，包括在Django的admin和自动生成的表单中。
+
+可以用Django自带的model field类型，也可使用自己写的类型。
+
+##### Field options
+以下列举了常用的属性选项：
+
+null: 默认为False，设置为True，则允许数据库存储null值
+blank：认为False，设置为True，则允许值为空，字符串则可为`''`
+verbose_name: 属性的别名
+
+##### Relationships
+
+Django定义了常见的三种关系数据库关系：多对一、多对多、一对一。
+
+- 多对一
+
+使用`django.db.models.ForeignKey`实现，需要一个位置参数，即关联的Model类。
+比如：一辆车(Car)有一个生产商(Manufacture)，一个生产商可以生成多辆车
+
+	from django.db import models
+	class Manufacture(models.Model):
+	    pass
+	
+	class Car(models.Model):
+	    manufacture = models.ForeignKey(Manufacture, on_delete=models.CaSCADE)
+
+如果要引用其他应用app的Model作为外键，可以用以下方式：
+
+	class Car(models.Model):
+	    manufacture = models.ForeignKey(
+	        # 使用app`production`的Manufacture作为外键
+	        'production.Manufacture',
+		on_delete=models.CaSCADE,
+	    )
+ 
+数据库默认会为外键创建一个引用，可以设置`db_index=False`来关闭。
+
+- 多对多关系
+一般建议代表多对多关系的field使用复数表示，只能在一个Model中表示，必须放在那个
+会被编辑的Model中。
+
+还可以使用中间类来描述两个Model间的多对多关系的细节。
+
+- 一对一关系
+主要使用：在某个对象的主键上，该对象扩展了主键一对一关联对象的属性。
+需要一个位置参数，关联的model类。
+
+##### 跨文件Model引用
+可以将某个app下的Model的属性关联到其他app下Model上，前提是要先导入其他app的Model。
+
+##### Field命名限制
+不能是Python保留的关键词；不能连续包含超过一个的下划线字符，因为这是Model查询
+数据库的方式。
+
+##### Model Attributes
+objects管理器，对数据库表级别操作
+
+##### Model mehtod
+自定义，用于对属性field级别的操作。
+
+
+#### Model继承
+三种情况：
+- 
+

@@ -1,0 +1,74 @@
+# XPath in Scraping
+
+XPath主要用于爬取内容。XPath被设计的初衷是用于解析XML文档，但是也能够
+被用于解析HTML。下面我们先看一段HTML代码：
+
+```html
+<html>
+<div class="content" id="first-bar">
+<span>I like Ice-Cream a lot !!!/span><br/>
+<span><a href="http://www.ice-cream.com">Ice-Creeeeeeam</a></span>
+</div>
+</html>
+```
+
+我们先看下能够选择上述页面的XPath基础语法。
+
+`/html` 选择根元素，即<html>标签，是不是很简单。
+
+`/html/div/span/a`：页面第一个`div`下的链接，选择所有div下的span下的子标签。
+
+`//a`：选择页面的所有`a`标签，在上述页面代码中，会选择唯一的一个链接标签。
+
+`//div/span/a`：与上述一样，选择`a`标签。
+
+与解析XML类似，我们能够在XML树（文档树）上移动标签，比如：
+`//a/..`：选择页面唯一个`a`标签的父标签`span`。
+
+当然，还能够根据属性来选择元素。
+
+`//div[@class]`：选择页面中带有`class`属性的`div`标签。
+
+`//div[@class='content']`：选择页面中所有`class`属性为"content"的`div`标签。
+
+另一个有趣的特性是，对兄弟标签列表，能够基于索引选择某个标签。
+
+`//div[0]`：选择页面第一个`div`标签。
+
+还可以基于函数表达式选择：
+
+`//div[first()]`
+
+另一个有趣的特性是能够根据标签的内容选择标签。
+`//span[text()='Ha Ha']`：选择内容为"Ha Ha"的标签。
+
+还有类似`text()`的功能，包括`contains(), first(), last(), position()`。第一个`contains()`
+可以根据属性或内容选择元素，另外的三个在兄弟元素较多时可以根据位置进行选择。
+
+```html
+<ul>
+<li id=”1”>Roll one</li>
+<li id=”2”>Roll two</li>
+<li id=”3”>Roll three</li>
+<li id=”4”>Roll four</li>
+</ul>
+```
+
+`//li[contains(text(), "Roll ")]`：选取标签内容包含"Roll "的元素。
+
+`//li[contains(text(), "Roll t")]`：选取内容包含"Roll t"的标签。
+
+`//li[last()]`：list中的最后一个li标签。
+
+`//li[position() < 3]`：list中位置小于3的第1、2两个li标签。
+
+XPath有自带的类正则表达式语言，可以用于不支持正则表达式或者使用不便的情况。
+下述语法选择文档中（递归）至少包含一个属性的标签。
+`//[@]`
+
+`//div[@class="content"] | //div[@class="first-bar"]`：使用第一段HTML代码为示例，
+选择class属性为"content"或"first-bar"`div`标签。
+
+用时：2018-05-01 22:21:32 - 2018-05-01 22:51:34 
+
+原文地址：[XPath with Scraping](https://www.codementor.io/abdullahsifat/xpath-in-scraping-izvh8sdr3)

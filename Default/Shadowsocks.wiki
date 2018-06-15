@@ -1,0 +1,93 @@
+# Shadowsocks的使用
+
+[Shadowsocks in github](https://github.com/shadowsocks)
+
+2018-03-25 23:06:31 - 2018-03-25 23:59:16
+
+#### 大致原理介绍
+shadowsocks是类似VPN的代理工具，有服务器端和本地端，服务器端必须安装在
+能够翻墙的服务器上，本地端通过连接服务器端作为代理，访问google等网站。
+
+所以，需要有一台能翻墙的服务器，并且在上面装上shadowsocks服务。
+本人购买了[搬瓦工](https://bwh1.net/)的39.99$/year的服务器。
+
+#### 服务器端配置
+
+由于习惯用的Ubuntu，所以VPS上装的是Ubuntu16.04 64位的系统，下面有关Shadowsocks的
+配置都是建立在这个系统版本上的。
+
+###### 安装Shadowsocks
+
+    # 更新软件源，下述命令行都是运行在root下，非root需加`sudo`
+    apt update
+    # 安装pip
+    apt install python-pip
+    pip install shadowsocks
+    # 加密库
+    apt install python-m2crypto
+    
+###### 设置配置文件
+文件所在位置是VPS上:`/etc/shadowsocks.json`
+
+    # 只有一个端口给用户使用
+    {
+    "server":"66.11x.xxx.xx",       # 购买的VPS的IP
+    "server_port":1024,             # 服务器端口，默认1024
+    "local_address":"127.0.0.1",    # 客户端本机地址
+    "local_port":1080,         
+    "password":"xxxxxxx",
+    "timeout":300,       
+    "method":"aes-256-cfb"
+    }
+    # 多个端口给不同用户使用的配置, 自己没有尝试过多个端口密码设置
+    {
+    "server":"xxx.xx.x.xx",
+    "port_password":{
+    "6666":"xxxxxxx",
+    "7777":"xxxxxxx",
+    "8888":"xxxxxxx",
+    "9999":"xxxxxxx"
+    },
+    "timeout":60,
+    "method":"rc4-md5",          # 加密方式，选择"aes-256-cfb", "rc4-md5"等
+    "fast_open":false,
+    "workers":1
+    }
+			     
+配置开机启动：`/etc/rc.local`，在后面加上下面的代码：
+
+    ssserver -c /etc/shadowsocks.json -d start
+
+#### 本地配置及使用
+服务器端配置没问题后，就可以进行本地配置来连接服务器代理实现翻墙了。
+
+###### 本地命令行实现
+与服务器端一样，也要安装shadowsocks客户端，本人系统使用是Ubuntu，所以安装步骤
+与前面的一样，这里不在重述。
+
+安装成功后，在本地新建一个配置文件，内容与前面服务器端配置一样。
+    # 配置内容与服务器端一致
+    vim /home/teddy/shadowsocks.json
+    # 启动本地端代理配置
+    sslocal -c /home/teddy/shadowsocks.json
+
+##### 配置浏览器，实现浏览器访问google等网站
+在Firefox上安装`SwitchyOmega`插件，然后进行配置。
+点击右侧的'New profile'，命名为'SS'，选择'Proxy Profile'，设置Protocol、Server、Port即可。
+
+
+上面本地命令设置完后，打开浏览器Firefox，还是不能访问google，原因是
+系统的网络代理没设，需要打开'Ubuntu的设置>Network>Network proxy'
+
+    
+
+
+#### Ubuntu开启BBR内核加速
+
+
+
+#### 参考资料
+
+[Linux下使用shadowsocks穿墙](https://blog.csdn.net/u014266895/article/details/64922486)
+[Mac,win7和ubuntu下搭建VPS和shadowsock详细教程](https://www.cnblogs.com/vultrvps007/p/8075586.html)
+[Ubuntu开启BBR内核加速](https://www.flyzy2005.com/fan-qiang/shadowsocks/ubuntu-bbr-shadowsocks/)

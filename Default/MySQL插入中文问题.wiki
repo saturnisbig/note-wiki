@@ -1,0 +1,32 @@
+# 解决MySQL数据插入中文问题
+
+2018-04-02 21:09:06 -
+部署完博客系统后，要在后台插入博文，出现'Server 500'，测试输入全部英文内容，
+发现可以发表博文，但是如果文章或者标题有中文则不行。认为是MySQL编码的问题，
+于是决定修改数据库配置文件（基于此前的基础，做出是数据库问题的判断）。
+
+思路：找到Ubuntu下MySQL配置文件所在地，配置编码为utf8，删除数据库，创建新的
+数据库或者修改原有数据库的默认编码。
+
+编码文件所在地：`/etc/mysql/conf.d/mysql.cnf`和`/etc/mysql/mysql.cnf.d/mysql.cnf`
+其中`/etc/mysql/mysql.cnf.d/mysql.cnf`文件中建议将该文件拷贝到
+`/etc/mysql/my.cnf`作为全局配置文件。
+
+具体操作如下：
+
+    # 备份原文件
+    $sudo mv /etc/mysql/my.cnf /etc/mysql/my.cnf.bk
+    # 拷贝文件，编辑/etc/mysql/my.cnf文件
+    $sudo cp /etc/mysql/mysql.cnf.d/mysql.cnf /etc/mysql/my.cnf
+    $sudo vim /etc/mysql/my.cnf
+    # 在`lc-messages-dir = /usr/share/mysql`下添加`character-set-server=utf8`  
+    # 编辑/etc/mysql/conf.d/mysql.cnf文件，在[mysql]下面添加
+    # `default-character-set=utf8`
+    $sudo vim /etc/mysql/conf.d/mysql.cnf
+    # 操作都完了后，重启数据库服务
+    $sudo service mysql restart
+    # 以root登录，查看数据库编码
+    $mysql -u root -p
+    >show variable like 'character%'
+    # 如果要可以插入中问则除character_set_filesystem外其余为utf8。
+

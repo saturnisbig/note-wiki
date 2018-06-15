@@ -1,0 +1,85 @@
+# Django的Cookies和Sessions
+
+使用Sessions
+
+#### 参考
+介绍cookie使用的：[Eli Bendersky's blog](http://eli.thegreenplace.net/2011/06/24/django-sessions-part-i-cookies/)
+
+#### 介绍概念
+
+因为HTTP协议是无状态的，用户每次访问网站，网站自身是不知道每次访问之间
+的联系的，比如：用户可能一直在访问网站，但是通过协议看到的只是一次一次的
+TCP连接。而cookie和session就是为了解决这个问题而出现的。
+
+Cookie：将信息存储在用户浏览器端（客户端），以便网站能够了解当前用户的访问信息，
+比如用户最后一次访问是什么时候，访问过网站几次了等等。
+
+Session：将信息存储在服务器端，服务器端存储了相应的键值对，并对相应的信息进行
+加密，还需存储一个过期时间，在客户端仅存储一个sessionid健，用于跟服务器端存储的
+值相对应起来。如果用户浏览器不支持存储cookie，一种方式是将sessionid放在url链接
+中（PHP常见），但是会使URL看起来不够clean。一些比较敏感的信息以session的方式是
+比较安全的。
+
+查看Cookie
+Firefox：在'Web Developer'工具中的'Storage'可以看到相关信息。
+
+#### 启用
+在`settings.py`中，启用下列设置：
+在`MIDDLEWARE`中启用：`django.contrib.sessions.middleware.SessionMiddleware`,
+通过命令行创建默认是启用的；
+在`INSTALLED_APPS`中启用`django.contrib.sessions`应用(这种方式会以数据库形式存储sessions)。
+执行`python manage.py migrate`命令以创建存储session的数据库。
+*Django建议每天定期清理session*,使用命令`python manage.py clearsession`
+*避免session间相互干扰.*
+
+#### 配置session的引擎
+
+database-backed sessions
+
+cached sessions
+
+file-based sessions
+
+cookie-based sessions
+
+#### Cookie测试的Session
+Django的`request`对象提供了三个方法：`set_test_cookie()`,`test_cookie_worked()`,
+`delete_test_cookie()`来测试Cookie是否起用，在其中的一个视图中启用测试方法，
+在另一个视图中看测试方法是否有效，如果有效则在后端打印信息，并删除测试的
+cookie。
+
+#### 在视图中使用sessions
+如果启用了`SessionsMiddleware`中间件，则所有的视图中的`HttpRequest`对象都会
+包含一个session属性，是类字典型。
+
+相关配置信息：
+`SESSION_EXPIRE_AT_BROWSER_CLOSE`是否在用户关掉浏览器后结束会话。
+`SESSION_COOKIE_AGE`设置Cookie留存时间，以秒为单位。
+
+#### 基本考虑和工作流
+基本考虑：
+- 你的web应用需要什么样的cookie信息，你要存储的信息是否要跨几个浏览器会话，
+或者是在一个会话结束后就被忽略掉；
+- 对于用cookie存储的信息要格外小心，因为信息是存储在客户端的，你无法保证客户端
+终端的安全性如何，如果包含潜在的敏感信息，选择服务器端的session方式；
+- 很可能用户会将浏览器的cookie禁用掉，这样如果依赖过多的cookie，则用影响到
+web应用的功能，所以必须考虑到 *你无法控制客户端的设置* 。
+
+客户端cookie的工作流：
+- 确定cookie是否存在于客户端，检查`request`参数即可，`request.COOKIE.has_key('<cookie_name>')`
+- 如果存在，则可以通过`request.COOKIE[]`方法来获取该cookie的值，cookie是以字典
+的方式存储的，存储的值都是以字符串的形式，因此根据需要转换成你想要的类型。
+- 如果cookie不存在，你打算更新该值，将值传给你打算存储的response中，通过
+`response.set_cookie('<cookie_name>', value)`进行设置。
+
+基于Session的cookie工作流：
+- 确保settings.py中的`MIDDLE_CLASSES`包含`django.contrib.sessions.middleware.SessionMiddleware`
+- 配置`SESSION_ENGINE`，参考官方文档[Django Document on Sessions](https://docs.djangoproject.com/en/1.9/topics/http/sessions/)；
+- 检查cookie是存在，`request.session.get()`；
+- 设置或者更新值，`request.session['<cookie_name>']=value`
+
+#### Session object 指南
+
+
+
+
