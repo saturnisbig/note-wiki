@@ -1,0 +1,41 @@
+# 16.3
+
+
+创建基于TCP/IP的client/server的伪代码如下：
+
+```python
+# 服务器端伪代码
+ss = socket()
+ss.bind()
+ss.listen()
+inf_loop:
+    cs = ss.accept()
+    comm_loop:
+        cs.recv()/cs.send()
+    cs.close()
+ss.close()
+
+# 客户端伪代码
+cs = socket()
+cs.connect()
+comm_loop:
+    cs.send()/cs.recv()
+cs.close()
+```
+
+基于UDP的伪代码：
+
+```python
+# 服务器端
+ss = socket()
+ss.bind()
+inf_loop:
+    cs = ss.recvfrom()/ss.sendto()
+ss.close()
+
+# 客户端
+cs = socket()
+comm_loop:
+    cs.sendto()/cs.recvfrom()
+cs.close()
+```

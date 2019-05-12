@@ -1,5 +1,4 @@
 
-[[production-env-configure]]
 [[TDD-Python]]
 
 - [[Writing your first Django app Part1]]
@@ -15,7 +14,6 @@
 * [[Custom Managers]]
 * [[Forms]]
 * [[Django-Model笔记]] -- 2018-04-02 23:13:09 
-
 * [[Django-Static file的设置]]
 * [[Django-URL的设置]]
 * [[Django-Model的编写]]
@@ -32,6 +30,7 @@
 * [[Django-taggit的使用]] - 2016-08-08 21:38:00 
 * [[Django-Aggregation]] - 2017-11-05 16:27:59
 * [[Django-allauth使用]] -- 2018-04-10 22:56:38 
+* [[Django-testing]] -- 2019-04-23 06:25:54 
 
 ## Chapter 03
 Start: 2014-01-26 22:56:00

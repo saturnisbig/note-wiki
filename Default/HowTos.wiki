@@ -7,10 +7,10 @@
   * [[GitHowTos]]
   * [[ApacheHowtos]]
   * [[Ruby]]
-  * [[Python]]
   * [[Cent Os]]
   * [[Vagex]]
   * [[上传文件]]
   * [[Dropbox]]
   * [[DjangDeploys]]
   * [[Sqlite]]
+  * [[find的使用]] -- 2018-08-04 23:09:55 

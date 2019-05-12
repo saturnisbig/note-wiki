@@ -1,0 +1,104 @@
+# 数据备份
+
+目的：对VPS上的MySQL数据库数据进行备份，并保存到本地电脑上。
+
+#### 数据定期备份脚本
+
+- MySQL数据导出与导入
+
+导出主要是通过MySQL的`mysqldump`命令，在命令行上测试时可以不写上密码只用`-p`，等出现提示符后再输入：
+`mysqldump -uroot -ppasswd --default-character-set=编码 数据库名 > 数据库名.sql`
+
+导入数据库文件的命令：`mysql -u数据库用户名 -p数据库密码 数据库名 < 数据库名.sql`
+使用导入命令前，要先创建好要导入的数据，不然无法导入。
+
+- MySQL数据定期备份脚本
+
+大致的思路是这样的：设置好备份的目录、备份命令、过期天数，数据库相关信息，备份
+文件名（由时间+备份的数据库名称组成），将备份的sql文件压缩，删除sql文件及过期的
+备份文件。
+
+```sh
+#! /bin/sh
+
+DUMP=/usr/bin/mysqldump
+BACKUP_DIR=/home/teddy/dbs
+LINUX_USER=teddy
+DAYS=14
+# 数据库信息
+DB_NAME=test
+DB_USER=root
+DB_PASSWD=root
+# 备份文件信息
+dt=`date +%Y-%m-%d_%H%M%S`
+BACKUP_NAME=$dt"-"$DB_NAME
+OUT_SQL=$BACKUP_NAME.sql
+TAR_SQL="$BACKUP_NAME.tar.gz"
+# 切换到备份目录，并执行相关操作
+cd $BACKUP_DIR
+$DUMP -u$DB_USER -p$DB_PASSWD --default-character-set=utf8 $DB_NAME > $OUT_SQL
+tar -czf $TAR_SQL ./$OUT_SQL
+rm $OUT_SQL
+chown $LINUX_USER:$LINUX_USER $BACKUP_DIR/$TAR_SQL
+find $BACKUP_DIR -name "*.tar.gz" -type f -mtime +$DAYS -exec rm '{}' \;
+#find $BACKUP_DIR -name "*.tar.gz" -type f -mtime +$DAYS | xargs rm
+```
+
+将写好的脚本命名`mysqldata_bk.sh`，放到备份文件的目录，`sudo chmod +x mysqldata_bk.sh`，
+让脚本能够在命令行下执行。
+
+#### crontab实现定期后台执行备份脚本
+
+编辑`/etc/crontab`文件，在最后添加：
+
+`0 0 * * * 7 teddy /home/teddy/dbs/mysqldata_bk.sh`
+
+每周日的0点0分开始执行。
+
+重启crond使设置生效：
+
+```bash
+service cron stop
+service cron start
+/etc/init.d/cron restart 
+```
+
+#### rsync将数据下载到本地电脑，并删除本地过期的数据
+
+rsync有两种常用的认证方式，一种为rsync-daemon方式，另一种则是ssh。
+在一些场合，使用rsync-daemon方式会比较缺乏灵活性，ssh方式成为首选。
+关于rsync的使用及原理可以参考文末的参考资料3。
+
+###### 下载远程服务器数据到本地
+
+- 从本地同步到远程
+
+```bash
+rsync -avz -e ssh /data/wwwroot/shop/upload/ root@120.24.170.210:/data/wwwroot/shop/upload
+# 下面的命令使用了自定义的ssh端口 
+$rsync -avz -e 'ssh -p 61124' /data/wwwroot/shop/upload/ root@120.24.170.210:/data/wwwroot/shop/upload
+```
+以上两种方式的区别就是远程的ssh默认端口换了
+
+- 从远程同步到本地
+
+```bash
+rsync -avzP -e ssh root@114.215.191.193:/data/wwwroot/shop/upload /data/wwwroot/shop/upload/
+
+rsync -avzP -e 'ssh -p 61124' root@114.215.191.193:/data/wwwroot/shop/upload /data/wwwroot/shop/upload/
+```
+以上两种方式的区别就是远程的ssh默认端口换了
+
+加上你在VPS上的备份目录是`/home/bob/backup`，本地存储的目录是`/home/alice/backup`，
+可以使用下述命令下载备份的数据到本地电脑上。
+
+`rsync -avzP -e 'ssh -p 61124' bob@your-vps-ip:/home/bob/backup /home/alice/backup`
+
+可以在本地电脑也创建一个定时任务，然后定期去VPS上下载备份的内容。
+但是如果要通过定时任务下载，需解决ssh登录密码问题，目前暂时还是手动执行下载脚本吧。
+
+#### 参考资料
+
+1. [通过ssh执行rsync来完成同步文件的命令总结](https://segmentfault.com/a/1190000007634970)
+2. [Ubuntu下mysql数据库自动备份脚本](http://blog.51cto.com/dahui09/1703597)
+3. [第2章 rsync(一)：基本命令和用法](http://www.cnblogs.com/f-ck-need-u/p/7220009.html)

@@ -1,0 +1,44 @@
+# Ch13.5 OOP Instances
+
+2018-11-06 23:47:17 - 2018-11-07 00:14:53 
+
+类是定义某种数据结构的类型，实例则是声明一个变量，这个变量是类的类型。
+创建实例的时候不需要调用`new`，不需要定义构造函数，Python会帮你创建，
+创建实例后，最先调用的方法是`__init__()`，通过重写该方法你可以对类
+进行一些初始化的设置。
+
+`__new__()`方法更像是类的构造函数，从Python2.2起，允许用户继承内置的
+类型，因此必须有办法来初始化不可变的对象，比如字符串、数字等，碰到
+这种情况，就要调用该方法。重写该方法时，必须在该方法中调用父类的
+`__new__`来创建对象，必须返回一个有效的实例，然后将实例值传递给`__init__`
+方法。
+
+在13.11中有关于使用`__new__()`方法的例子。
+
+`__del__()`解构方法：因为Python的垃圾回收机制，只有在实例的所有引用
+被清理后才会被调用。很少会碰到需要重写该方法，如果要重写该方法，必须
+记得先调用父类的该方法，以确保前面的都被合理的清理了。
+
+```python
+class P(object):
+    pass
+    
+class C(P):
+    def __init__(self):
+        print 'initialized'
+    def __del__(self):  # destructor
+        P.__del__(self)	# call parent destructor
+	print 'deleted'
+	
+>>> c1 = C()
+initialized
+>>> c2 = c1
+>>> c3 = c2
+>>> id(c1), id(c2), id(c3)
+the same value
+>>> del c1
+>>> del c2
+>>> del c3 # raise exception, P don't have __del__ method
+deleted
+```
+

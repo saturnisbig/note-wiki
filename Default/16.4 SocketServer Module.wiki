@@ -1,0 +1,37 @@
+# 16.4 SocketServer Module
+
+`SocketServer`是标准库中的高级模块，目的是为了简化创建客户端/服务器时的固定代码。
+该模块为我们创建了很多现成的类。
+
+Class	 	Description
+--------------------------------------------------------------------------------
+BaseServer 	Contains core server functionality and hooks for mix-in classes; used only for derivation so you will not create instances of this class; use TCPServer or UDPServer instead
+
+TCPServer/
+UDPServer 	Basic networked synchronous TCP/UDP server
+
+UnixStream-
+Server/UnixData-
+gramServer 	Basic file-based synchronous TCP/UDP server
+
+ForkingMixIn/
+Threading
+MixIn 		Core forking or threading functionality; used only as mix-in classes with one of the server classes to achieve some asyn-chronicity; you will not instantiate this class directly
+
+ForkingTCP-
+Server/Fork-
+ingUDPServer 	Combination of ForkingMixIn and TCPServer/UDPServer
+
+ThreadingTCP-
+Server/Thread-
+ingUDPServer 	Combination of ThreadingMixIn and TCPServer/UDPServer
+
+BaseRequest-
+Handler 	Contains core functionality for handling service requests;
+		used only for derivation so you will not create instances of
+		this class; use StreamRequestHandler or Datagram-RequestHandler instead
+		
+StreamRequest
+Handler/Data-
+gramRequest-
+Handler 	Implement service handler for TCP/UDP servers

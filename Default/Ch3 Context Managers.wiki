@@ -1,0 +1,197 @@
+# Ch3 Context Managers
+
+2019-04-29 06:14:20 - 2019-04-29 06:22:15 阅读
+2019-04-29 06:22:15 - 2019-04-29 06:56:05 笔记
+2019-05-11 10:17:10 - 2019-05-11 10:33:08 笔记
+
+`with`语句从Python2.5开始新增的功能，开发者可以创建上下文管理器，所谓上下文
+管理器就是可以自动的创建一些东西（比如打开数据库连接、文件等），然后自动的
+进行销毁（关闭连接）。比如打开文件的例子：
+
+```python
+with open(path, 'w') as f_obj:
+    f_obj.write(some_data)
+    # 不需要使用f_obj.close()来关闭
+```
+
+该功能依赖的是Python的魔术方法`__enter__`和`__exit__`。
+
+- 创建上下文类
+
+不必重写Python的`open`方法，在这里我们以数据库操作为例，创建有一个上下文管理器，
+该管理器打开数据库连接，在处理完后自动关闭连接。
+
+```python
+import sqlite3
+
+class DataConn:
+    def __init__(self, db_name):
+        self.db_name = db_name
+    
+    def __enter__(self):
+        self.conn = sqlite3.connect(self.db_name)
+	return self.conn
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.conn.close()
+	if exc_val:
+	    raise
+	    
+if __name__ == '__main__':
+    db = '/home/teddy/code/test.db'
+    with DataConn(db) as conn:
+        cursor = conn.cursor()
+```
+
+- 使用`contextlib`来创建上下文管理器
+
+Python2.5还新增了`contextlib`模块，允许使用`contextmanager`装饰器来创建上下
+文管理器。
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def file_open(path):
+    try:
+        f_obj = open(path, 'w')
+	# 被调用函数使用
+        yield f_obj
+    except OSError:
+        print('We had an error!')
+    finally:
+        print('Closing file.')
+        f_obj.close()
+
+
+if __name__ == "__main__":
+    with file_open('test.txt') as fobj:
+        fobj.write('Testing context managers.')
+
+```
+
+- `contextlib.closing(thing)`
+
+`contextlib`模块自带了一些基本功能，比如`closing`类，可以在代码块执行完成后
+进行一些关闭的操作。在Python文档中有个示例类似如下：
+
+```python
+from contextlib import contextmanager
+
+@contextmanager
+def closing(db):
+    try:
+        yield db.conn()
+    finally:
+        db.close()
+
+# 还可以在`with`语句中使用`closing`类。
+from contextlib import closing
+from urllib.request import urlopen
+
+with closing(urlopen('http://www.google.com')) as webpage:
+    for line in webpage:
+        # process the line
+	pass
+```
+
+- `contextlib.suppress(*exceptions)`，忽略触发的异常
+
+`suppress`类在Python3.4版本中新增，设计的思路是可以禁止触发任何类型的异常。
+假设我们想忽略如下`FileNotFoundError`异常：
+
+```python 
+with open('fauxfile.txt') as f_obj:
+    for line in f_obj:
+        print(line)
+
+Traceback (most recent call last):
+Python Shell, prompt 4, line 1
+builtins.FileNotFoundError: [Errno 2] No such file or directory: 'fauxfile.txt'
+# 上下文管理器并未处理此类异常，使用suppress可以禁止触发异常
+from contentlib import suppress
+
+with suppress(FileNotFoundError):
+    with open('fauxfile.txt') as fobj:
+        for line in fobj:
+	    print(line)
+```
+
+- `contextlib.redirect_stdout/redirect_stderr`重定向信息
+
+在Python3.4和3.5中才分别被添加，所以必须至少>=这两个版本的才支持。
+除了标准输出、输入等，还可以重定向到某些缓冲区或Tkinter或wxPython的文本控件。
+
+```python
+# 不用`contextlib`提供的方法的写法
+path = '/path/to/text.txt'
+
+with open(path, 'w') as fobj:
+    sys.stdout = fobj
+    help(sum)
+    # 往后的操作都是针对sys.stdout
+    # help(map)
+
+# 使用contextlib的作法
+from contextlib import redirect_stdout
+
+path = '/path/to/text.txt'
+with open(path, 'w') as fobj:
+    with redirect_stdout(fobj):
+        help(redirect_stdout)
+    # 区别可能是在这里，fobj在redirect_stdout的with语句外，可以被进行其他操作
+    # 无需再设置重定向
+    # help(map)
+```
+- `ExitStack` -- ??
+
+可以方便结合其他的上下文管理器和清理函数，具体使用不是很懂，先把例子记录下来。
+
+```python
+from contextlib import ExitStack
+with ExitStack as stack:
+    file_objects = [stack.enter_context(open(filename)) for file name in filenames]
+```
+在Python的文档中还有很多`contextlib`的例子可以了解到以下内容：
+“捕获来自`__enter__`方法的异常；支持多种的上下文管理器；替换任何使用try-finally的地方等等”
+
+- 可重入的上下文管理器
+
+大部分创建的上下文管理器只能配合使用一次`with`语句，如果要想能多次使用`with`语句，我们
+就得使用可重入的管理器，比如`redirect_stdout`，但是该方法并不是线程安全的，使用的时候
+还是要参考文档，相关例子如下：
+```python
+>>> from contextlib import contextmanager
+>>> @contextmanager
+... def single():
+...     print('Yielding')
+...     yield
+...
+print('Exiting context manager')
+>>> context = single()
+>>> with context:
+...     pass
+...
+Yielding
+Exiting context manager
+>>> with context:
+...     pass
+...
+Traceback (most recent call last):
+Python Shell, prompt 9, line 1
+File "/usr/local/lib/python3.5/contextlib.py", line 61, in __enter__
+raise RuntimeError("generator didn't yield") from None
+builtins.RuntimeError: generator didn't yield
+# 使用redirect_stdout
+>>> from contextlib import redirect_stdout
+>>> from io import StringIO
+>>> stream = StringIO()
+>>> write_to_stream = redirect_stdout(stream)
+>>> with write_to_stream:
+...     print('Write something to the stream')
+...     with write_to_stream:
+...         print('Write something else to stream')
+...
+>>> print(stream.getvalue())
+Write something to the stream
+Write something else to stream
+```

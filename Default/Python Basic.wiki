@@ -13,6 +13,7 @@ s.encode('utf-8'):将unicode编码转换成其他编码的字符串;
 也可以被import，当被import的时候，该代码内的代码是不会被执行的，只有使用
 python script.py的时候才会执行。
 
+- [[Python List相关]] - 2018-12-23 22:58:08 
 - [[Date and Time]] - 2018-02-07 23:12:50 
 - [[File-Basic]]
 

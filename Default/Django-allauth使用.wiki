@@ -2,6 +2,109 @@
 
 2018-04-10 22:57:06 -2018-04-11 00:11:08 
 
+想要的功能
+注册、登录、找回密码
+快速登录与注册的
+2019-04-14 23:05:58
+涉及到注册微信及微博开发者账户问题，等注册完后再实现。
+2019-04-17 06:15:23 - 2019-04-17 06:52:35 
+
+## 安装及基本的设置
+
+##### 安装
+
+建议使用`pip`安装：`pip install django-allauth`
+
+##### 配置
+
+- 设置`settings.py`文件
+
+```python
+
+INSTALLED_APPS = (
+    ...
+    # The following apps are required:
+    'django.contrib.auth',
+    'django.contrib.messages',
+    'django.contrib.sites',
+
+    # allauth相关
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    # ... include the providers you want to enable:
+    # 添加第三方登录支持
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.weibo',
+)
+# 
+SITE_ID = 1
+# Specify the context processors as follows:
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [],
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                # Already defined Django-related contexts here
+
+                # 添加这行，`allauth` needs this from django
+                'django.template.context_processors.request',
+            ],
+        },
+    },
+]
+# 认证支持设置
+AUTHENTICATION_BACKENDS = (
+    ...
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+)
+```
+- 设置`urls.py`
+`allauth`提供了修改的URLs，都是以`account`开头，包括`account_login`、`account_logout`
+等等，可以到你安装应用的`lib/python2.7/site-packages/allauth/account/urls.py`中
+查看相关的URLs，这些可以在模板中使用。
+
+```python
+urlpatterns = [
+    ...
+    url(r'^accounts/', include('allauth.urls')),
+    ...
+]
+```
+
+##### 基本设置完后
+
+先同步数据库`python manage.py migrate`，然后登录网站后台，进行如下设置：
+
+1. 为域名添加一个`Site`，与`settings.SITE_ID`要匹配（在后台的`django.contrib.sites`app中）
+2. 为每个支持OAuth的第三方应用添加`Social App`（在`socialaccount`app中）
+3. 填写site和支持OAuth的第三方应用提供的授权信息。
+
+以上几个步骤是支持第三方登录的流程，通常设置完后就可以了。
+
+##### 相关功能支持配置
+```python
+# settings.py
+SITE_ID = 2
+# 禁用注册邮箱验证, 选项是"mandatory"(强制),"optional"(可选),"none"(不需要)
+# 如果是强制，只有邮箱被验证后才允许登录；其他不管是否邮箱被验证都能登，差别
+# 是一个有发送邮件，一个不发送验证邮件
+ACCOUNT_EMAIL_VERIFICATION = 'none'
+# 登录方式，用户名和邮箱都可以
+ACCOUNT_AUTHENTICATION_METHOD = 'username_email'
+ACCOUNT_EMAIL_REQUIRED = 'true'
+# 登录后的重定向
+LOGIN_REDIRECT_URL = '/'
+# 设置直接登出，不用确认
+ACCOUNT_LOGOUT_ON_GET = True
+```
+
 #### 准备工作
 
 增加github的授权登录：
@@ -13,3 +116,6 @@
 然后点击Social Accounts下的Social application，增加一个application，
 如下图所示：
 
+微博：
+
+http://tplove.info/accounts/github/login/callback/

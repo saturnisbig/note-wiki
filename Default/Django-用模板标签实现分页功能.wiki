@@ -1,0 +1,177 @@
+# 用Django模板标签实现分页功能
+
+分页作为一个常用的功能，是开发中经常会用到的。在自己的博客系统中，
+原先是将分页集成到具体需要该功能的ListView中，这样，如果在其他app中
+需要分页，只能将代码片段再复制过去，造成多余的代码。
+
+思考后觉得可以有两个方式：一是创建一个继承Django的ListView的类MyListView
+，在该类中实现分页功能，后续需要分页的则继承自MyListView；二是使用模板标
+签，接受一个上下文context变量，将分类需要的参数嵌入到context中，然后，
+通过html显示出来。在需要分类的地方，只要加载模板标签，然后将分页html包含
+即可，`{% include 'paginator.html'%}`。下面介绍下模板标签的方式。
+
+##### 创建模板标签
+
+在博客app下创建文件夹：`mkdir templatetags`
+
+创建文件：`touch __init__.py`
+
+app的目录结构如下：
+```python
+# 我的box应用app目录结构
+__init__.py
+models.py
+templatetags/
+	__init__.py
+	box_tags.py
+views.py
+model.py
+```
+
+分页功能代码：
+```python
+#!/usr/bin/env python
+# _*_ coding: utf-8 _*_
+
+from django import template
+
+register = template.Library()
+
+# 传入context参数，获取分类所需的上下文信息
+@register.simple_tag(takes_context=True)
+def display_pages(context):
+    is_paginated = context['is_paginated']
+    if not is_paginated:
+        return ''
+    paginator = context['paginator']
+    page = context['page_obj']
+    # 分页显示...间的间隔
+    per_page = 2
+    first = False
+    last = False
+    left = []
+    right = []
+    left_has_more = False
+    right_has_more = False
+    page_number = page.number
+    total_pages = paginator.num_pages
+    page_range = list(paginator.page_range)
+
+    if page_number == 1:
+        right = page_range[page_number:(page_number+per_page)]
+        if right[-1] < total_pages - 1:
+            right_has_more = True
+
+        if right[-1] < total_pages:
+            last = True
+    elif page_number == total_pages:
+        # index in page_range
+        index = total_pages - 1
+        left_start = index - per_page
+        left = page_range[(left_start) if left_start > 0 else 0:index]
+        if left[0] > 2:
+            left_has_more = True
+
+        if left[0] > 1:
+            first = True
+    else:
+        index = page_number - 1
+        left_start = index - per_page
+        left = page_range[left_start if left_start > 0 else 0:index]
+        right = page_range[page_number:page_number+per_page]
+        if left[0] > 2:
+            left_has_more = True
+
+        if left[0] > 1:
+            first = True
+
+        if right[-1] < total_pages - 1:
+            right_has_more = True
+
+        if right[-1] < total_pages:
+            last = True
+
+    # 将分页所需参数插入上下文中
+    context.update({
+        'first': first,
+        'left': left,
+        'left_has_more': left_has_more,
+        'right': right,
+        'right_has_more': right_has_more,
+        'last': last,
+    })
+    # 不返回这个的话，模板中会显示None
+    return ''
+```
+
+##### 分页的HTML代码
+
+分页的HTML代码可以放在项目template下的base文件夹下，该文件夹用于存放
+基础的HTML代码，包括分页、导航栏、侧边栏等。
+
+其中分页的文件名`paginator.html`如下，样式使用的是bootstrap自带的：
+```html
+<div class="post-pagination">
+	<nav>
+		<ul class="pagination justify-content-center">
+			{% if page_obj.has_previous %}
+			<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">上一页</a></li>
+			{% endif %}
+			{% if first %}
+			<li class="page-item"><a class="page-link" href="?page=1">1</a></li>
+			{% endif %}
+			{% if left %}
+			{% if left_has_more %}
+			<li class="page-item">...</li>
+			{% endif %}
+			{% for pg in left %}
+			<li class="page-item"><a class="page-link" href="?page={{pg}}">{{ pg }}</a></li>
+			{% endfor %}
+			{% endif %}
+			<li class="page-item active"><a class="page-link" href="?page={{ page_obj.number }}">{{ page_obj.number }}</a></li>
+			{% if right %}
+			{% for pg in right %}
+			<li class="page-item"><a class="page-link" href="?page={{ pg }}">{{ pg }}</a></li>
+			{% endfor %}
+			{% if right_has_more %}
+			<li class="page-item">...</li>
+			{% endif %}
+			{% endif %}
+			{% if last %}
+			<li class="page-item"><a class="page-link" href="?page={{ paginator.num_pages }}">{{ paginator.num_pages }}</a></li>
+			{% endif %}
+			{% if page_obj.has_next %}
+			<li class="page-item"><a class="page-link"href="?page={{ page_obj.next_page_number }}">下一页</a></li>
+			{% endif %}
+		</ul>
+	</nav>
+</div>
+```
+
+##### 使用方法
+
+在需要使用模板标签的地方，加载你的模板标签所在文件，包含所需的分页代码。
+
+在继承的`ListView`中，需要打开分页功能，即设置`paginate_by=5`，这样才能
+传递分页所需的`paginator, page_obj`等参数到上下文中。（？在改进版中，可以
+通过传递object_list、分页每页数等参数的方式来实现）
+
+```html
+<!-- 文件的开始位置加载box_tags -->
+{% extends 'box/base.html' %}
+{% load box_tags %}
+
+......
+
+<!-- 在需要用到分页的地方 -->
+{% display_pages %}
+{% if is_paginated %}
+{% include "base/paginator.html" %}
+{% endif %}
+```
+
+分页显示的样式可参考：[我的博客](http://www.tplove.info/)
+
+##### 参考资料
+
+- [Django用模板标签templatetags分页文章html传入参数后context无返回或者是参数是没有传入模板函数？](https://segmentfault.com/q/1010000007539673/a-1020000007556374)

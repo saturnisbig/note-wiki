@@ -1,0 +1,61 @@
+# Ch13 OOP Class Attributes (p515-p525)
+2018-11-05 19:07:25 - 2018-11-05 19:48:13 
+
+##### 创建类
+不需要事先声明，然后在定义，声明后紧跟对类的定义。不支持类似C++的纯虚函数，
+也没有像Java的抽象方法。可以在基类中以代理的方式，触发`NotImplementedError`错误。
+
+```python
+class ClassName(bases):
+    'class documentation string'
+    class_suite
+```
+
+##### 类的属性
+属性是指数据或者具有某些功能的元素，这些数据或功能元素属于某个对象，可以通过熟悉
+的点操作符来获取属性。
+
+当我们通过点操作符获取某个属性，如果这个属性是一个对象，它自身又具有一些属性，就
+可以继续通过点操作符来获取这个对象的属性，形成一个属性链条，比如：`sys.stdout.write('foo')`
+
+###### 类的数据属性
+
+数据属性("data attributes")指的是在类中定义的变量，这些属性也被称为静态成员、静态数据、
+类变量。属于被定义的类，独立于任何类实例。这类属性一般只用于跟踪与类有关的值，通常情况
+下用的都是实例属性。
+
+###### 类的方法
+
+类的方法：即在类中定义的属于类的函数，一般默认的第一个参数都是`self`指实例自身。
+
+*有界和无界方法(Bound and Unbound Methods)*
+为了和OOP传统一致，Python中限制了未通过实例不能调用类的方法，必须通过实例才能调用方法。
+无界方法也能够被调用，但是为了调用成功，必须明确提供实例对象。
+
+###### 查看类的属性
+
+有两种方式，最简单的是使用`dir()`内置函数，另一种是访问类的属性字典变量`__dict__`，
+如下：
+
+```python
+class MyClass(object):
+    myVersion = '1.1' 	# static data
+    def showMyVersion(self):	# method
+        print MyClass.myVersion
+	
+>>> dir(MyClass)
+>>>> print MyClass.__dict__
+```
+
+###### 特殊的类属性
+
+```python
+C.__name__	类名的字符串形式
+C.__doc__	类的文档字符串
+C.__bases__	类父类的元组
+C.__dict__	类的属性
+C.__module__	类C所属的模块（1.5新增）
+C.__class__	类C是什么的实例？（新风格类有效）
+```
+
+

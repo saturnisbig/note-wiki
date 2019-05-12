@@ -12,3 +12,7 @@ http://djangosuit.com/pricing/
 
 `list_filter`
 
+2019-02-23 20:24:06 
+`list_select_related`:会对外键进行缓存，加快加载速度，`get_list_select_related()`来设置
+自己的需求
+

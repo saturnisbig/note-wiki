@@ -1,0 +1,15 @@
+# MySQL数据导出与导入
+
+- 数据库的导出
+
+ssh登录后，用命令行的形式导出数据库：
+
+`mysqldump -uroot -ppasswd --default-character-set=编码 数据库名 > 数据库名.sql`
+
+示范案例：`mysqldump -utplove -ptplove --default-character-set=gb2312 tplove > tplove.sql`
+- 数据库的导入
+
+命令：`mysql -u数据库用户名 -p数据库密码 数据库名 < 数据库名.sql`
+示例：`mysql -utplove -ptplove tplove < tplove.sql`
+
+用户名和密码间没有空格。

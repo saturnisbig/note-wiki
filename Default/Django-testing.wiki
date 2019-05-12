@@ -1,0 +1,18 @@
+# Django testing
+
+阅读《Tango with Django》
+2019-04-23 06:19:53 - 2019-04-23 06:37:30 
+阅读Django自带文档Part5 - done
+2019-04-23 06:37:51 - 2019-04-23 06:44:17 
+2019-04-24 06:57:49 - 2019-04-24 07:18:07 
+阅读文档Test in Django
+
+a separate TestClass for each model or view
+a separate test method for each set of conditions you want to test
+test method names that describe their function
+
+使用`coverage.py`来查看测试覆盖的范围
+
+- [[Writing and running tests]] -- 2019-04-25 19:47:19 
+
+- [[Testing tools]] -- 2019-04-25 21:02:50 

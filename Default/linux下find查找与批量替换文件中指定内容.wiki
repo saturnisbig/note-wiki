@@ -1,0 +1,9 @@
+#  linux下find查找与批量替换文件中指定内容
+
+查找需要替换的ip，看看哪些文件有配置这个ip，执行下面命令：
+
+find ./ -type f -regex ".*\.xml\|.*\.js.*\|.*\.properties" | xargs grep "118.190.73.218"
+
+查找完成后进行替换为139.129.208.20，执行下面命令：
+
+find ./ -type f -regex ".*\.xml\|.*\.js.*\|.*\.properties" | xargs perl -pi -e"s/118.190.73.218/139.129.208.20/g"

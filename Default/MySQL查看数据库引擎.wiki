@@ -1,0 +1,13 @@
+# 查看数据库使用的引擎
+
+- 查看MySQL提供的存储引擎
+
+mysql>show engines;
+
+- 查看当前默认的引擎
+
+mysql>show variables like '%storage_engine%';
+
+- 查看某个表使用了什么引擎
+
+mysql> show create table <table_name>;

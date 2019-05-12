@@ -1,0 +1,26 @@
+# ShadowSocks2.8.2启动报错"undefined symbol EVP_CIPHER_CTX_cleanup"
+
+主要记录升级VPS后，openssl升级到1.1.0版本，导致shadowsocks2.8.2启动报
+`undefined symbol: EVP_CIPHER_CTX_cleanup`错误的解决方法。
+
+##### 问题描述
+
+近期升级了VPS上的ubuntu系统到18.04.1，在启动Shadowsocks时报错`AttributeError: /usr/local/ssl/lib/libcrypto.so.1.1: undefined symbol: EVP_CIPHER_CTX_cleanup shadowsocks start failed`
+这是因为在openssl1.1.0版本中，启用了`EVP_CIPHER_CTX_cleanup`函数，如官网所说：
+
+>>EVP_CIPHER_CTX was made opaque in OpenSSL 1.1.0. As a result, EVP_CIPHER_CTX_reset() appeared and EVP_CIPHER_CTX_cleanup() disappeared. 
+
+##### 解决方法
+
+1. 用vim打开文件：`vim /usr/local/lib/python2.7/dist-packages/shadowsocks/crypto/openssl.py `(该路径请根据自己的系统情况自行修改，如果不知道该文件在哪里的话，可以使用find命令查找文件位置)
+2. 跳转到52行（shadowsocks2.8.2版本，其他版本搜索一下cleanup）进入编辑模式将第52行
+`libcrypto.EVP_CIPHER_CTX_cleanup.argtypes = (c_void_p,)` 
+改为`libcrypto.EVP_CIPHER_CTX_reset.argtypes = (c_void_p,)`
+3. 再次搜索`cleanup`（全文件共2处，此处位于111行），将`libcrypto.EVP_CIPHER_CTX_cleanup(self._ctx)` 改为`libcrypto.EVP_CIPHER_CTX_reset(self._ctx)`
+4. 保存并退出
+5. 启动shadowsocks服务：`service shadowsocks start` 或 `sslocal -c ss`配置文件目录
+
+##### 参考文档
+
+1. [Kali2.0 update到最新版本后安装shadowsocks服务报错问题](https://blog.csdn.net/blackfrog_unique/article/details/60320737)
+2. [ShadowSocks启动报错undefined symbol EVP_CIPHER_CTX_cleanup](https://blog.csdn.net/youshaoduo/article/details/80745196)

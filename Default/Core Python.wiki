@@ -7,3 +7,9 @@
 - [[CP-Chap6]]
 - [[CP-Chap7-Conditionals and Loops]] - 2018-06-02 11:05:36 
 - [[CP-Chap8-Files and Input Output]] - 2018-06-04 23:10:03 
+- [[CP-Chap10-错误和异常]] - 2018-06-20 06:34:50 
+- [[CP-Chap11-函数与函数式编程]] - 2018-07-07 07:39:35 
+- [[CP-Chap12-Modules]] - 2018-09-16 15:51:20 - 2018-09-26 06:48:38 done
+- [[CP-Chap13-Object Oriented Programming]] - 2018-10-10 05:57:16 
+- [[CP-Chap14-Execution Environment]] - 2018-10-10 05:57:16 
+- [[CP-Chap16-Network Programming]] - 2019-03-17 10:07:23 

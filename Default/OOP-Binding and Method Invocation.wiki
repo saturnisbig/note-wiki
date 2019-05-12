@@ -1,0 +1,66 @@
+# Binding and Method Invocation
+
+2018-11-14 05:45:20 - 2018-11-14 06:43:55 
+
+方法和函数实际上是一样的，除了几点区别：方法是定义在类中的函数；
+当调用方法的时候，如果有类的实例，称为`bound method`，没有则称
+为`unbound method`；方法定义中的第一个变量是触发方法的实例。
+
+##### 调用bound方法
+
+直接通过类的实例进行调用，假设你有个类`MyClass`，类的实例`mc`，
+类中有方法`foo`，要访问该方法，由于在定义的时候方法的第一个参数
+使用了self，默认不需要传递该参数，直接通过实例访问`mc.foo()`
+即可。如果第一个参数没有传入`self`，则必须在调用的时候传入传入实例。
+
+##### 调用unbound方法
+
+使用unbound方法的情况很少，主要的使用情景是：在继承的子类中，你
+重写了父类的方法，必须调用父类的构造函数。如下：
+
+```python
+class EmplAddrBookEntry(AddrBookEntry):
+    'Employee Address Book Entry class'
+    def __init__(self, nm, ph, id, em):
+        AddrBookEntry.__init__(self, nm, ph)
+	self.empid = id
+	self.email = em
+```
+
+## Static Method
+
+静态方法实际上是定义在类中的函数，如果传递了类给该函数，则函数变为
+类方法。正常的方法，传递的第一个参数是类的实例，如果是类方法，第一个
+参数为类，一般使用变量`cls`来代表类参数。例子如下：
+
+```python
+class TestStaticMethod:
+# class TestStaticMethod(object):
+#    @staticmethod
+    def foo():
+        print 'calling static method foo()'
+    foo = staticmethod(foo)
+    
+class TestClassMethod:
+# class TestClassMethod(object):
+#    @classmethod
+    def foo(cls):
+        print 'calling class method foo()'
+	print 'foo() is part of class:', cls.__name__
+    foo = classmethod(foo)
+    
+```
+
+## 组合(Composition)
+
+可以在一个类中使用其他定义的类作为属性。
+
+## 子类和继承(p545-p546)
+
+创建子类的语法：
+
+```python
+class SubClassName(ParentClass1[, ParentClass2, ...]):
+    'optional class documentation string'
+    class_suite
+```

@@ -13,6 +13,7 @@ http://blog.fooleap.org/using-vim-with-clipboard-on-archlinux.html
 - [[tabs-edit相关]]
 - [[normal模式下处理大小写]] -- 2018-05-27 20:14:14 
 - [[Vim的移动]] -- 2018-05-27 20:23:31 
+- [[Vim鼠标复制]] -- 2018-12-02 13:34:11 
  
 # Learn the VI and VIM Editor
 

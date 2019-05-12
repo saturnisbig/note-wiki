@@ -1,0 +1,114 @@
+# [Django: An Unofficial Opinionated FAQ](https://blog.doismellburning.co.uk/django-an-unofficial-opinionated-faq/)
+
+在使用Django的过程中我们经常会面临很多的选择，对于如何做出选择，
+Django并没有给出官方的答复，我也认为不必这么做--Django的多用途
+也是它的优势之一。
+
+在本文，我将提供一些自己的意见--尽管大部分建议都很宽泛，由于不清楚
+你具体的用途，因此这些意见并不完全正确，但是在你并没有更多了解的
+情况下，如果你自己也不知道该如何选择，这些建议将会发挥一定的作用。
+
+- 该用Flask还是Django
+
+Django。
+
+如果你需要实现的是很小且自我包含的功能，或者代码中仅需要使用到HTTP的API，
+那么建议选择Flask。
+
+否则，不可避免的你会发现用Flask写的服务出问题，然后必须不停的添加额外的
+库和功能，最终可能会后悔怎么一开始不使用Django。
+
+- 应该把代码分散到多个App中吗？
+
+可能不必这么做。
+
+App适用于移植可复用的功能。
+
+对于自己的项目，尤其是刚开始做，放在一个核心的App中最好。到某个时候
+你可能就会觉得应该将功能分开，在这个时候自然而然的就会有类似分割线的东西
+将功能分开。通常这会比一开始就声明功能模块，然后处理改变简单。
+
+- 应该使用Django自带的模板语言（DTL）还是别的？
+
+使用Django自带的。
+
+这是Django自带的，功能正常，基本提供了所有你所需要的。
+
+- DTL没有实现我要的功能--是否要使用其他模板框架比如Jinja2？
+
+使用DTL。
+
+通常对DTL的抱怨是“表达能力不够”--但是有些逻辑是不能在模板中实现的。
+
+我将这点视为DTL的强项：使你不得不将逻辑移到模型和视图中，确保了模板相对
+简单，只需扮演显示内容的角色，而不需要有在Python代码外还有额外的复杂性。
+
+- 该使用Gunicorn还是uWSGI来运行Django？
+
+使用[Gunicorn](https://gunicorn.org/)
+
+Gunicorn只做一件事--它是一个WSGI HTTP服务器--做的很好。部署起来很快、
+很简单，而且不影响后续增加新的服务。
+
+uWSGI目的是“开发一个全栈的服务器服务”--如果你需要这样的功能，那么就可以
+使用，但是我喜欢的原则是把一件事情做好（Gunicorn提供WSGI HTTP服务功能），
+我将应用部署到类似Heroku或者AWS Elastic Beanstalk等平台，都提供其他的一些
+服务，而且能够很好的进行管理。
+
+- 在哪里部署应用？
+
+[Heroku](https://www.heroku.com/)
+
+这是一个我用过的最简单的PaaS平台。
+
+PaaS应该是你的选择--虽然你也可以买个便宜的VM，在上面安装Nginx然后进行配置，
+但是这个问题已经被这些平台以更省钱的方式解决了（如果你也以时间衡量价值的话），
+而且通常会处理的比你好。
+
+构建自己的平台好比写OS或者web框架，并不是很轻松的事情，更何况已经有现成的解决
+方案了。
+
+- 用什么来处理静态文件？
+
+[Whitenoise](http://whitenoise.evans.io/en/stable/)
+
+Amazon S3，Nginx，Apache等等，都很好，但是Whitenoise是一个相对小的库，而且在
+服务静态文件上表现很好，不需要额外的服务。
+
+- 让admin来做X。。。。。。
+
+应该停止这么做。
+
+Django的文档是这么说的：
+>>The admin’s recommended use is limited to an organization’s internal management tool. It’s not intended for building your entire front end around.
+The admin has many hooks for customization, but beware of trying to use those hooks exclusively. If you need to provide a more process-centric interface that abstracts away the implementation details of database tables and fields, then it’s probably time to write your own views.
+
+如果你打算让admin来实现一些你想要的功能，很可能你要停止这种想法，然后用Django
+自带的强大的[generic views](https://docs.djangoproject.com/en/2.1/ref/class-based-views/)来实现。
+
+- 该有什么数据库？
+
+[PostgreSQL](https://www.postgresql.org/)
+
+能够满足你的需求。
+
+虽然MySQL和MariaDB也能用，但是我觉得PostgreSQL使用起来最简单，也得到Django社
+区最多的支持。
+
+- 应该按开发/生产环境来气区分配置文件吗？
+
+别。
+
+[The Twelve-Factor App covers a range of reasons why in-app per-environment settings files and the like can be problematic, and why it’s worth using environment variables instead.](https://12factor.net/config)
+
+`django12factor`和很多其他的app能够帮助你从运行环境中进行相关配置。
+
+- 应该使用自己的User模型吗？
+
+根据Django官方文档介绍，需要区分情形：
+
+如果是项目刚开始，强烈建议你设置自己的用户模型，即使系统默认的用户模型已经满足
+了你的要求。虽然这个模型可能跟系统自带的一样，但是便于将来进行扩展。
+
+如果你是在项目的中途，这需要手动修改schema，将数据从旧的用户表转移数据，可能
+还需要手动进行一些migrations。

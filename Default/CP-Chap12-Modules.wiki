@@ -1,0 +1,259 @@
+# Chapter 12 Modules
+
+阅读开始：
+2018-09-16 15:51:44 - 2018-09-16 16:31:16 (p450-p461)
+2018-09-16 19:24:45 - 2018-09-16 19:31:36 
+2018-09-17 06:05:54 - 2018-09-17 06:33:06 (p462-p471)
+
+
+笔记：
+2018-09-17 06:37:11 - 2018-09-17 06:54:50 
+2018-09-17 23:37:16 - 2018-09-18 00:07:31 
+2018-09-24 22:30:08 - 2018-09-24 23:27:32 
+2018-09-26 05:54:43 - 2018-09-26 06:48:23 
+
+
+练习：
+
+##### 什么是模块
+以逻辑的方式组织代码，表现为`.py`、`.pyc`等文件。
+##### 模块和文件
+一个文件被看作是一个独立的模块，一个模块也可以被看作是一个文件。
+
+- 模块名称空间
+
+`namespace`: A namespace is a mapping of names(identifiers) to objects.
+不同模块下，可以有相同的函数名称或者属性名，因为在导入的时候需要有模块作为
+限定，所以不会存在混淆。比如，系统的`string`模块有`atoi`函数，假设我们自定义个
+`mymodule`中也有`atoi`，这种情况是正常的。
+
+- 搜索路径和路径搜索
+
+搜索路径：对一组目录进行查找。
+
+路径搜索：查找某个文件
+
+Python的默认路径是在编译或安装时指定的，可以在两个地方修改：
+一个是`PYTHONPATH`环境变量，该变量是一组用冒号分割的目录路径，*nix下设置在
+`.profile`文件中，win下设置到环境变量；另一个是解释器启动后，可以访问搜索
+路径，被保存到`sys.path`变量中，是个文件目录列表，可以`append`新的目录到
+搜索路径中。
+
+在脚本中如果修改了`sys.path`变量，可能需要再重新`reload`下。
+
+##### 名称空间
+
+名称空间：名称（标识符）到对象的映射。程序在执行的时候，有两到三个活动的名称空间，
+分别是全局、本地和内建的，本地的内容是一直在变换。
+
+核心笔记：1`__builtins__`和2`__builtin__`
+1中包含内建名称空间中的内建名字的集合，其中大多来自2模块，该模块包含内建函数、异常
+及其他属性。
+
+可以使用`globals()`和`locals()`内建函数来确定那个名称是在什么名称空间下。
+
+名称空间和作用域：
+在遇到名称空间时想想“它存在吗？”；碰到变量作用域时想想“看得见吗？”
+
+程序执行时是如何查找属性的？
+现在本地名称空间中查找，再在全局中，最后在内建中，前面的会覆盖后面的，前面如果先
+找到也不会再往后找。
+
+一个类的实例可以被当做一个名称空间。
+
+##### 导入模块
+
+导入模块一般放置在Python模块的最顶端。
+
+如果在一个脚本中重复导入了同一模块，则仅会在导入时执行一次。
+
+*核心风格* import语句的模块顺序
+在Python模块的开头导入所有模块，而且最好按如下顺序：
+- Python标准库模块
+- Python第三方模块
+- 应用程序自定义模块
+使用空行分割三类模块的导入语句。
+
+在使用`from a import b, c, d, e...`跨行时，可以用括号分开。
+
+##### 模块导入的特性
+
+加载模块会导致模块被“执行”，即模块的顶层部分直接被执行，包括设置全局变量
+和函数、类声明，如果有对`__name__`的检查，也会被执行。
+
+已安装的模块可以作为脚本执行，如果要执行标准库或第三方包中的模块则需要一
+定的技巧。（14.4.3有更多介绍）
+
+一个模块只被加载一次，无论它被导入多少次。
+
+*核心风格* 限制使用"from module import *"：这不是良好的编程风格，会“污染”
+当前名称空间，而且很可能覆盖当前名称空间中现有的名字，但是如果某个模块
+有很多要经常访问的变量或者模块的名字很长，这种方式也不错。
+    建议只有在两种场合使用这样的方法：一是目标模块中的属性非常多，反复键入
+模块名称很不方便，例如Tkinter和NumPy模块；二是在交互解释器下，这样可以
+减少输入次数。
+
+被导入到导入者作用域的名字会成为局部空间的一部分，可能会覆盖已经存在的
+具有相同名字的对象，而对导入变量的影响只在局部拷贝而不是所导入模块的原始
+名称空间。
+
+
+##### 模块内建函数
+
+`import`调用`__import__()`函数完成模块导入，这个函数可以让有需要的用户实现自定
+义的导入算法。函数语法：`__import__(module_name[,globals[,locals[, fromlist]]])`
+
+`import sys`相当于`sys=__import__('sys')`
+
+`globals()`和`locals()`分别返回调用者全局和局部命名空间的字典。
+
+`reload(module)`内建函数可以重新导入一个已经导入的模块module。使用该函数有一些
+标准，首先模块必须是全部导入而非'from-import'导入，而且必须被成功导入；参数
+必须是模块名称而不是包含模块名的字符串，即`reload(sys)`而非`reload('sys')`。
+
+##### 包
+包是有层次的文件目录结构，定义了一个由模块和子包组成的Python应用程序执行环境，
+Python1.5中加入该特性，来解决如下问题：
+- 为平坦的命名空间加入有层次的组织结构；
+- 允许程序员把有联系的模块组合到一起；
+- 允许分发者使用目录结构而不是一大堆混乱的文件；
+- 帮助解决有冲突的模块名称。
+
+与类和模块类似，也使用句点来访问属性。使用`import`和`from-import`来导入。
+
+```python
+Phone/
+    __init__.py
+    common_util.py
+    Voicedta/
+        __init__.py
+        Pots.py
+        Isdn.py
+    Fax/
+        __init__.py
+        G3.py
+    Mobile/
+        __init__.py
+        Analog.py
+        Digital.py
+    Pager/
+        __init__.py
+        Numeric.py
+```
+导入例子：
+```python
+import Phone.Mobile.Analog
+Phone.Mobile.Analog.dial()
+
+from Phone import Mobile
+Mobile.Analog.dial('555-1212')
+
+from Phone.Mobile import Analog
+Analog.dial('555-1212')
+
+from Phone.Mobile.Analog import dial
+```
+
+其中包里面的`__init__.py`是初始化模块时from-import语句导入时需要的。
+在该文件中加入`__all__`变量，该变量包含执行这样的语句时应导入模块的名字，
+是一个模块的字符串列表。
+
+为了解决导入自定义模块的名字与Python标准模块冲突的问题，从Python2.5开始 *绝对路径*
+和*相对路径*的概念被引入，从2.7开始，成为Python的默认设置。
+
+*绝对导入(PEP328)* 从Python2.5开始，在导入的模块必须是在`sys.path`或者`PYTHONPAHT`中
+设置的，否则会发出警告。即在上述例子中，假设当前所在位置是Mobile模块下的`Digital.py`，
+要导入`Analog.py`文件中的内容，必须使用`import Phone.Mobile.Analog`，使用`import Analog`
+将是不正确的。
+
+*相对导入* 为了弥补被绝对导入夺取的部分模块作者的权利，增加了相对导入的概念。
+因为`import`语句都是绝对的，所以相对导入仅对`from-import`语句有效。前面举的例子，
+可以以相对导入的方式实现`from Phone.Mobile.Analog import dial`或者`from .Analog import dial`
+
+##### 模块其他特性
+
+- 自动导入的模块
+当Python解释器启动时，会自动加载一些模块，对我们有影响的是`__builtin__`模块，
+该模块被加载为`__builtins__`。`sys.modules`变量包含了目前解释器成功加载的模块，
+该变量是个字典类型，键为模块名称，值为被导入的位置。
+
+- 阻止导入属性
+在用户使用`from module import *`导入模块时，如果不想让模块中的属性被导入，
+可以在属性名称前加`_`，但是如果明确导入了加下划线的属性，则该属性仍会被导入的。
+如，`import foo._bar`。
+
+- 大小写敏感导入(PEP235)
+方案是：为了让大小写不敏感的导入能够有效，必须设置一个环境变量`PYTHONCASEOK`，
+一旦设置了该变量，最先被找到的名称一样的模块就会被Python导入。除此之外，
+Python使用的是大小写敏感的导入，在导入时查找大小写符合要求的模块。
+
+- 源码编码(PEP263)
+从Python2.3开始，可以创建包含非ASCII字符的文件，但是得在文件的开头表面文件的
+的编码类型，即在很多源码文件中看到的`# _*_ coding: utf-8 _*_`，如果没有标明
+文件的编码，但是在文件中有非ASCII字符，则会出现SyntaxError的错误。
+
+- 循环导入
+在大的Python项目中，可能会碰到循环导入的情况，举个例子，
+
+```python
+# omh4cli.py
+from cli4vof import cli4vof
+
+def cli_util():
+    pass
+    
+def omh4cli():
+      ...
+    cli4vof()
+      ...
+omh4cli()
+
+# cli4vof.py
+import omh4cli
+def cli4vof():
+    omh4cli.cli_util()
+```
+上述代码会出现如下错误：
+```
+$ python omh4cli.py
+Traceback (most recent call last):
+File "omh4cli.py", line 3, in ?
+from cli4vof import cli4vof
+File "/usr/prod/cli4vof.py", line 3, in ?
+import omh4cli
+File "/usr/prod/omh4cli.py", line 3, in ?
+from cli4vof import cli4vof
+ImportError: cannot import name cli4vof
+```
+如果把导入文件`import omh4cli`放到文件的末尾，虽然没有了导入的错误，但是会找不
+到`omh4cli`方法。
+```
+$ python omh4cli.py
+Traceback (most recent call last):
+File "omh4cli.py", line 3, in ?
+from cli4vof import cli4vof
+File "/usr/prod/cli4vof.py", line 7, in ?
+import omh4cli
+File "/usr/prod/omh4cli.py", line 13, in ?
+omh4cli()
+File "/usr/prod/omh4cli.py", line 11, in omh4cli
+cli4vof()
+File "/usr/prod/cli4vof.py", line 5, in cli4vof
+omh4cli.cli_util()
+NameError: global name 'omh4cli' is not defined
+```
+解决方法是将`import omh4cli`导入语句放到`cli4vof()`函数内部。
+
+- 模块执行
+将会在14章中详细介绍。
+
+##### 相关模块
+
+`imp`
+`modulefinder`
+`pkgutil`
+`site`
+`zipimport`
+`distutils`
+
+- 

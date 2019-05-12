@@ -1,0 +1,10 @@
+# Vim鼠标复制
+
+编辑Vim的配置文件`.vimrc`，添加上相应的配置：
+
+```vim
+if has('mouse')
+	set mouse-=a
+endif
+```
+

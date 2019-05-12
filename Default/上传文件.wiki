@@ -3,3 +3,29 @@
 
     $scp -r localDir user@remote-host-ip:~
 
+### 使用rsync上传和下载数据
+rsync有两种常用的认证方式，一种为rsync-daemon方式，另一种则是ssh。
+在一些场合，使用rsync-daemon方式会比较缺乏灵活性，ssh方式成为首选。
+
+##### 下载远程服务器数据到本地
+
+1. 从本地同步到远程
+
+```bash
+rsync -avz -e ssh /data/wwwroot/shop/upload/ root@120.24.170.210:/data/wwwroot/shop/upload
+rsync -avz -e 'ssh -p 61124' /data/wwwroot/shop/upload/ root@120.24.170.210:/data/wwwroot/shop/upload
+```
+以上两种方式的区别就是远程的ssh默认端口换了
+
+
+1. 从远程同步到本地
+
+```bash
+rsync -avzP -e ssh root@114.215.191.193:/data/wwwroot/shop/upload /data/wwwroot/shop/upload/
+rsync -avzP -e 'ssh -p 61124' root@114.215.191.193:/data/wwwroot/shop/upload /data/wwwroot/shop/upload/
+```
+以上两种方式的区别就是远程的ssh默认端口换了
+
+###### 参考资料
+
+1. [通过ssh执行rsync来完成同步文件的命令总结](https://segmentfault.com/a/1190000007634970)

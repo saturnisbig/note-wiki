@@ -1,0 +1,180 @@
+# OOP Inheritance
+
+2018-11-22 06:18:41 -
+2018-11-25 17:19:02 - 2018-11-25 17:46:18 
+2018-11-25 22:31:41 - 2018-11-25 22:40:12 
+2018-11-27 22:22:41 - 2018-11-27 23:07:00 
+
+继承指的就是基类（被继承者）的属性如何传递给子类（继承者）的，子类会继承基类
+的任何数据属性和方法。
+
+相关的特殊属性`__bases__`显示的是被子类继承的类元组。`__class__`指的是创建
+实例的类。`__doc__`类的文档，不会被子类继承。
+
+#### 13.11.1 类的属性`__bases__`
+
+该属性表示的是类的父类的集合的元组，没有继承的类的该属性值为空，下面通过例子来了解：
+
+##### 13.11.2 重写继承方法
+
+在子类中重写了父类中有的方法，如果没有在子类中显示调用父类的该方法，则通过子类
+的实例调用该方法时，只调用子类中定义的方法，父类的不会被调用。
+
+如果也想父类的该方法在子类实例调用时被调用，需要显示在子类中调用该方法或者使用
+内置`super()`函数。详情见实例
+
+*重写__init__()*
+在子类中重写`__init__()`方法，默认父类的该方法并不会被执行，必须显示调用。使用
+`super()`内置函数的好处是，不必写出父类的名字。
+
+```python
+# inheritance example
+class P(object):
+    'P class'
+    def __init__(self):
+        
+    pass
+    
+class C(P):
+    pass
+    
+>>> c = C()
+>>> c.__class__    # child "is a" parent
+<class '__main__.C'>
+>>> C.__bases__	    	# child's parent class
+(<class '__main__.P'>,)
+
+class A(object): pass
+class B(A): pass
+class C(B): pass
+class D(A, B): pass # error
+
+>>> A.__bases__
+(object,)
+>>> C.__bases__
+(__main__.B)
+
+# 13.11.2 
+class P(object):
+    def __init__(self):
+        print "calling P's constructor"
+
+class C(P):
+    def __init__(self):
+        super(C, self).__init__()
+        print "calling C's constructor"
+```
+
+##### 13.11.3 继承标准类型
+
+*继承不可变类型*
+
+不可变类型需重写`__new__`方法，该方法为类方法，第一个参数传入类。
+
+*继承可变类型*
+
+不需要重写`__new__()`方法，通常只需重写自己希望修改的行为方法。
+重写的时候要小心，要清楚自己所进行的修改。
+
+```python
+# 继承不可变类型
+class RoundFload(float):
+    ''' 保留2位小数 '''
+    def __new__(cls, val):
+        return super(RoundFloat, cls).__new__(cls, round(val, 2))
+	
+# 继承可变类型
+class SortedKeyDict(dict):
+    def keys(self):
+    	return sorted(super(SortedKeyDict, self).keys())
+	
+>>>d = SortedKeyDict((('zheng-cai', 67), ('hui-jun', 68),('xin-yi', 2)))
+>>>print 'By iterator:'.ljust(12), [key for key in d]
+>>>print 'By keys():'.ljust(12), d.keys()
+By iterator: ['zheng-cai', 'xin-yi', 'hui-jun']
+By keys(): ['hui-jun', 'xin-yi', 'zheng-cai']
+```
+##### 13.11.4 多重继承
+
+多重继承的概念比较好理解，难点在于如何正确找到当前类（继承的类）中没有定义的属性。
+在使用多重继承时需要记住两个方面，一个是能够找到正确的属性；另一个是当存在重写的
+方法时，所有重写的方法调用父类的方法实现父类的功能，子类方法则遵守自己的规则。
+
+*方法映射顺序*
+在2.2前使用的是：深度优先，从左到右查找被继承类中是否具有属性，采用第一个被找到
+的属性。
+从2.3开始采用了新的方法，并沿用到现在。讨论方法映射超出本书范围，你可以简单的理解
+新的映射方法：广度优先。通过下面的示例来看下有何不同？
+
+新风格类有`__mro__`属性，显示查找的顺序。
+
+```python
+
+class P1: #(object):	# parent class 1
+    def foo(self):
+        print 'called P1-foo()'
+
+class P2: #(object):	# parent class 2
+    def foo(self):
+        print 'called P2-foo()'
+    def bar(self):
+        print 'called P2-bar()'
+
+class C1(P1, P2):
+	pass		# child 1 der. from P1, P2	
+
+class C2(P1, P2):	# child 2 der. from P1, P2
+    def bar(self):
+        print 'called C2-bar()'
+
+class GC(C1, C2):	# define grandchild class
+    pass		# derived from C1 and C2
+
+# classic classes
+>>> gc = GC()
+>>> gc.foo() 	# GC=>C1=>P1
+called P1-foo()
+>>> gc.bar()	# GC=>C1=>P1=>P2
+called P2-bar()
+# new-style classes 去掉object前的注释
+>>> gc = GC()
+>>> gc.foo()	# GC=>C1=>C2=>P1
+called P1-foo()
+>>> gc.bar()	# GC=>C1=>C2
+called C2-bar()
+>>> GC.__mro__
+(<class '__main__.GC'>, <class '__main__.C1'>, <class
+'__main__.C2'>, <class '__main__.P1'>, <class
+'__main__.P2'>, <type 'object'>)
+```
+*由于diamonds引起的MRO问题*
+从2.2起同意了类型和类，带来一个新的问题，都是因为继承了`object`，请看下面
+的例子：
+```python
+class B#(object):
+    pass
+class C#(object):
+    def __init__(self):
+        print "the default constructor"
+class D(B, C):
+    pass
+# 传统类
+>>> d = D()
+the default constructor
+# 新型类
+初始化时会调用`object.__init__()`
+```
+
+- 参考资料
+•
+Guido van Rossum’s essay on the unification of types and classes:
+http://www.python.org/download/releases/2.2.3/descrintro
+•
+PEP 252: Making Types Look More Like Classes
+http://www.python.org/doc/peps/pep-0252
+•
+“What’s New in Python 2.2” document
+http://www.python.org/doc/2.2.3/whatsnew
+•
+Python 2.3 Method Resolution order paper
+http://python.org/download/releases/2.3/mro/

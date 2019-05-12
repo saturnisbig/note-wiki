@@ -1,0 +1,4 @@
+# Shadowsocks使用相关知识
+
+- [[ShadowSocks2.8.2启动报错undefined symbol EVP_CIPHER_CTX_cleanup]]
+- [[Shadowsocks多端口使用配置]] -- undone

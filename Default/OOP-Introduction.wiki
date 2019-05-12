@@ -1,0 +1,31 @@
+# Ch13 OOP Intruduction
+
+类有分new style class和classic class，建议都使用new style class，从Python3.0开始默认
+都是new style class。在3.0以下版本要创建new style class，必须继承`object`，如下：
+
+```python
+class MyNewObjectType(object):
+    'define class'
+    # class suite
+```
+创建实例的过程即为实例化，实例必须来自某个类。
+
+##### 方法
+
+方法在类中定义，只能通过实例调用。要让方法能够起作用，必须经过3个步骤：定义类和方法；
+创建类的实例；通过实例激活方法，如下所示：
+
+```python
+class MyDataWithMethod(object):
+    def printFoo(self): # 这里的self指的是实例
+        print 'You invoked printFoo()'
+```
+
+想对类进行初始化，需重写`__init__`方法。
+
+*核心风格*
+关于对类、属性、方法进行命名的规则：类名通常首字母大写，数据属性应该
+听起来像与数据值一致，方法需指出动作发生的对象或者值。属性通常用名词，
+而动词加上对象则表示方法。比如：`update_phone()`、`update_email()`等。
+
+

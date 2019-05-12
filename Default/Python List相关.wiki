@@ -1,0 +1,111 @@
+# [Python List相关用法 ](https://jeffknupp.com/blog/2018/12/13/how-to-do-just-about-anything-with-python-lists/)
+
+2018-12-23 22:58:29 - 2018-12-23 23:25:03 
+2018-12-31 21:26:23 - 2018-12-31 21:52:05 
+
+##### Reverse/Sort A List In Python
+
+有两种方式来反转列表，使用哪一种取决于你要如何处理反转的结果。如果是仅仅为了
+输出结果，则使用Python内置的`reversed(seq)`方法，如果想获取反转的结果可以使
+用另一个内置函数`sorted(iterable, *, key=None, reverse=False)`，例子如下：
+
+```python
+# reversed
+original_list = [1, 2, 3, 4]
+for element in reversed(original_list):
+    print(element)
+
+# sorted
+In [10]: original_list = [3, 1, 2, 5, 4]
+
+In [11]: sorted(original_list)
+Out[11]: [1, 2, 3, 4, 5]
+
+In [15]: sorted(original_list, reverse=True)
+Out[15]: [5, 4, 3, 2, 1]
+```
+
+如果列表中不只包含数值，而是包括元组，元组的数据为`(<date>, <daily high>, daily low>)`？
+如：`readings = [('1202', 45.0, 28.1), ('1201', 44.0, 33.0), ('1130', 45.0, 32.6)]`
+调用`sorted(readings)`函数，结果是按照`<date>`部分排列的元组，即元组的第一个
+元素，按照字母表的顺序进行排列。如果我们想按照`<daily high>`或`<daily low>`
+排序，要怎么实现呢？通过传入`key`参数(一个接受单一参数的函数)返回`sorted`比
+较的值。如下所示：
+
+```python
+# sorted with key argument
+In [25]: sorted(readings, key=lambda reading: reading[2])
+Out[25]: [('1202', 45.0, 28.1), ('1130', 45.0, 32.6), ('1201', 44.0, 33.0)]
+# 按照元组第二个值反转列表
+In [26]: sorted(readings, key=lambda reading: reading[1], reverse=True)
+Out[26]: [('1202', 45.0, 28.1), ('1130', 45.0, 32.6), ('1201', 44.0, 33.0)]
+# 使用operator模块的itemgetter函数直接获取元组的值
+# 使用itemgetter意味着列表元素为元组，且元组值多于1个
+In [29]: sorted(readings, key=itemgetter(1), reverse=True)
+Out[29]: [('1202', 45.0, 28.1), ('1130', 45.0, 32.6), ('1201', 44.0, 33.0)]
+# 使用itemgetter，还可以设置第一个比较值相同后，第二个进行比较的值
+In [31]: sorted(readings, key=itemgetter(1,2), reverse=True)
+Out[31]: [('1130', 45.0, 32.6), ('1202', 45.0, 28.1), ('1201', 44.0, 33.0)]
+```
+
+##### Split A Python List Into Chunks
+
+将列表分成长度一样的多个值，如果不够均分，则用填充字符填充。推荐使用`itertools`
+模块，在该模块的菜谱部分实现本功能的示例代码如下：
+```python
+def grouper(iterable, n, fillvalue=None):
+    "collect data into fixed-length chunks or blocks"
+    # grouper('ABCDEFG', 3, 'x') --> ABC DEF Gxx
+    args = [iter(iterable)] * n
+    return zip_longest(*args, fillvalue=fillvalue)
+```
+
+##### 将带嵌入列表的列表变为只有一个列表
+
+还是使用`itertools`模块，方法如下：
+```python
+def flatten(list_of_list):
+    "Flatten one level of nesting."
+    return chain.from_iterable(list_of_list)
+```
+上述方法返回的是一个迭代器，如果需要列表，可以在调用`list()`方法。
+
+##### 插入列表
+
+举了插入列表操作的四种情况，详见代码：
+```python
+# 在表头插入
+s.insert(0, value)
+# 在表尾插入
+s.append(value)
+# 在某个索引位置插入
+s[index] = value
+# 连接2个列表
+s += t
+```
+
+##### 创建列表
+
+`x = []`  # 设置x为空列表
+`x = [1, 2, 3]`	# 创建列表，并将值赋给x
+`x = [x for x in iterable]`	# 列表表达式
+`x = list or x = list((1,2,3))`	# 使用`list()`构造函数
+
+##### 将函数应用到列表
+
+推荐使用列表推导，虽然也可以使用`map`(前者更pythonic)，两者的区别为：
+`map`生成的值是个生成器，每次返回一个值，而列表推导则生成一个列表。
+代码如下：
+```python
+# 原始方式
+original_list = [1, 2, 3, 4, 5]
+double_list = []
+for element in original_list:
+    double_list.append(element * 2)
+# 使用列表推导
+double_list = [element * 2 for element in original_list]
+```
+
+参考资料：
+1. [Python List相关用法 ](https://jeffknupp.com/blog/2018/12/13/how-to-do-just-about-anything-with-python-lists/)
+2. [itertools module](https://docs.python.org/3/library/itertools.html)
