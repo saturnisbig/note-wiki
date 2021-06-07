@@ -1,4 +1,4 @@
-# Diary
+ Diary
 
 ## 2018
 
@@ -193,3 +193,202 @@
 ### July
         * [[2012-07-30]]
 
+# Diary
+
+## 2020
+
+### July
+        * [Ch03 Dictionaries and Sets](2020-07-12)
+
+## 2018
+
+### October
+        * [在升级系统后碰到了gunicron启动问题](2018-10-24)
+
+### September
+        * [2018-09-26](2018-09-26)
+        * [2018-09-15](2018-09-15)
+
+### May
+        * [豆豆上台讲故事](2018-05-08)
+        * [没有固定的时间](2018-05-01)
+
+### April
+        * [2018-04-23](2018-04-23)
+        * [Django Model文档学习笔记](2018-04-03)
+
+## 2017
+
+### June
+        * [PV-Ch13 Search](2017-06-20)
+        * [Scrapy命令行、Spiders介绍和PV-Macros](2017-06-08)
+        * [Scrapy爬虫练习和PV-Macros](2017-06-07)
+        * [Ch10-Copy and Paste](2017-06-03)
+        * [Scrapy文档学习和Ch09-Navigate Between Files with Jumps](2017-06-01)
+
+### May
+        * [Requests基础和PV-Ch07完Ch08开始](2017-05-21)
+        * [免登录爬取新浪微博](2017-05-20)
+        * [PV-Ch06-Manage Multiple Files(p82-89)和免登录爬取新浪微博](2017-05-19)
+        * [PV-Ch06(p77-p92)和免登录新浪爬虫-01 单博主微博及评论数据](2017-05-18)
+        * [PV-Ch05 Command-Line Mode和爬取淘宝匿名旺旺号-数据存储](2017-05-17)
+        * [lxml选取节点文本内容 - PV-Cho5-Command-Line Mode](2017-05-16)
+        * [PV-Ch04 Command-Line Mode](2017-05-15)
+        * [PV-Ch04-Visual Mode](2017-05-11)
+        * [PV-Ch03-Insert Mode学习](2017-05-09)
+        * [Ch03 Insert Mode (p27-p34)](2017-05-08)
+        * [阅读PV-Ch02-Normal Mode](2017-05-07)
+        * [PV-Ch01-The Vim Way](2017-05-02)
+
+### April
+        * [学习模拟淘宝登录博文](2017-04-28)
+        * [完善抓取淘宝MM - 使用PhantomJS来抓取](2017-04-26)
+        * [selenium基础知识学习](2017-04-25)
+        * [抓取淘宝MM照片 - 未完成](2017-04-24)
+        * [百度贴吧帖子](2017-04-21)
+        * [Python爬虫实战-爬取糗事百科段子](2017-04-18)
+
+### March
+        * [lxml相关知识 - 基础知识](2017-03-20)
+        * [PP4E-Ch05](2017-03-14)
+        * [Ch04并发抓取](2017-03-10)
+        * [priceMonitor项目](2017-03-08)
+
+### February
+        * [PP4E Ch05 笔记](2017-02-27)
+        * [PP4E-Ch05-笔记](2017-02-23)
+        * [PP4E-Ch05-笔记](2017-02-22)
+        * [PP4E-Ch04-笔记](2017-02-20)
+        * [练习抓取国美数据和PP4E-ch04笔记](2017-02-16)
+        * [[[PP4E-Ch04-笔记]]](2017-02-15)
+        * [[[PP4E-Ch03-笔记]]](2017-02-14)
+        * [[[PP4E-Ch03-笔记]]](2017-02-08)
+        * [2017-02-07](2017-02-07)
+        * [PP4E-Ch02-笔记](2017-02-04)
+        * [Ch01 -- Preview Step5 完成](2017-02-03)
+
+### January
+        * [Ch01 -- Preview -- Step5内容阅读和代码输入](2017-01-19)
+        * [Ch01 -- Preview -- Step4代码练习](2017-01-18)
+        * [Ch01 -- Preview -- Step3 代码练习](2017-01-10)
+        * [Ch01 -- Preview -- Step3 练习](2017-01-09)
+        * [Ch01 -- Preview --- Step2  复习](2017-01-05)
+        * [Ch01 -- Preview --- Step2  复习](2017-01-04)
+        * [PP4E Ch01 -- Preview](2017-01-03)
+
+## 2016
+
+### December
+        * [Chapter3 缓存 - 复习和练习](2016-12-27)
+        * [Chapter 3 缓存](2016-12-26)
+        * [Chapter2 练习和看代码](2016-12-22)
+        * [WSWP - Chapter 1 - 复习](2016-12-14)
+        * [WSWP - Chapter 1 复习](2016-12-13)
+        * [WSWP - Chapter 2 - 复习](2016-12-12)
+
+### November
+        * [PP-Chapter 19](2016-11-22)
+        * [WSWP - Chapter02 - code exercise](2016-11-21)
+        * [Scraping with Python - Chapter1](2016-11-16)
+        * [Exception Designing](2016-11-09)
+        * [Vim edit habit paper](2016-11-07)
+        * [collections - deque and namedtuple](2016-11-01)
+
+### October
+        * [collections module -- defaultdict](2016-10-31)
+        * [The collections module](2016-10-24)
+        * [Exception Basics](2016-10-18)
+        * [Class部分练习题5](2016-10-17)
+        * [Class Decorator和Class Gotchas](2016-10-12)
+        * [static method和class method的用法](2016-10-11)
+        * [__slots__和staticmethod](2016-10-10)
+        * [Learning Python Study](2016-10-09)
+
+## 2015
+
+### September
+        * [2015-09-05](2015-09-05)
+
+## 2014
+
+### February
+        * [Work Today](2014-02-17)
+
+## 2013
+
+### December
+        * [How to remove git submodule](2013-12-25)
+        * [code smell](2013-12-15)
+        * [Chapter 4](2013-12-14)
+        * [(TDD)Chapter2 and Chapter3](2013-12-12)
+        * [TDD python](2013-12-11)
+
+### November
+        * [Virtualenv and Virtualenvwrapper](2013-11-24)
+
+### October
+        * [Install mongodb on Ubuntu](2013-10-17)
+        * [2013-10-14](2013-10-14)
+
+### August
+        * [关于Python编码](2013-08-20)
+
+### July
+        * [工厂模式](2013-07-31)
+        * [数据库的命名原则](2013-07-29)
+        * [删除重复的数据保留最小id的数据 sqlite](2013-07-14)
+        * [2013-07-05](2013-07-05)
+
+### May
+        * [IOS protocol and delegate](2013-05-27)
+        * [ios](2013-05-22)
+
+### March
+        * [button like anchor and javascript to ignore click event](2013-03-06)
+
+### February
+        * [Tkinter 和Android开发环境安装](2013-02-17)
+        * [sqlite export and import to sql statement](2013-02-16)
+
+### January
+        * [2013-01-30](2013-01-30)
+        * [Python re](2013-01-06)
+
+## 2012
+
+### December
+        * [Python basic](2012-12-29)
+        * [2012-12-23](2012-12-23)
+        * [2012-12-13](2012-12-13)
+        * [2012-12-11](2012-12-11)
+        * [change template system to jinja2](2012-12-04)
+
+### November
+        * [Python function var privillege](2012-11-15)
+        * [Python Function Basics](2012-11-14)
+        * [Revert from 'git rm -r .'](2012-11-01)
+
+### October
+        * [Iterations and Comprehensions, Part 1](2012-10-26)
+        * [while an for Loops](2012-10-25)
+        * [if Tests and Python Syntax Rules](2012-10-24)
+        * [Assignments, Expressions, and Prints](2012-10-23)
+        * [Introducing Python Statements](2012-10-22)
+        * [Tuples, Files, and Everythings](2012-10-16)
+        * [2012-10-8 To 2012-10-14](2012-10-14)
+
+### September
+        * [Python 'any' | webpy session error](2012-09-25)
+        * [Python descriptor and sqlalchemy basic](2012-09-19)
+        * [Python date operation](2012-09-12)
+        * [Markdown syntax study](2012-09-02)
+
+### August
+        * [Make dotcloud work -- solve 'sqlite database' lock problem](2012-08-24)
+        * [Convert MySQL to sqlite importable sql file](2012-08-19)
+        * [MySQL select next or prev of current row](2012-08-14)
+        * [2012-08-07](2012-08-07)
+        * [2012-08-04](2012-08-04)
+
+### July
+        * [2012-07-30](2012-07-30)

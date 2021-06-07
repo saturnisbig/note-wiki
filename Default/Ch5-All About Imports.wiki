@@ -1,0 +1,239 @@
+# All about imports
+
+阅读完
+2019-10-31 23:00:43 - 2019-10-31 23:18:08 
+笔记
+2019-11-03 07:38:40 - 2019-11-03 08:01:37 
+2019-11-03 08:23:13 - 2019-11-03 08:48:15 
+2019-11-03 21:18:54 - 2019-11-03 21:31:59
+扩展博文
+2019-11-03 21:36:49 - 2019-11-03 21:47:10 
+
+##### 常规的import
+
+直接使用`import`关键字，按照Python语法风格建议每个`import`一行，
+类似下面这样的：
+
+```python
+import sys
+# 每个import最好一行
+import os, sys, time
+
+import sys as system # 重命名模块
+# 使用点概念引入模块
+import urllib.error
+```
+
+##### 使用"from module import something"
+
+我们经常会碰到要引用某个模块或库的一部分，可以用下面的方式实现：
+
+```python
+# 1
+from functools import lru_cache
+
+# 这样在代码中就可以直接使用lru_cache(*args)，如果只是导入functools模块，
+# 则需使用functools.lru_cache(*args)
+
+# 2
+from os import *
+```
+
+在复杂的代码中，了解函数所在的模块会比较好。然而，如果你的代码管理和模块化的很合理，导入模块的一部分将会显得很便利、简洁。
+
+上述2的方式很少用，而且会将命名空间搞乱掉。你在自己代码中可能定义了函数名，
+这些与模块中的一些函数名存在冲突，这样调用的就是你自己定义的函数了。`Tkinter`
+模块可能是唯一一个推荐使用2方式的。
+
+如果你自己写模块或者库，有些人会推荐将所有一些导入到`__init__.py`文件，
+这样可以让你的代码更容易用。我个人喜欢直言的而非含糊的方式，但是每个
+人有自己喜欢的方式。
+
+```python
+from os import path, walk, unlink
+from os import uname, remove
+
+# 可以改为下面的方式
+
+from os import (path, walk, unlink, uname,
+		remove, rename)
+
+from os import path, walk, unlink, uname, \
+		remove, rename
+```
+
+##### 相对引用
+
+PEP328描述了相对引用的来源及所使用的语法。背后的想法是使用节点来决定
+如何相对引入其他包/模块，以避免偶尔发生的对标准库的shadowing。例子如下：
+
+```python
+my_package/
+    __init__.py
+    subpackage1/
+        __init__.py
+        module_x.py
+        module_y.py
+    subpackage2/
+        __init__.py
+        module_z.py
+    module_a.py
+
+# 在第一层的__init__.py文件中写上下述代码
+from . import subpackage1
+from . import subpackage2
+# 在subpackage1下的__init__.py文件中
+from . import module_x
+from . import module_y
+# module_x.py
+from .module_y import spam as ham
+
+def main():
+    ham()
+# module_y.py
+def spam():
+    print ('spam' * 3)
+```
+打开终端，切换到`my_package`所在目录，不要进入到该目录。运行Python解释器。
+使用的iPython。
+```python
+In [1]: import my_package
+In [2]: my_package.subpackage1.module_x
+Out[2]: <module 'my_package.subpackage1.module_x' from 'my_package/subpackage1/module_x.py'>
+In [3]: my_package.subpackage1.module_x.main()
+spam spam spam
+```
+
+相对引用对创建包的代码来说很有用。如果你创建很多相关的代码，使用相对引用
+是个比较好的方式。记住，如果需要超过一层，可以添加额外的段，但是PEP328不
+建议超过2层。
+
+如果在`module_x.py`中添加`if __name__ == "__main__"`部分并运行的的话，
+可能会看到一些令人迷惑的错误提示，通过下面代码可以了解：
+
+```python
+from .module_y import spam as ham
+
+def main():
+    ham()
+    
+if __name__ == '__main__':
+    # This won't work
+    main()
+```
+
+在subpackage1文件夹下运行`python module_x.py`，将会有如下错误提示：
+```python
+# Python2
+Traceback (most recent call last):
+File "module_x.py", line 1, in <module>
+from . module_y import spam as ham
+ValueError: Attempted relative import in non-package
+
+# Python3
+Traceback (most recent call last):
+File "module_x.py", line 1, in <module>
+from . module_y import spam as ham
+SystemError: Parent module '' not loaded, cannot perform relative import
+```
+产生错误的原因是`module_x.py`是一个包里的模块，你打算以脚本的方式运行，这
+和相对引用是不兼容的。
+
+如果要在代码中使用该模块，必须将其添加到Python的import查找路径中，简单的
+方式如下：
+```python
+import sys
+# 必须放在前面，否则会有问题
+sys.path.append('/path/to/folder/containing/my_package')
+import my_package
+```
+
+##### 选择导入
+
+使用场景：你有偏好使用的模块，又担心如果该模块不存在会报错。这种情况下，就
+可以使用选择导入来支持不同软件版本，如下例：
+```python
+# github2中的用法
+try:
+    # For Python 3
+    from http.client import responses
+except ImportError: # For Python 2.5-2.7
+    try:
+        from httplib import responses # NOQA
+    except ImportError: # For Python 2.4
+        from BaseHTTPServer import BaseHTTPRequestHandler as _BHRH
+        responses = dict([(k, v[0]) for k, v in _BHRH.responses.items()])
+# lxml包中的用法
+try:
+    from urlparse import urljoin
+    from urllib2 import urlopen
+except ImportError:
+    # Python 3
+    from urllib.parse import urljoin
+    from urllib.request import urlopen
+```
+
+##### 本地导入
+
+即将模块导入当前文件的某个块里（函数块，类等）。在脚本的头部导入，则是整个
+脚本都可以使用。本地导入的模块只能在其所在作用域内使用。好处之一是，如果包
+很大，加载时间长，则可将该包放在较少使用的函数中导入使用。自己几乎不用本地
+导入，因为如果这样的导入很多的话就会很难了解到底发生了什么。
+
+```python
+import sys
+# global scope
+def square_root(a):
+    # This import is into the square_root functions local scope
+    import math
+    return math.sqrt(a)
+    
+    
+def my_pow(base_num, power):
+    return math.pow(base_num, power)
+    
+
+if __name__ == '__main__':
+    print(square_root(49))
+    print(my_pow(2, 3))
+```
+
+##### 导入陷阱
+
+- 循环导入
+
+创建了相互导入的模块，就会变成循环导入。
+
+- shadowed import
+
+用户创建了和系统模块一样名字的模块。
+
+##### 小结
+
+我们介绍了很多基本的内容，但是关于import还有很多需要学习的。PEP302包括了
+导入钩子，允许你做一些很酷的事情，比如直接从github导入。同时，Python的
+importlib模块也值得一看。从importlib开始，看看源码，学习一些简洁的技巧。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

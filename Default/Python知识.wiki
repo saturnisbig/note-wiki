@@ -5,3 +5,4 @@
 - [[How to make an iterator in Python]] -- 2018-08-18 14:45:03 
 - [[How to sort the Python dict by key or value]] -- 2019-04-09 07:04:42 
 - [[Python urllib2.quote keyerror]] -- 2019-04-14 23:17:47 
+- [[Expert Python topics you should know]] -- 2019-10-29 22:36:22 

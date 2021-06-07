@@ -1,0 +1,6 @@
+# tmux保存会话状态
+
+prefix Ctrl-s
+
+prefix Ctrl-r
+

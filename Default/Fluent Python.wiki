@@ -1,3 +1,6 @@
 # Fluent Python
 
 ## [[FP-Ch01-The Python Data Model]] - 2017-05-31 19:30:18 -
+## [[FP-Ch02-An Array of Sequences]] - 2020-06-27 23:01:36 -
+# [[FP-Ch03-Dictionaries and Sets]] - 2020-07-12 22:59:20 -
+# [[FP-Ch04-Text versus Bytes]] - 2020-08-11 23:05:24 

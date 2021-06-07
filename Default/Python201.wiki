@@ -2,6 +2,9 @@
 
 - [[Ch2-The collections module]] -- 2019-04-20 19:52:52 
 - [[Ch3 Context Managers]] -- 2019-04-29 06:14:01 
+- [[Ch4-The functools module]] -- 2019-09-03 22:36:53 
+- [[Ch5-All About Imports]] -- 2019-10-31 23:00:32 
+- [[Ch6-The importlib Module]] -- 2019-11-24 15:04:55 
 
 2016-11-22 07:12:15 - 2016-11-22 07:24:25
 

@@ -1,0 +1,67 @@
+# 第一章 安装及简单使用
+
+- 安装
+`sudo apt install tmux`
+
+启动一个名为"basic"的会话
+`tmux new -s basic`
+
+tmux的命令前置符
+`CTRL-b`，同时按下两个按键，如果要将程序"detach"就再按下`d`。
+该命令符是可以配置的，下文简称`PF`
+
+- 列出现有会话
+`tmux list-session`，列出存在的会话，简化为`tmux ls`。
+
+- 创建后台会话
+`tmux new -s second_sess -d`，直接创建后台会话。
+
+- 调回后台会话
+`tmux attach -t second_sess`，调回第二个会话。
+
+- 结束会话(Killing Sessions)，程序挂起（死掉）时有用
+`tmux kill-session -t basic`
+
+- 窗口处理
+`tmux new -S windows -n shell`，`-n`命名窗口。
+`PF+n`，切换下个窗口；`PF+p`，切换前一个窗口；`PF+f`，通过名称查找；
+`PF+w`，调出窗口列表进行选择；`PF+c`，创建新的窗口；`PF+,`，重命名窗口；
+`PF+0`，窗口数字，从0开始；`PF+&`，询问是否退出窗口。
+
+- 一个窗口显示多个格子
+`PF+%`，将窗口分成两个格子，并将光标移到新的工作区。
+`PF+"`，水平分割窗口，成两个格子。
+`PF+o`，在切割格子间跳动，也可通过`PF+方向键`进行格子切换。
+`PF+x`，关闭格子。
+`PF+:`，进入命令行模式，可以通过命令行创建会话、窗口等。`new-window -n console`
+`PF+?`，查看预定义绑定的命令。
+
+- 命令参考
+
+Command	Description
+tmux new-session Creates a new session without a name. Can be
+shortened to tmux new or simply tmux .
+tmux new -s development Creates a new session called “development.”
+tmux new -s development -n editor Creates a session named “development” and
+names the first window “editor.”
+tmux attach -t development Attaches to a session named “development.”
+
+Default Commands for Sessions, Windows, and Panes
+Command	Description
+P REFIX d Detaches from the session, leaving the session running in the
+background.
+P REFIX : Enters Command mode.
+P REFIX c Creates a new window from within an existing tmux session.
+Shortcut for new-window .
+P REFIX 0 ... 9 Selects windows by number.
+P REFIX w Displays a selectable list of windows in the current session.
+P REFIX , Displays a prompt to rename a window.
+P REFIX & Closes the current window after prompting for confirmation.
+P REFIX % Divides the current window in half vertically.
+P REFIX " Divides the current window in half horizontally.
+
+Command	Description
+P REFIX o Cycles through open panes.
+P REFIX q Momentarily displays pane numbers in each pane.
+P REFIX x Closes the current pane after prompting for confirmation.
+P REFIX S PACE Cycles through the various pane layouts.

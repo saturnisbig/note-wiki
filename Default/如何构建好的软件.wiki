@@ -1,0 +1,90 @@
+# 如何构建好的软件
+
+2020-01-12 17:43:12 - 2020-01-12 18:03:32 
+2020-01-14 22:39:36 - 2020-01-14 23:28:25 
+2020-01-21 20:50:33 - 2020-01-21 21:40:17 
+
+>> There is no such thing as platonically good engineering: it depends on your needs and the practical problems you encounter. 
+
+>> Software should be treated not as a static product, but as a living manifestation
+of the development team's collective understanding.
+
+软件开发中，如果有委托别的公司开发一些功能，最好让公司的雇员跟进学习相关的知识，确保关键知识
+掌握在公司雇员手中。
+
+
+
+##### 构建好的软件的3条原则
+
+1. 开始得尽量简单（简洁性）
+构建好的软件需要专注：以能够解决问题的最小功能开始。简单且好的APP能够方便
+的添加必需的功能。
+小的软件项目几乎不可能会失败，会失败是因为变得太大了。
+
+>> Software projects rarely fail because they are too small; they fail because they get too big. 
+不幸的是在项目实战中要保持专注非常难：光是从股东那边搜集需求就产生了一大堆的功能。
+解决这个问题的一个方式是使用优先列表。照样搜集需求，但是每个需求打上不同的标签：
+完全关键的功能、高价值补充或者有了会更好。
+这样如果就能将关键功能限制在一定数量之内，更集中的针对关键功能进行开发。
+
+2. 找出问题，然后迭代处理
+
+现代软件太过复杂而且变化快，没有什么计划能消除所有的不足。构建好的软件首先也是从
+构建坏的软件开始的，然后逐步找出问题，提高解决方法。
+
+要找出问题，可以从和你想帮助的人群谈话开始，目的是为了理解你想解决的问题的本质，
+避免先入为主的偏见.
+
+要注意官僚的目标伪装成问题陈述。“司机在处理停车票的时候感到沮丧”是一个问题。“我们
+需要为司机开发一个APP是我们数字化大家庭计划的一部分”则不是。
+
+如果我们的目的是为了让居民生活更好，我们应该明确知道是什么让他们活得更糟。
+
+有一个清晰的问题描述能让你以实验的方式测试不同方案可行性，通常这些方案在理论上是
+很难决定的。对于软件，明显的解决方案通常会有致命的错误，在使用时才会显现出来。
+目的不是构建最终的产品，而是先能够尽快且不费太多功夫发现问题。非功能模型用来测试
+接口设计。中间功能模型用来尝试不同功能。原型代码，虽然写的比较糟糕，确能够较快
+得到反馈。这个过程的预期不是所写的代码，而是对想构建的东西有一个清晰的理解。
+
+>> Beware of bureaucratic goals masquerading as problem statements. If our end goal is to make citizens’ lives better, we need to explicitly acknowledge the things that are making their lives worse. 
+
+在较好的理解了解决方案后，你可以开始构建真正的产品了。将重点放在发现具体执行中的
+问题，停止探索新的想法。可以写一些小的测试，这些测试能够很快发现明显的问题。
+
+软件未发布的测试阶段，很多问题没被发现，当软件发布的时候，如果有上百万的用户，那么
+当原来小概率出现的问题，将会出现，这背后有一批人在等着你修复bug。你必须解决新的带宽，
+设备，安全攻击等产生的问题。
+
+总的说来，就是通过不同的持续反馈来高效的发现问题。开发软件并不是避免失败，而是
+有意识的尽快的让问题暴露出来，然后得到相关信息反馈，逐步构建软件。
+
+3. 雇佣最好的工程师
+
+要有好的工程关键要有好的工程师。谷歌等公司维护着这世界上最大的系统，他们有严格
+的选人程序，仍对人才非常渴求。
+
+乔布斯和扎克伯革说过最好的工程师比普通的工程师效率高至少10倍。并不是说好的工程师
+写代码比较快，而是好的工程师做的决定可以节省10倍的时间。
+
+好的工程师能够更好的从现有的软件中找到能复用的，这样就能最小化系统中需要重头构建的
+部分。能够更好的使用工具，将很多工作流程自动化。自动化也意味着将人力解放出来，用来
+解决意料外的错误，这是最好的程序员所擅长的。好的工程师设计的系统更健壮、更能被人理解。
+这有很多好处，让同事更快更稳定的在此基础上进行开发。
+
+这也意味着一小拨最好的工程师在一起比一群普通工程师在一起构建软件的速度更快。
+他们能够利用开元代码和复杂的云服务方案等来自动化测试，也能很好的使用一些工具。
+这样他们就能将精力集中在工作中需要创造性解决问题的部分。他们能够和用户快速的测试不同的
+想法，为不同功能设定优先级，砍掉不重要的工作。
+
+>>Building software is not about avoiding failure; it is about strategically failing as fast as possible to get the information you need to build something good. 
+
+小的好工程师团队比大的平均工程师团队制造更少的bug和安全问题。
+
+越需要协作的工程项目，越需要好的工程师。一个工程时代码中的问题会影响整个团队。在大
+的项目组中，差的工程师让他人耗费更多的精力。大的项目需要构建在可靠的代码模块上，
+设计要高效，设想要清晰。工程师越好，系统越不容易崩溃。限制系统复杂性最有效的措施是
+工程师的水平。
+
+##### 总结
+
+Good software development starts with building a clear understanding of the problem you want to solve. This lets you test many possible solutions and converge on a good approach. Development is accelerated by reusing the right open source code and cloud services, granting immediate access to established software systems and sophisticated new technology. The development cycle alternates between exploration and consolidation, quickly and messily progressing on new ideas, then focusing and simplifying to keep the complexity manageable. As the project moves forward, it gets tested with successively larger groups of people to eliminate increasingly uncommon problems. Launching is when the real work ramps up for a good development team: layers of automated systems should be built to handle issues quickly and prevent harm to actual users. Ultimately, while there are infinite intricacies to software development, understanding this process provides a basis to tackle the complexities of how to build good software.

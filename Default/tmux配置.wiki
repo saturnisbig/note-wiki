@@ -1,0 +1,21 @@
+# 第二章 配置tmux
+
+#### 介绍`.tmux.conf`文件
+
+在用户的home目录下创建配置文件`.tmux.conf`，每次修改完配置文件，新配置的内容并
+不会马上生效，要通过`PF+:`，`source-file ~/.tmux.conf`，重新读取配置文件。
+
+- 设置更简单的启动建
+将启动键`CTRL-a`，同时可以考虑将大写字母锁定键映射为CTRL，相关设置可以
+参考：http://www.emacswiki.org/emacs/MovingTheCtrlKey
+`set -g prefix C-a`
+
+- 设置默认延迟时间
+
+`set -sg escape-time 1`
+
+#### 自定义键、命令和用户输入
+
+- 载入配置文件快捷键
+
+`bind r source-file ~/.tmux.conf \; display "Reloaded!"`

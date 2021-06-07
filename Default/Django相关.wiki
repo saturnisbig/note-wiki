@@ -4,3 +4,14 @@
 - [[Django-用模板标签实现分页功能]] -- 2018-08-14 05:54:08 
 - [[Django:非官方的FAQ]] -- 2019-03-24 21:27:57 
 - [[Django-发送邮件相关设置]] -- 2019-04-17 22:53:36 
+- [[Django-Model介绍]] -- 2019-07-27 23:04:19 
+- [[Django开发者七个常犯错误]] -- 2019-10-26 11:37:15 
+- [[How to Disallow Auto-named Django Migrations(翻译)]] 
+
+
+
+2020-03-20 15:47:46 
+问题：Specifying a namespace in include（）withou providing an app_name
+
+python3 Django 环境下，如果你遇到在根目录下urls.py中的include方法的第二个参数namespace添加之后就出错的问题。请在[app_name]目录下的urls.py中的urlpatterns前面加上app_name='[app_name]'， [app_name]代表你的应用的名称。
+例如：app_name ='[blog]'

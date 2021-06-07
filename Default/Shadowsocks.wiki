@@ -4,6 +4,8 @@
 
 2018-03-25 23:06:31 - 2018-03-25 23:59:16
 
+`service shadowsocks status`查看状态
+
 #### 大致原理介绍
 shadowsocks是类似VPN的代理工具，有服务器端和本地端，服务器端必须安装在
 能够翻墙的服务器上，本地端通过连接服务器端作为代理，访问google等网站。
@@ -78,8 +80,6 @@ shadowsocks是类似VPN的代理工具，有服务器端和本地端，服务器
 
 上面本地命令设置完后，打开浏览器Firefox，还是不能访问google，原因是
 系统的网络代理没设，需要打开'Ubuntu的设置>Network>Network proxy'
-
-    
 
 
 #### Ubuntu开启BBR内核加速

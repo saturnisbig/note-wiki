@@ -7,3 +7,52 @@
 关于migration的记录，存储在`django_migrations`数据库表中
 
 
+- django-mptt rebuild tree in migration file
+
+参考：
+1、[Django MPTT: Rebuild tree in migrations file](https://stackoverflow.com/questions/53949475/django-mptt-rebuild-tree-in-migrations-file?noredirect=1&lq=1)
+2、[How to add django-mptt rebuild to migration?](https://stackoverflow.com/questions/49160623/how-to-add-django-mptt-rebuild-to-migration/51180884#51180884)
+
+在migration结束后重新构建tree
+```python
+from django.apps import AppConfig
+from django.db.models.signals import post_migrate
+
+def rebuild_tree(sender, **kwargs):
+    from .models import YourModel
+    YourModel.objects.rebuild()
+
+class YouApponfig(AppConfig):
+    name = 'app_name'
+
+    def ready(self):
+        post_migrate.connect(rebuild_tree, sender=self)
+```
+在migration的同时重建tree
+```python
+from __future__ import unicode_literals
+from django.db import migrations
+from mptt import register, managers
+
+
+def rebuild_tree(apps, schema_editor):
+    YourMPTTModel = apps.get_model('your_app', 'YourMPTTModel')
+
+    manager = managers.TreeManager()
+    manager.model = YourMPTTModel
+
+    register(YourMPTTModel)
+
+    manager.contribute_to_class(YourMPTTModel, 'objects')
+    manager.rebuild()
+
+
+class Migration(migrations.Migration):
+
+
+  operations = [
+      migrations.RunPython(
+          rebuild_tree
+      )
+  ]
+```

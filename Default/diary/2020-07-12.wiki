@@ -1,0 +1,6 @@
+# Ch03 Dictionaries and Sets
+
+2020-07-12 23:00:14 - 2020-07-12 23:24:49 (p63-p72)
+`dict.setdefault`, `collections.defaultdict`
+
+dd = defaultdict(list)
